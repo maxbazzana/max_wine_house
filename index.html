@@ -361,8 +361,8 @@
     <div style="display: inline-block; text-align: left;">
         ⚠️ <strong>Condiciones de venta:</strong>
         <ul style="margin-top: 5px; margin-bottom: 0; padding-left: 20px;">
-            <li>Pedido mínimo: una caja cerrada (3, 4 o 6 unidades según el producto).</li>
-            <li>Se permiten cajas mixtas únicamente de 6 unidades.</li>
+            <li>Pedido mínimo: una caja cerrada (de 3, 4 o 6 unidades, según el producto).</li>
+            <li>Se permiten cajas mixtas únicamente de 6 unidades.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(En este caso, se aplicará el precio minorista a cada vino incluido)</li>
             <li>Algunos vinos son exclusivos de caja cerrada y no pueden combinarse en mixtas.</li>
         </ul>
     </div>
@@ -396,7 +396,7 @@
                 <h4 style="margin-top:0; color:var(--primary)">Finalizar Pedido</h4>
                 
                 <div style="margin-bottom: 10px; font-weight: bold; color: #555;">
-                    Vendedor: Max BP
+                    Vendedor: Max Bazzana
                 </div>
 
                 <div class="payment-info">
@@ -822,10 +822,12 @@
             msg += `*Caja Mixta*\n`;
             let botellasMixtas = 0;
             cajasMixtas.forEach(i => {
-                total += (i.precio * i.qty);
+                const subtotal = i.precio * i.qty;
+                total += subtotal;
                 totalBotellas += i.qty;
                 botellasMixtas += i.qty;
                 msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
+                msg += `   ↳ ${i.qty} x $${i.precio.toLocaleString('es-AR')} = $${subtotal.toLocaleString('es-AR')}\n`;
             });
             totalCajas += (botellasMixtas / 6);
         }
@@ -834,11 +836,13 @@
             if (cajasMixtas.length > 0) msg += `\n`; 
             msg += `*Caja Cerrada*\n`;
             cajasCerradas.forEach(i => {
-                total += (i.precio * i.qty);
+                const subtotal = i.precio * i.qty;
+                total += subtotal;
                 totalBotellas += i.qty;
                 const bSize = i.boxSize || 6;
                 totalCajas += (i.qty / bSize);
                 msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
+                msg += `   ↳ ${i.qty} x $${i.precio.toLocaleString('es-AR')} = $${subtotal.toLocaleString('es-AR')}\n`;
             });
         }
         
