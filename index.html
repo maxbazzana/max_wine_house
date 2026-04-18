@@ -690,7 +690,7 @@
         if (vSel) fullName += ` (Elegida: ${vSel.value})`;
         const unitPrice = p.caja / qty;
         const exist = cart.find(i => i.bodega === p.bodega && i.nombre === fullName && i.precio === unitPrice && i.isBox === true);
-        if (exist) exist.qty += qty; else cart.push({ bodega: p.bodega, nombre: fullName, precio: unitPrice, qty: qty, isBox: true });
+        if (exist) exist.qty += qty; else cart.push({ bodega: p.bodega, nombre: fullName, precio: unitPrice, qty: qty, isBox: true, boxSize: qty });
         updateCartUI(); showToast(`Caja agregada`);
     }
 
@@ -800,11 +800,12 @@
         
         let total = 0;
         let totalBotellas = 0;
+        let totalCajas = 0;
 
-        cart.forEach(i => { 
-            total += (i.precio * i.qty); 
-            totalBotellas += i.qty;
-            
+        const cajasMixtas = cart.filter(i => !i.isBox);
+        const cajasCerradas = cart.filter(i => i.isBox);
+
+        const getFinalName = (i) => {
             let finalName = "";
             if (i.nombre.includes("(Elegida:")) {
                 const parts = i.nombre.split("(Elegida:");
@@ -814,11 +815,37 @@
                 const cleanName = i.nombre.replace('<br>', ' ').replace('<span class="selected-variant-text">', '').replace('</span>', '');
                 finalName = `${i.bodega} ${cleanName}`;
             }
+            return finalName;
+        };
 
-            msg += `▪️ (${i.qty}) ${finalName}\n`; 
-        });
+        if (cajasMixtas.length > 0) {
+            msg += `*Caja Mixta*\n`;
+            let botellasMixtas = 0;
+            cajasMixtas.forEach(i => {
+                total += (i.precio * i.qty);
+                totalBotellas += i.qty;
+                botellasMixtas += i.qty;
+                msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
+            });
+            totalCajas += (botellasMixtas / 6);
+        }
+
+        if (cajasCerradas.length > 0) {
+            if (cajasMixtas.length > 0) msg += `\n`; 
+            msg += `*Caja Cerrada*\n`;
+            cajasCerradas.forEach(i => {
+                total += (i.precio * i.qty);
+                totalBotellas += i.qty;
+                const bSize = i.boxSize || 6;
+                totalCajas += (i.qty / bSize);
+                msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
+            });
+        }
         
+        let formattedCajas = Number.isInteger(totalCajas) ? totalCajas : totalCajas.toFixed(1);
+
         msg += `-------------------\nTotal de botellas: ${totalBotellas}\n`;
+        msg += `Total de cajas: ${formattedCajas}\n`;
         msg += `💰 *TOTAL: $${Math.round(total).toLocaleString('es-AR')}*\n`;
         msg += `-------------------\n👤 Vendedor: Max Bazzana`;
         
