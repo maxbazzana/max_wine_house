@@ -50,7 +50,7 @@
         .brand-logo-icon { 
             font-size: 2rem; 
         }
-        .brand-text { display: flex; flex-direction: column; }
+        .brand-text { display: flex; flex-direction: column; align-items: center; text-align: center; }
         .brand-title { 
             font-size: 1.4rem; 
             font-weight: 800; 
@@ -337,6 +337,32 @@
             border-radius: 4px;
             font-size: 0.9em;
         }
+
+        /* WHATSAPP FLOAT */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.05);
+            color: #FFF;
+        }
     </style>
 </head>
 <body>
@@ -344,10 +370,10 @@
 <header>
     <div class="header-content">
         <div class="brand-container">
-            <span class="brand-logo-icon">🍷</span>
+            <img src="logo max/copa.png" alt="Max Wine House Logo" style="height: 3.5rem; width: auto; display: block; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));">
             <div class="brand-text">
                 <span class="brand-title">MAX WINE HOUSE</span>
-                <span class="subtitle">Entrega a domicilio incluida en el precio final</span>
+                <span class="subtitle">Curaduría de vinos argentinos</span>
             </div>
         </div>
         <div class="cart-icon" onclick="openCart()">
@@ -362,7 +388,7 @@
         ⚠️ <strong>Condiciones de venta:</strong>
         <ul style="margin-top: 5px; margin-bottom: 0; padding-left: 20px;">
             <li>Pedido mínimo: una caja cerrada (de 3, 4 o 6 unidades, según el producto).</li>
-            <li>Se permiten cajas mixtas únicamente de 6 unidades.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(En este caso, se aplicará el precio minorista a cada vino incluido)</li>
+            <li>Se permiten cajas mixtas únicamente de 6 unidades.<br>&nbsp;(En este caso, se aplicará el precio minorista a cada vino incluido)</li>
             <li>Algunos vinos son exclusivos de caja cerrada y no pueden combinarse en mixtas.</li>
         </ul>
     </div>
@@ -399,12 +425,16 @@
                     Vendedor: Max Bazzana
                 </div>
 
-                <div class="payment-info">
+                <label style="font-size:0.9em; font-weight:bold;">Forma de pago:</label>
+                <select id="paymentMethod" style="width: 100%; margin-bottom: 10px;" onchange="togglePaymentInfo()">
+                    <option value="" disabled selected>Seleccioná una opción</option>
+                    <option value="Transferencia">Transferencia</option>
+                    <option value="Efectivo">Efectivo</option>
+                </select>
+
+                <div id="transfer-info" class="payment-info" style="display: none;">
                     <strong>Alias:</strong> <span id="alias-text" style="font-family: monospace; font-size: 1.1em; color:#000;">bazzana.max-1906</span>
                     <button class="copy-btn" onclick="copyAlias()">COPIAR</button>
-                    <br><br>
-                    <small>• Podés pagar por transferencia o efectivo (a convenir)</small><br>
-                    <small>• El precio incluye el envío a domicilio.</small><br>
                 </div>
                 
                 <label style="font-size:0.9em; font-weight:bold;">Tu Nombre:</label>
@@ -418,9 +448,6 @@
 
                 <label style="font-size:0.9em; font-weight:bold;">Observaciones:</label>
                 <textarea id="customerObs" placeholder="Ej: Timbre no funciona, dejar en portería..." style="width: 93%; margin-bottom: 10px; font-family: inherit; resize: vertical;" rows="3"></textarea>
-
-                <label style="font-size:0.9em; font-weight:bold;">Consultas:</label>
-                <textarea id="customerQuery" placeholder="Ej: Sobre el pago…, etc." style="width: 93%; margin-bottom: 10px; font-family: inherit; resize: vertical;" rows="3"></textarea>
                 
                 <button id="btn-checkout" class="btn btn-checkout" onclick="sendOrder()" disabled>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
@@ -434,6 +461,12 @@
 </div>
 
 <div id="toast" class="toast">Producto agregado</div>
+
+<a href="https://wa.me/5491130529102" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+    </svg>
+</a>
 
 <script>
     let products = [
@@ -712,6 +745,16 @@
 
     function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
 
+    function togglePaymentInfo() {
+        const method = document.getElementById('paymentMethod').value;
+        const info = document.getElementById('transfer-info');
+        if (method === 'Transferencia') {
+            info.style.display = 'block';
+        } else {
+            info.style.display = 'none';
+        }
+    }
+
     function updateCartUI() {
         const count = cart.reduce((acc, i) => acc + i.qty, 0);
         document.getElementById('cart-count').textContent = count;
@@ -746,14 +789,14 @@
                 itemsDiv.appendChild(div);
             });
 
-            // Lógica de pedido mínimo (ignora cajas cerradas)
-            if (countBottles > 0 && countBottles < 6) {
-                const missing = 6 - countBottles;
+            // Lógica de pedido mínimo (ignora cajas cerradas, exige múltiplos de 6 para mixtas)
+            if (countBottles > 0 && countBottles % 6 !== 0) {
+                const missing = 6 - (countBottles % 6);
                 valMsg.className = 'cart-alert'; 
                 if (missing === 1) {
-                    valMsg.innerHTML = `⚠️ Falta <strong>1</strong> botella individual para el pedido mínimo de 6.`;
+                    valMsg.innerHTML = `⚠️ Falta <strong>1</strong> botella individual para completar la caja mixta de 6.`;
                 } else {
-                    valMsg.innerHTML = `⚠️ Faltan <strong>${missing}</strong> botellas individuales para el pedido mínimo de 6.`;
+                    valMsg.innerHTML = `⚠️ Faltan <strong>${missing}</strong> botellas individuales para completar la caja mixta de 6.`;
                 }
                 btn.disabled = true;
             } else {
@@ -781,16 +824,12 @@
         const name = document.getElementById('customerName').value;
         const addr = document.getElementById('customerAddress').value;
         const date = document.getElementById('deliveryDate').value;
-        const query = document.getElementById('customerQuery').value;
+        const payment = document.getElementById('paymentMethod').value;
         const obs = document.getElementById('customerObs').value;
 
-        if (!name || !addr) { alert("Completa tus datos."); return; }
+        if (!name || !addr || !payment) { alert("Completá tus datos y la forma de pago."); return; }
         
-        let msg = `*SALES ORDER Nº*\n👤 Cliente: ${name}\n📍 Dirección: ${addr}\n📅 Entrega: ${date}\n`;
-        
-        if (query && query.trim() !== "") {
-            msg += `❓ Consultas: ${query}\n`;
-        }
+        let msg = `*SALES ORDER Nº*\n👤 Cliente: ${name}\n📍 Dirección: ${addr}\n📅 Entrega: ${date}\n💵 Pago: ${payment}\n`;
         
         if (obs && obs.trim() !== "") {
             msg += `📝 Observaciones: ${obs}\n`;
