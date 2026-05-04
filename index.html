@@ -376,9 +376,14 @@
                 <span class="subtitle">Curaduría de vinos argentinos</span>
             </div>
         </div>
-        <div class="cart-icon" onclick="openCart()">
-            🛒 <span style="display:none; @media(min-width:400px){display:inline}">Pedido</span>
-            <span id="cart-count" class="cart-badge">0</span>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <div id="btn-ofertas" class="cart-icon" onclick="filterOffers()" style="background: var(--btn-offer); border-color: var(--btn-offer);" title="Ver Ofertas">
+                🔥 OFERTAS <span style="display:none; @media(min-width:400px){display:inline}">Ofertas</span>
+            </div>
+            <div class="cart-icon" onclick="openCart()">
+                🛒 <span style="display:none; @media(min-width:400px){display:inline}">Pedido</span>
+                <span id="cart-count" class="cart-badge">0</span>
+            </div>
         </div>
     </div>
 </header>
@@ -470,87 +475,117 @@
 
 <script>
     let products = [
-        { bodega: "ACHAVAL FERRER", nombre: "Malbec / Merlot / Cabernet Franc", precio: 16200, soloCaja: true },
-        { bodega: "ACHAVAL FERRER", nombre: "Quimera Blend", precio: 32050, precioMinorista: 35900 },
-        { bodega: "ALMA NEGRA", nombre: "Blanc de Blancs", precio: 19950, precioMinorista: 22500 },
-        { bodega: "ALMA NEGRA", nombre: "Tinto", precio: 21950, precioMinorista: 26000 },
-        { bodega: "ALMA NEGRA", nombre: "Brut Nature Rose", precio: 22500, precioMinorista: 24900 },
-        { bodega: "ALMA NEGRA", nombre: "Orange", precio: 38000, precioMinorista: 42500 },
-        { bodega: "ATAMISQUE", nombre: "Atamisque Andrea Malbec (Vistalba / Consulta)", precio: 39000, precioMinorista: 39000 },
-        { bodega: "ATAMISQUE", nombre: "Atamisque Assemblage", precio: 43000, precioMinorista: 43000 },
-        { bodega: "ATAMISQUE", nombre: "Atamisque Petit Verdot", precio: 43000, precioMinorista: 43000 },
-        { bodega: "BRESSIA", nombre: "Monteagrelo (Malbec / Cab. Franc / Cab. Sauv. / Syrah)", precio: 14400, soloCaja: true },
-        { bodega: "BRESSIA", nombre: "Royal Brut Nature", precio: 21500, soloCaja: true },
-        { bodega: "BRESSIA", nombre: "Lagrima Canela (blend de blancos)", precio: 22900, soloCaja: true },
-        { bodega: "BRESSIA", nombre: "Profundo (OFERTA)", precio: 22900, soloCaja: true },
-        { bodega: "BRESSIA", nombre: "Piel Negra Pinot Noir", precio: 27500, precioMinorista: 29000 },
-        { bodega: "BRESSIA", nombre: "Conjuro", precio: 46000, precioMinorista: 49000 },
+        { bodega: "ACHAVAL FERRER", nombre: "Malbec / Merlot / Cabernet Franc", precio: 16500, soloCaja: true },
+        { bodega: "ACHAVAL FERRER", nombre: "Quimera Blend", precio: 35900, precioMinorista: 35900 },
+        { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Blanc de Blancs", precio: 20500, precioMinorista: 22500 },
+        { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Tinto", precio: 21500, precioMinorista: 23500 },
+        { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Brut Nature Rose", precio: 22500, precioMinorista: 24900 },
+        { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Orange (OFERTA)", precio: 37000, precioMinorista: 38900 },
+        { bodega: "ALTALAND", nombre: "Syrah (La Rioja)", precio: 13000, precioMinorista: 15000 },
+        { bodega: "ALTAR UCO", nombre: "Edad Moderna Malbec (OFERTA)", precio: 24900, precioMinorista: 26000 },
+        { bodega: "ALTAR UCO", nombre: "Edad Média Blend Tinto", precio: 52500, precioMinorista: 52500 },
+        { bodega: "ALTOS LAS HORMIGAS", nombre: "Colonia Las Liebres Bonarda", precio: 9900, precioMinorista: 9900 },
+        { bodega: "ALTOS LAS HORMIGAS", nombre: "La Danza Blend", precio: 9900, precioMinorista: 9900 },
+        { bodega: "ALTOS LAS HORMIGAS", nombre: "Reserva Malbec", precio: 22000, precioMinorista: 22000 },
+        { bodega: "ALTOS LAS HORMIGAS", nombre: "Jardín de Hormigas Meteora Malbec (OFERTA)", precio: 38000, precioMinorista: 38000 },
+        { bodega: "ALTOS LAS HORMIGAS", nombre: "Appellation Altamira o Gualtallary Malbec", precio: 39900, precioMinorista: 39900 },
+        { bodega: "ATAMISQUE", nombre: "Atamisque Andrea Malbec (Vistalba / Consulta)", precio: 38900, precioMinorista: 38900 },
+        { bodega: "ATAMISQUE", nombre: "Atamisque Assemblage", precio: 42900, precioMinorista: 42900 },
+        { bodega: "ATAMISQUE", nombre: "Atamisque Petit Verdot", precio: 42900, precioMinorista: 42900 },
+        { bodega: "BRESSIA", nombre: "Monteagrelo (Malbec / Cab. Franc / Cab. Sauv. / Syrah)", precio: 17500, soloCaja: true },
+        { bodega: "BRESSIA", nombre: "Royal Brut Nature", precio: 26000, precioMinorista: 28000 },
+        { bodega: "BRESSIA", nombre: "Lagrima Canela (blend de blancos)", precio: 26000, precioMinorista: 28000 },
+        { bodega: "BRESSIA", nombre: "Profundo", precio: 26000, precioMinorista: 28000 },
+        { bodega: "BRESSIA", nombre: "Piel Negra Pinot Noir (OFERTA)", precio: 31900, precioMinorista: 34900 },
+        { bodega: "BRESSIA", nombre: "Conjuro", precio: 47900, precioMinorista: 51900 },
         { bodega: "BRESSIA", nombre: "Ultima Hoja", precio: 96000, uCaja: 3, precioMinorista: 96000 },
-        { bodega: "CATENA ZAPATA", nombre: "Nicasia (Red Blend / Malbec / Cabernet Franc / Blanc de Blancs)", precio: 6090, soloCaja: true },
-        { bodega: "CATENA ZAPATA", nombre: "Saint Felicien (Malbec / Cab. Franc / Cab. Sauv. / Chardonnay / Cab-Merlot / Pinot Noir)", precio: 7650, soloCaja: true },
+        { bodega: "CATENA ZAPATA", nombre: "Nicasia (Red Blend / Malbec / Cabernet Franc / Blanc de Blancs)", precio: 6500, soloCaja: true },
+        { bodega: "CATENA ZAPATA", nombre: "Saint Felicien (Malbec / Cab. Franc / Cab. Sauv. / Chardonnay / Cab-Merlot / Pinot Noir)", precio: 7900, soloCaja: true },
         { bodega: "CATENA ZAPATA", nombre: "Nicasia Grand Blend", precio: 8850, soloCaja: true },
-        { bodega: "CATENA ZAPATA", nombre: "DV Cabernet-Malbec (OFERTA)", precio: 9950, soloCaja: true },
-        { bodega: "CATENA ZAPATA", nombre: "DV Pinot-Pinot", precio: 12650, soloCaja: true },
-        { bodega: "CATENA ZAPATA", nombre: "Saint Felicien Bonarda", precio: 13700, soloCaja: true },
-        { bodega: "CATENA ZAPATA", nombre: "DV Chardonnay-Chardonnay", precio: 13950, precioMinorista: 15000 },
-        { bodega: "CATENA ZAPATA", nombre: "DV Malbec-Malbec", precio: 13950, precioMinorista: 15000 },
-        { bodega: "CATENA ZAPATA", nombre: "DV L'Esploratore (Malbec Cafayate / Malbec Angulos)", precio: 15000, uCaja: 4, precioMinorista: 16900 },
-        { bodega: "CATENA ZAPATA", nombre: "DV Cabernet-Cabernet", precio: 15100, soloCaja: true },
-        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata (Chardonnay / Merlot / Cab. Sauv. / Cab. Franc)", precio: 18400, uCaja: 4, precioMinorista: 19900 },
-        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec 2020 (OFERTA)", precio: 19500, uCaja: 4, precioMinorista: 21500 },
-        { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard (Cab. Sauv Nicasia Altamira / Cab. Sauv Domingo Tupungato / Cab. Sauv La Pirámide Agrelo)", precio: 19950, uCaja: 4, precioMinorista: 21500 },
-        { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard Malbec Adriana (OFERTA)", precio: 24190, uCaja: 4, precioMinorista: 26000 },
-        { bodega: "CATENA ZAPATA", nombre: "Nicola Catena Bonarda", precio: 36400, uCaja: 4, precioMinorista: 38500 },
-        { bodega: "CATENA ZAPATA", nombre: "Malbec Argentino 2022 (OFERTA)", precio: 49500, precioMinorista: 52000 },
-        { bodega: "CATENA ZAPATA", nombre: "Nicolas Catena 2021", precio: 53900, precioMinorista: 56500 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Cabernet-Malbec", precio: 9950, soloCaja: true },
+        { bodega: "CATENA ZAPATA", nombre: "DV Pinot-Pinot", precio: 12500, soloCaja: true },
+        { bodega: "CATENA ZAPATA", nombre: "Saint Felicien Bonarda", precio: 13900, precioMinorista: 14900 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Chardonnay-Chardonnay", precio: 13900, precioMinorista: 14900 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Malbec-Malbec", precio: 13900, precioMinorista: 14900 },
+        { bodega: "CATENA ZAPATA", nombre: "DV L'Esploratore (Malbec Cafayate / Malbec Angulos)", precio: 16000, uCaja: 4, precioMinorista: 17900 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Cabernet-Cabernet", precio: 15000, soloCaja: true },
+        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata (Chardonnay / Merlot / Cab. Sauv. / Cab. Franc)", precio: 18500, uCaja: 4, precioMinorista: 19500 },
+        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec 2020", precio: 20500, uCaja: 4, precioMinorista: 21500 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard (Cab. Sauv Nicasia Altamira / Cab. Sauv Domingo Tupungato / Cab. Sauv La Pirámide Agrelo)", precio: 19950, uCaja: 4, precioMinorista: 22500 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard Malbec Adriana (OFERTA)", precio: 24200, uCaja: 4, precioMinorista: 26000 },
+        { bodega: "CATENA ZAPATA", nombre: "Nicola Catena Bonarda (OFERTA)", precio: 36400, uCaja: 4, precioMinorista: 39900 },
+        { bodega: "CATENA ZAPATA", nombre: "Malbec Argentino 2022 (OFERTA)", precio: 51500, precioMinorista: 54500 },
+        { bodega: "CATENA ZAPATA", nombre: "Nicolas Catena 2021 (OFERTA)", precio: 53900, precioMinorista: 56500 },
         { bodega: "CATENA ZAPATA", nombre: "Birth of Cabernet 2021", precio: 59000, precioMinorista: 61000 },
-        { bodega: "CHACRA", nombre: "Barda / Roka / Nacha (Barda Pinot Noir / Roka Malbec / Nacha Rosé)", precio: 41300, precioMinorista: 45000 },
-        { bodega: "DOMAINE NICO", nombre: "Brut Rosé", precio: 28900, precioMinorista: 31200 },
-        { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Grand Mère / Grand Père) (OFERTA)", precio: 29900, precioMinorista: 33900 },
-        { bodega: "EL ENEMIGO", nombre: "El Enemigo (Cabernet Franc / Malbec / Chardonnay / Bonarda)", precio: 16000, soloCaja: true, precioMinorista: 16000 },
-        { bodega: "EL ENEMIGO", nombre: "Gran Enemigo (Cepillo / Agrelo / Chacayes / Corte) (OFERTA)", precio: 34450, precioMinorista: 34450 },
-        { bodega: "EL ENEMIGO", nombre: "Gran Enemigo Gualtallary 2021", precio: 36400, precioMinorista: 36400 },
+        { bodega: "CHACRA", nombre: "Barda / Roka / Nacha (Barda Pinot Noir / Roka Malbec / Nacha Rosé)", precio: 45000, precioMinorista: 45000 },
+        { bodega: "CHACRA", nombre: "Chacra 55 Pinot Noir", precio: 74900, precioMinorista: 74900 },
+        { bodega: "COLOMÉ", nombre: "Colomé Auténtico", precio: 17000, precioMinorista: 17000 },
+        { bodega: "COLOMÉ", nombre: "Colomé 1831", precio: 32000, precioMinorista: 35000 },
+        { bodega: "DOMAINE NICO", nombre: "Brut Rosé", precio: 29000, precioMinorista: 31000 },
+        { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Grand Mère / Grand Père)", precio: 28000, precioMinorista: 30000 },
+        { bodega: "DURIGUTTI", nombre: "Proyecto las Compuertas Charbono Bonarda", precio: 25500, precioMinorista: 25500 },
+        { bodega: "DURIGUTTI", nombre: "Proyecto las Compuertas Blanco de Finca", precio: 32500, precioMinorista: 32500 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "El Enemigo (Cabernet Franc / Malbec / Chardonnay / Bonarda)", precio: 16000, soloCaja: true, precioMinorista: 16000 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "Gran Enemigo (Cepillo / Agrelo / Chacayes / Corte) (OFERTA)", precio: 34900, precioMinorista: 34900 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "Gran Enemigo Gualtallary 2022", precio: 36000, precioMinorista: 36000 },
         { bodega: "ERNESTO CATENA", nombre: "Animal Malbec Orgánico", precio: 11500, precioMinorista: 13000 },
         { bodega: "ERNESTO CATENA", nombre: "Tikal Amorio Malbec", precio: 25000, precioMinorista: 28500 },
         { bodega: "ERNESTO CATENA", nombre: "Lost by Siesta Malbec", precio: 92000, uCaja: 3, precioMinorista: 92000 },
         { bodega: "ESCORIHUELA GASCÓN", nombre: "Escorihuela (Malbec / Cab. Sauv.)", precio: 6990, soloCaja: true },
-        { bodega: "ESCORIHUELA GASCÓN", nombre: "Pequeñas Producciones (Malbec / Cab. Sauv. / Pinot Noir / Cabernet Franc / Chardonnay)", precio: 20800, uCaja: 4, soloCaja: true },
+        { bodega: "ESCORIHUELA GASCÓN", nombre: "Gran Reserva Malbec Orgánico", precio: 13900, precioMinorista: 14900 },
+        { bodega: "ESCORIHUELA GASCÓN", nombre: "Pequeñas Producciones (Malbec / Cab. Sauv. / Pinot Noir / Cabernet Franc / Chardonnay)", precio: 20000, uCaja: 4, precioMinorista: 20000 },
         { bodega: "ESCORIHUELA GASCÓN", nombre: "MEG Miguel Escorihuela Gascón Tinto", precio: 31000, uCaja: 4, precioMinorista: 31000 },
-        { bodega: "ESCORIHUELA GASCÓN", nombre: "DON Malbec", precio: 51000, uCaja: 4, precioMinorista: 51000 },
+        { bodega: "ESCORIHUELA GASCÓN", nombre: "DON Malbec (OFERTA)", precio: 51000, uCaja: 4, precioMinorista: 51000 },
+        { bodega: "FALASCO", nombre: "Hermandad (Malbec / Blend)", precio: 26500, precioMinorista: 28500 },
+        { bodega: "FALASCO", nombre: "Hermandad Winemaker Cabernet Franc", precio: 42000, precioMinorista: 42000 },
+        { bodega: "FALASCO", nombre: "Hermandad Winemaker Series Pinot Noir", precio: 42000, precioMinorista: 42000 },
+        { bodega: "KAIKEN", nombre: "Kaiken Disobedience by Francis Mallmann (OFERTA)", precio: 22500, precioMinorista: 23900 },
+        { bodega: "KAIKEN", nombre: "Kaiken Nude Rosé", precio: 25500, precioMinorista: 29000 },
+        { bodega: "KRONTIRAS", nombre: "Malbec Natural (OFERTA)", precio: 18500, precioMinorista: 18500 },
+        { bodega: "KRONTIRAS", nombre: "Explore Angliánico (OFERTA)", precio: 19500, precioMinorista: 20500 },
         { bodega: "LUCA", nombre: "Luca (Pinot Noir / Syrah)", precio: 22400, soloCaja: true, precioMinorista: 24000 },
-        { bodega: "LUCA", nombre: "Luca Malbec (OFERTA)", precio: 25000, precioMinorista: 27000 },
-        { bodega: "LUCA", nombre: "Beso de Dante (OFERTA)", precio: 37990, precioMinorista: 41500 },
-        { bodega: "LUCA", nombre: "Nico by Luca Malbec", precio: 84990, uCaja: 3, precioMinorista: 88000 },
+        { bodega: "LUCA", nombre: "Luca Malbec", precio: 25000, precioMinorista: 27000 },
+        { bodega: "LUCA", nombre: "Beso de Dante", precio: 38500, precioMinorista: 41500 },
+        { bodega: "LUCA", nombre: "Nico by Luca Malbec (OFERTA)", precio: 84990, uCaja: 3, precioMinorista: 88000 },
         { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca (Malbec / Chardonnay)", precio: 10500, soloCaja: true },
-        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca Extra Brut", precio: 15500, soloCaja: true },
-        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca Los Nobles Malbec doc", precio: 47000, uCaja: 4, precioMinorista: 47000 },
-        { bodega: "MOSQUITA MUERTA", nombre: "Gran Cordero Piel de Lobo Malbec", precio: 7200, soloCaja: true },
-        { bodega: "MOSQUITA MUERTA", nombre: "Sapo de Otro Pozo (Malbec / Blend Tinto)", precio: 9900, soloCaja: true },
+        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca Extra Brut", precio: 16500, soloCaja: true },
+        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca Los Nobles Malbec Doc (OFERTA)", precio: 54000, uCaja: 4, precioMinorista: 54000 },
+        { bodega: "MOSQUITA MUERTA", nombre: "Gran Cordero Piel de Lobo Malbec", precio: 7300, soloCaja: true },
+        { bodega: "MOSQUITA MUERTA", nombre: "Sapo de Otro Pozo (Malbec / Blend Tinto)", precio: 11000, soloCaja: true },
         { bodega: "MOSQUITA MUERTA", nombre: "Espumante (Nature / Extra Brut)", precio: 12000, precioMinorista: 13500 },
-        { bodega: "MOSQUITA MUERTA", nombre: "Mosquita Blend de Tintas", precio: 13400, soloCaja: true },
-        { bodega: "MOSQUITA MUERTA", nombre: "Malcriado Malbec", precio: 43900, precioMinorista: 47000 },
-        { bodega: "PULENTA", nombre: "La Flor (Malbec / Blend / Malbec Rose / Sauv. Blanc)", precio: 8490, soloCaja: true },
+        { bodega: "MOSQUITA MUERTA", nombre: "Mosquita Blend de Tintas", precio: 13000, soloCaja: true },
+        { bodega: "MOSQUITA MUERTA", nombre: "Malcriado Malbec", precio: 44500, precioMinorista: 47000 },
+        { bodega: "MUNDO REVÉS", nombre: "Asa Nisi Masa Malbec", precio: 15500, precioMinorista: 16900 },
+        { bodega: "NINA", nombre: "Nina 11 Merlot (La Rioja)", precio: 28000, precioMinorista: 28000 },
+        { bodega: "PULENTA", nombre: "La Flor (Malbec / Blend / Malbec Rose / Sauv. Blanc)", precio: 9000, soloCaja: true },
         { bodega: "PULENTA", nombre: "Pulenta Estate Chardonnay", precio: 12490, precioMinorista: 13500 },
-        { bodega: "PULENTA", nombre: "Pulenta Estate (Red Blend / Pinot Noir / Cabernet Franc / Malbec / Malbec orgánico / Cab. Sauv.) (OFERTA)", precio: 18490, precioMinorista: 20000 },
+        { bodega: "PULENTA", nombre: "Pulenta Estate (Red Blend / Pinot Noir / Cabernet Franc / Malbec / Malbec orgánico / Cab. Sauv.)", precio: 18500, precioMinorista: 20000 },
         { bodega: "PULENTA", nombre: "Pulenta Gran Malbec / Gran Pinot Noir / Gran Merlot", precio: 56900, precioMinorista: 56900 },
-        { bodega: "PULENTA", nombre: "Pulenta Gran Corte", precio: 64900, precioMinorista: 64900 },
+        { bodega: "PULENTA", nombre: "Pulenta Gran Corte", precio: 65900, precioMinorista: 65900 },
+        { bodega: "RAQUIS", nombre: "Las Bases Malbec", precio: 52000, precioMinorista: 52000 },
+        { bodega: "RIBERA DEL CUARZO", nombre: "Clásico Merlot", precio: 36900, precioMinorista: 36900 },
+        { bodega: "RIBERA DEL CUARZO", nombre: "Especial Malbec", precio: 66000, precioMinorista: 69000 },
+        { bodega: "RICCITELLI", nombre: "The Party Malbec", precio: 24500, precioMinorista: 24500 },
+        { bodega: "RICCITELLI", nombre: "Kongfu Criolla", precio: 32900, precioMinorista: 32900 },
+        { bodega: "ROLLAND", nombre: "Mariflor Merlot", precio: 16500, precioMinorista: 17500 },
+        { bodega: "ROLLAND", nombre: "Mariflor Pinot Noir", precio: 18500, precioMinorista: 19500 },
         { bodega: "ROSELL BOHER", nombre: "Casa Boher (Malbec Agrelo / Malbec San Pablo)", precio: 12700, precioMinorista: 14000 },
         { bodega: "ROSELL BOHER", nombre: "Casa Boher Extra Brut", precio: 16500, soloCaja: true },
-        { bodega: "ROSELL BOHER", nombre: "Gran Reserva Blend", precio: 35500, uCaja: 4, precioMinorista: 35500 },
-        { bodega: "ROSELL BOHER", nombre: "Gran Chardonnay / Viognier", precio: 35500, uCaja: 4, precioMinorista: 35500 },
+        { bodega: "ROSELL BOHER", nombre: "Gran Reserva Blend", precio: 36500, uCaja: 4, precioMinorista: 38500 },
+        { bodega: "ROSELL BOHER", nombre: "Gran Chardonnay / Viognier", precio: 36500, uCaja: 4, precioMinorista: 38500 },
         { bodega: "RUTINI", nombre: "Encuentro (Malbec / Cab. Sauv. / Chardonnay)", precio: 9990, soloCaja: true },
         { bodega: "RUTINI", nombre: "Rutini (Syrah / Merlot / Cab. Franc-Malbec / Cab. Sauv-Malbec)", precio: 12700, soloCaja: true },
         { bodega: "RUTINI", nombre: "Rutini Sauvignon Blanc", precio: 13300, soloCaja: true },
         { bodega: "RUTINI", nombre: "Rutini (Cab. Sauv. / Cab. Franc / Chardonnay)", precio: 18500, soloCaja: true, precioMinorista: 19900 },
         { bodega: "RUTINI", nombre: "Dominio Chardonnay", precio: 18500, precioMinorista: 19900 },
-        { bodega: "RUTINI", nombre: "Rutini Espumoso Extra Brut", precio: 22500, uCaja: 4, precioMinorista: 24000 },
         { bodega: "RUTINI", nombre: "Dominio Extra Brut (OFERTA)", precio: 22000, precioMinorista: 23500 },
-        { bodega: "RUTINI", nombre: "Rutini Malbec", precio: 23000, precioMinorista: 23000 },
+        { bodega: "RUTINI", nombre: "Rutini Espumoso Extra Brut", precio: 22500, uCaja: 4, precioMinorista: 24000 },
+        { bodega: "RUTINI", nombre: "Rutini Malbec", precio: 23000, precioMinorista: 24500 },
         { bodega: "RUTINI", nombre: "Rutini Espumoso Brut Nature", precio: 35900, uCaja: 4, precioMinorista: 39000 },
         { bodega: "RUTINI", nombre: "Gualtallary Single Vineyard (Malbec / Cab. Sauv. / Cab. Franc)", precio: 41500, precioMinorista: 45500 },
         { bodega: "RUTINI", nombre: "Altamira Single Vineyard Cabernet Sauvignon (OFERTA)", precio: 41500, precioMinorista: 45500 },
-        { bodega: "RUTINI", nombre: "Antologia XXXVIII (38)", precio: 47500, uCaja: 4, precioMinorista: 47500 },
         { bodega: "RUTINI", nombre: "Dominio Grand Blend (OFERTA)", precio: 44900, precioMinorista: 46900 },
+        { bodega: "RUTINI", nombre: "Antologia XXXVIII (38)", precio: 47500, uCaja: 4, precioMinorista: 47500 },
         { bodega: "RUTINI", nombre: "Apartado (Gran Malbec / Gran Blend) (OFERTA)", precio: 85500, precioMinorista: 88000 },
         { bodega: "SALENTEIN", nombre: "Salentein Extra Brut", precio: 9750, soloCaja: true },
         { bodega: "SALENTEIN", nombre: "Salentein Brut Nature", precio: 10200, soloCaja: true },
@@ -559,31 +594,48 @@
         { bodega: "SALENTEIN", nombre: "Primus Chardonnay", precio: 32000, precioMinorista: 33000 },
         { bodega: "SALENTEIN", nombre: "Primus Malbec", precio: 46000, precioMinorista: 46000 },
         { bodega: "SALENTEIN", nombre: "Gran VU", precio: 97000, uCaja: 3, precioMinorista: 97000 },
-        { bodega: "SOTTANO", nombre: "Canalla Blend", precio: 8900, soloCaja: true },
-        { bodega: "SOTTANO", nombre: "El Contrabandista Petit Verdot", precio: 8900, soloCaja: true },
-        { bodega: "SOTTANO", nombre: "Mil Demonios (Malbec / Assemblage / Pinot Noir)", precio: 12700, precioMinorista: 13900 },
+        { bodega: "SOLOCONTIGO", nombre: "Develado Cab. Sauv-Cab. Franc", precio: 15900, precioMinorista: 15900 },
+        { bodega: "SOLOCONTIGO", nombre: "Casa de las Musas Blend", precio: 29500, precioMinorista: 29500 },
+        { bodega: "SOTTANO", nombre: "Canalla Blend", precio: 8500, soloCaja: true },
+        { bodega: "SOTTANO", nombre: "El Contrabandista Petit Verdot", precio: 8500, soloCaja: true },
+        { bodega: "SOTTANO", nombre: "Mil Demonios (Malbec / Assemblage / Pinot Noir)", precio: 12900, precioMinorista: 13900 },
         { bodega: "SOTTANO", nombre: "Arrogante Syrah", precio: 12900, precioMinorista: 13900 },
-        { bodega: "SOTTANO", nombre: "Reserva de Familia 12 meses Roble (Malbec / Cab. Sauv. / Cabernet-Malbec)", precio: 13600, precioMinorista: 14900 },
+        { bodega: "SOTTANO", nombre: "Reserva de Familia 12 meses Roble (Malbec / Cab. Sauv. / Cabernet-Malbec)", precio: 13900, precioMinorista: 14900 },
         { bodega: "SOTTANO", nombre: "Mil Demonios Espumante", precio: 15000, precioMinorista: 16500 },
         { bodega: "SOTTANO", nombre: "María Magdalena Chardonnay", precio: 17000, precioMinorista: 18500 },
         { bodega: "SOTTANO", nombre: "Mil Demonios Pirata (Cab. Sauv.)", precio: 18500, precioMinorista: 20500 },
         { bodega: "SOTTANO", nombre: "Mil Demonios Samurai (Malbec)", precio: 19500, precioMinorista: 21900 },
-        { bodega: "SOTTANO", nombre: "Mil Demonios Vikingo (Corte de Petit Verdot)", precio: 20500, precioMinorista: 22500 },
-        { bodega: "SOTTANO", nombre: "Mil Demonios Lucifer Blend", precio: 27500, precioMinorista: 29000 },
+        { bodega: "SOTTANO", nombre: "Mil Demonios Vikingo (Corte de Petit Verdot)", precio: 20900, precioMinorista: 22900 },
+        { bodega: "SOTTANO", nombre: "Mil Demonios Lucifer Blend", precio: 28500, precioMinorista: 30900 },
         { bodega: "SOTTANO", nombre: "Barrabás (Cab. Franc / Cab. Sauv.)", precio: 29500, precioMinorista: 31900 },
-        { bodega: "SOTTANO", nombre: "Judas Malbec (OFERTA)", precio: 53500, precioMinorista: 55500 },
-        { bodega: "SOTTANO", nombre: "Judas Blend", precio: 64000, precioMinorista: 68000 },
+        { bodega: "SOTTANO", nombre: "La Bestia", precio: 49900, precioMinorista: 49900 },
+        { bodega: "SOTTANO", nombre: "Judas Malbec", precio: 52900, precioMinorista: 55500 },
+        { bodega: "SOTTANO", nombre: "Judas Blend", precio: 62000, precioMinorista: 65000 },
+        { bodega: "SOTTANO", nombre: "Arcángel Mikhail", precio: 83500, precioMinorista: 83500 },
         { bodega: "SUSANA BALBO", nombre: "Benmarco Expresivo", precio: 31000, precioMinorista: 32000 },
-        { bodega: "TAPIZ", nombre: "Black Tears Malbec (OFERTA)", precio: 62000, precioMinorista: 62000 },
+        { bodega: "TAPIZ", nombre: "Black Tears Malbec (OFERTA)", precio: 57000, precioMinorista: 57000 },
         { bodega: "TAPIZ", nombre: "Las Notas de Jean Claude", precio: 72000, precioMinorista: 72000 },
-        { bodega: "TRUMPETER", nombre: "Varietales (Malbec / Cab. Sauv. / Syrah / Cab. Franc / Chardonnay)", precio: 6800, soloCaja: true },
-        { bodega: "TRUMPETER", nombre: "Trumpeter Reserva (Malbec / Cab. Sauv. / Rose)", precio: 9050, soloCaja: true },
+        { bodega: "TRUMPETER (Rutini Wines)", nombre: "Varietales (Malbec / Cab. Sauv. / Syrah / Cab. Franc / Chardonnay)", precio: 7100, soloCaja: true },
+        { bodega: "TRUMPETER (Rutini Wines)", nombre: "Trumpeter Reserva (Malbec / Cab. Sauv. / Rose)", precio: 9100, soloCaja: true },
+        { bodega: "TUTU WINES", nombre: "Tutu Malbec", precio: 19900, precioMinorista: 19900 },
+        { bodega: "TUTU WINES", nombre: "Antro Pinot Noir (AGOTADO)", precio: 26000, precioMinorista: 26000 },
+        { bodega: "TUTU WINES", nombre: "Las Villanas Lilith Malbec (AGOTADO)", precio: 45000, precioMinorista: 45000 },
         { bodega: "VIÑA COBOS", nombre: "Felino Malbec", precio: 16990, precioMinorista: 18500 },
         { bodega: "VIÑA COBOS", nombre: "Cocodrilo Corte", precio: 32000, precioMinorista: 32000 },
-        { bodega: "VIÑA COBOS", nombre: "Bramare Malbec Luján de Cuyo", precio: 41500, precioMinorista: 41500 },
-        { bodega: "YACOCHUYA", nombre: "San Pedro de Yacochuya Torrontés", precio: 10800, precioMinorista: 12900 },
-        { bodega: "YACOCHUYA", nombre: "San Pedro de Yacochuya Cabernet-Malbec", precio: 22000, precioMinorista: 23500 },
-        { bodega: "YACOCHUYA", nombre: "Yacochuya Tinto", precio: 48000, precioMinorista: 51000 }
+        { bodega: "VIÑA COBOS", nombre: "Bramare Malbec Luján de Cuyo", precio: 43500, precioMinorista: 43500 },
+        { bodega: "YACOCHUYA", nombre: "San Pedro de Yacochuya Torrontés", precio: 11000, precioMinorista: 12000 },
+        { bodega: "YACOCHUYA", nombre: "San Pedro de Yacochuya Cabernet-Malbec", precio: 18500, precioMinorista: 20000 },
+        { bodega: "YACOCHUYA", nombre: "Yacochuya Tinto", precio: 48000, precioMinorista: 51000 },
+        { bodega: "YANAY", nombre: "Tinto de Jujuy (OFERTA)", precio: 26000, precioMinorista: 26000 },
+        { bodega: "YANAY", nombre: "Yanay Garnacha (OFERTA)", precio: 44900, precioMinorista: 44900 },
+        { bodega: "ZORZAL", nombre: "Zorzal Eggo Filoso Pinot Noir (OFERTA)", precio: 18000, precioMinorista: 19000 },
+        { bodega: "ZORZAL", nombre: "Zorzal Piantao", precio: 65000, precioMinorista: 68500 },
+        { bodega: "ZUCCARDI", nombre: "Espumante Santa Julia Classic Cuvée", precio: 11900, precioMinorista: 13000 },
+        { bodega: "ZUCCARDI", nombre: "Espumante Santa Julia Dulce Natural", precio: 12900, precioMinorista: 14000 },
+        { bodega: "ZUCCARDI", nombre: "Poligonos Cabernet Franc", precio: 26900, precioMinorista: 26900 },
+        { bodega: "ZUCCARDI", nombre: "Zuccardi Concreto Malbec", precio: 32900, precioMinorista: 35000 },
+        { bodega: "ZUCCARDI", nombre: "Ema Bonarda", precio: 36000, precioMinorista: 38000 },
+        { bodega: "ZUCCARDI", nombre: "Tito Altamira Blend Tinto", precio: 33000, precioMinorista: 34000 }
     ];
 
     // Ordenar productos agrupándolos por bodega y de menor a mayor precio (según regla solicitada)
@@ -600,6 +652,7 @@
 
     let cart = [];
     let displayedProducts = [];
+    let showingOffers = false;
 
     // Feriados 2026 proporcionados por el usuario
     const feriados2026 = [
@@ -648,11 +701,22 @@
     }
 
     function extractVariants(name) {
-        let cleanName = name.replace(/\(OFERTA\)/gi, "").trim();
+        let cleanName = name.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").trim();
         const parenthesisMatch = cleanName.match(/\(([^)]+)\)/);
         if (parenthesisMatch && parenthesisMatch[1].includes('/')) return parenthesisMatch[1].split('/').map(v => v.trim());
         if (cleanName.includes('/')) return cleanName.split('/').map(v => v.trim().replace(/^\(/, '').replace(/\)$/, ''));
         return null;
+    }
+
+    function filterOffers() {
+        showingOffers = !showingOffers;
+        const btn = document.getElementById('btn-ofertas');
+        if (showingOffers) {
+            btn.style.boxShadow = '0 0 0 2px white';
+        } else {
+            btn.style.boxShadow = 'none';
+        }
+        renderProducts();
     }
 
     function renderProducts() {
@@ -663,19 +727,41 @@
         displayedProducts = products.filter(p => {
             const matchesSearch = p.nombre.toLowerCase().includes(search) || p.bodega.toLowerCase().includes(search);
             const matchesBodega = bodega === 'all' || p.bodega === bodega;
-            return matchesSearch && matchesBodega;
+            const matchesOffer = showingOffers ? p.nombre.toUpperCase().includes("OFERTA") : true;
+            return matchesSearch && matchesBodega && matchesOffer;
         });
         displayedProducts.forEach((p, index) => {
             const unitsInBox = p.uCaja || 6;
             const variants = extractVariants(p.nombre);
             const isOffer = p.nombre.toUpperCase().includes("OFERTA");
+            const isAgotado = p.nombre.toUpperCase().includes("AGOTADO");
             const isExclusivo = p.soloCaja;
             
-            let displayName = p.nombre.replace(/\(OFERTA\)/gi, "").trim();
+            let displayName = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").trim();
             if(variants) displayName = displayName.split('(')[0].trim();
             
             let imgName = p.bodega;
+            if (imgName === "ALMA NEGRA (Ernesto Catena)") imgName = "ALMA NEGRA";
+            if (imgName === "EL ENENIGO (Bodega Aleanna)") imgName = "EL ENEMIGO";
             if (imgName === "ERNESTO CATENA") imgName = "Esnesto_Catena";
+            if (imgName === "RICCITELLI") imgName = "riccitelli";
+            if (imgName === "KRONTIRAS") imgName = "krontiras";
+            if (imgName === "MUNDO REVÉS") imgName = "mundo_reves";
+            if (imgName === "SOLOCONTIGO") imgName = "solo_contigo";
+            if (imgName === "YANAY") imgName = "yanay";
+            if (imgName === "RAQUIS") imgName = "raquis";
+            if (imgName === "COLOMÉ") imgName = "COLOMÉ";
+            if (imgName === "DURIGUTTI") imgName = "DURIGUTTI";
+            if (imgName === "TUTU WINES") imgName = "tutu_wines";
+            if (imgName === "ALTOS LAS HORMIGAS") imgName = "altos_las_hormigas";
+            if (imgName === "ZUCCARDI") imgName = "zuccardi";
+            if (imgName === "ALTALAND") imgName = "altaland";
+            if (imgName === "NINA") imgName = "nina";
+            if (imgName === "FALASCO") imgName = "falasco";
+            if (imgName === "ALTAR UCO") imgName = "altar_uco";
+            if (imgName === "KAIKEN") imgName = "kaiken";
+            if (imgName === "ZORZAL") imgName = "zorzal";
+            if (imgName === "TRUMPETER (Rutini Wines)") imgName = "TRUMPETER";
             const imagePath = `logos bodegas/${imgName}.png`;
 
             let variantHTML = variants ? `
@@ -694,6 +780,7 @@
             card.className = 'card';
             card.innerHTML = `
                 ${isOffer ? '<div class="offer-badge">🔥 OFERTA</div>' : ''}
+                ${isAgotado ? '<div class="offer-badge" style="background-color: #555; right: 10px;">🚫 AGOTADO</div>' : ''}
                 ${isExclusivo ? '<div class="offer-badge" style="left: 10px; right: auto; background-color: #2c3e50;">Exclusivo x Caja</div>' : ''}
                 <div class="card-image-container">
                     <img src="${imagePath}" alt="${p.bodega}" onerror="this.style.display='none'">
@@ -707,8 +794,8 @@
                     ${variantHTML}
                 </div>
                 <div class="actions">
-                    ${btnBotella}
-                    <button class="btn btn-box" onclick="addToCartBox(${index}, ${unitsInBox})">AGREGAR CAJA</button>
+                    ${isAgotado ? `<button class="btn btn-bottle" disabled style="opacity: 0.6; cursor: not-allowed; border-color: #eee;">+1 Botella</button>` : btnBotella}
+                    ${isAgotado ? `<button class="btn btn-box" disabled style="background-color: #888; color: #fff; cursor: not-allowed; box-shadow: none;">AGREGAR CAJA</button>` : `<button class="btn btn-box" onclick="addToCartBox(${index}, ${unitsInBox})">AGREGAR CAJA</button>`}
                 </div>`;
             grid.appendChild(card);
         });
@@ -716,7 +803,7 @@
 
     function addToCartBox(idx, qty) {
         const p = displayedProducts[idx];
-        let name = p.nombre.replace(/\(OFERTA\)/gi, "").trim();
+        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").trim();
         if (name.includes('(')) name = name.split('(')[0].trim();
         const vSel = document.getElementById(`variant-select-${idx}`);
         let fullName = name;
@@ -729,7 +816,7 @@
 
     function addToCart(idx, qty) {
         const p = displayedProducts[idx];
-        let name = p.nombre.replace(/\(OFERTA\)/gi, "").trim();
+        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").trim();
         if (name.includes('(')) name = name.split('(')[0].trim();
         const vSel = document.getElementById(`variant-select-${idx}`);
         let fullName = name;
