@@ -26,14 +26,16 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* HEADER */
+        /* HEADER REFACTORIZADO */
         header { 
             background: linear-gradient(135deg, #2c3e50, #000000); 
-            padding: 0.8rem 1rem; 
+            padding: 0.8rem 16px; 
+            box-sizing: border-box;
             position: sticky; 
             top: 0; 
             z-index: 1000; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
+            width: 100%;
         }
         .header-content { 
             max-width: 1200px; 
@@ -41,44 +43,78 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
+            gap: 10px;
         }
         .brand-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            flex: 1 1 auto;
+            min-width: 0; /* Permite que el texto se trunque si es necesario */
         }
         .brand-logo-icon { 
             font-size: 2rem; 
         }
-        .brand-text { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .brand-text { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            min-width: 0;
+        }
         .brand-title { 
-            font-size: 1.4rem; 
+            font-size: clamp(1rem, 4vw, 1.4rem); 
             font-weight: 800; 
             color: var(--gold); 
-            line-height: 1; 
+            line-height: 1.2; 
             white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
         }
         .subtitle { 
-            font-size: 0.75rem; 
+            font-size: clamp(0.65rem, 2.5vw, 0.75rem); 
             color: #ccc; 
-            margin-top: 4px; 
+            margin-top: 2px; 
             font-weight: 300;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
         }
         
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
         .cart-icon { 
             cursor: pointer; 
             background: rgba(255,255,255,0.1); 
             color: white; 
-            padding: 8px 15px; 
+            padding: 0 12px; 
             border-radius: 50px; 
             border: 1px solid var(--gold);
             position: relative; 
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
             font-weight: 600;
             transition: transform 0.2s, background 0.2s;
+            min-height: 44px; /* Área táctil segura */
+            min-width: 44px; /* Área táctil segura */
+            box-sizing: border-box;
+            flex-shrink: 0; /* Prioridad de visibilidad */
         }
+        #btn-ofertas {
+            flex-shrink: 1; /* Permite adaptación si falta espacio */
+        }
+
         .cart-icon:active {
             transform: scale(0.95);
         }
@@ -93,13 +129,20 @@
             justify-content: center; 
             font-size: 11px; 
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: -4px;
+            right: -4px;
+            flex-shrink: 0;
         }
 
         .nav-text { display: none; }
         @media(min-width: 400px) {
             .nav-text { display: inline; margin-left: 4px; }
+        }
+        @media(max-width: 350px) {
+            /* Extra seguridad para resoluciones ultra-pequeñas */
+            .header-content { gap: 5px; }
+            .header-actions { gap: 5px; }
+            .cart-icon { padding: 0 8px; }
         }
 
         /* BANNER REGLAS */
@@ -384,7 +427,7 @@
                 <span class="subtitle">Curaduría de vinos argentinos</span>
             </div>
         </div>
-        <div style="display: flex; gap: 10px; align-items: center;">
+        <div class="header-actions">
             <div id="btn-ofertas" class="cart-icon" onclick="filterOffers()" style="background: var(--btn-offer); border-color: var(--btn-offer);" title="Ver Ofertas">
                 🔥<span class="nav-text">Off</span>
             </div>
