@@ -77,6 +77,10 @@
             align-items: center;
             gap: 5px;
             font-weight: 600;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .cart-icon:active {
+            transform: scale(0.95);
         }
         .cart-badge { 
             background: var(--btn-offer); 
@@ -91,6 +95,11 @@
             position: absolute;
             top: -5px;
             right: -5px;
+        }
+
+        .nav-text { display: none; }
+        @media(min-width: 400px) {
+            .nav-text { display: inline; margin-left: 4px; }
         }
 
         /* BANNER REGLAS */
@@ -370,7 +379,6 @@
 <header>
     <div class="header-content">
         <div class="brand-container">
-            <img src="logo max/copa.png" alt="Max Wine House Logo" style="height: 3.5rem; width: auto; display: block; filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));">
             <div class="brand-text">
                 <span class="brand-title">MAX WINE HOUSE</span>
                 <span class="subtitle">Curaduría de vinos argentinos</span>
@@ -378,10 +386,10 @@
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
             <div id="btn-ofertas" class="cart-icon" onclick="filterOffers()" style="background: var(--btn-offer); border-color: var(--btn-offer);" title="Ver Ofertas">
-                🔥OFF <span style="display:none; @media(min-width:400px){display:inline}">Ofertas</span>
+                🔥<span class="nav-text">Ofertas</span>
             </div>
             <div class="cart-icon" onclick="openCart()">
-                🛒 <span style="display:none; @media(min-width:400px){display:inline}">Pedido</span>
+                🛒<span class="nav-text">Pedido</span>
                 <span id="cart-count" class="cart-badge">0</span>
             </div>
         </div>
@@ -547,8 +555,8 @@
         { bodega: "LUCA", nombre: "Luca Malbec", precio: 25000, precioMinorista: 27000 },
         { bodega: "LUCA", nombre: "Beso de Dante", precio: 38500, precioMinorista: 41500 },
         { bodega: "LUCA", nombre: "Nico by Luca Malbec (OFERTA)", precio: 84990, uCaja: 3, precioMinorista: 88000 },
-        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca (Malbec / Chardonnay)", precio: 10500, soloCaja: true },
-        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca Extra Brut", precio: 16500, soloCaja: true },
+        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca (Malbec / Chardonnay)", precio: 10500, precioMinorista: 10500 },
+        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca Extra Brut", precio: 16500, precioMinorista: 16500 },
         { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca Los Nobles Malbec Doc (OFERTA)", precio: 54000, uCaja: 4, precioMinorista: 54000 },
         { bodega: "MOSQUITA MUERTA", nombre: "Gran Cordero Piel de Lobo Malbec", precio: 7300, soloCaja: true },
         { bodega: "MOSQUITA MUERTA", nombre: "Sapo de Otro Pozo (Malbec / Blend Tinto)", precio: 11000, soloCaja: true },
@@ -745,7 +753,7 @@
             if (imgName === "EL ENENIGO (Bodega Aleanna)") imgName = "EL ENEMIGO";
             if (imgName === "ERNESTO CATENA") imgName = "Esnesto_Catena";
             if (imgName === "RICCITELLI") imgName = "riccitelli";
-            if (imgName === "KRONTIRAS") imgName = "krontiras";
+            if (imgName === "KRONTIRAS") imgName = "Krontiras";
             if (imgName === "MUNDO REVÉS") imgName = "mundo_reves";
             if (imgName === "SOLOCONTIGO") imgName = "solo_contigo";
             if (imgName === "YANAY") imgName = "yanay";
