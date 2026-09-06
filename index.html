@@ -573,6 +573,7 @@
         { bodega: "CATENA ZAPATA", nombre: "Malbec Argentino (OFERTA)", precio: 53000, precioMinorista: 55000 },
         { bodega: "CATENA ZAPATA", nombre: "Nicolas Catena", precio: 58000, precioMinorista: 61000 },
         { bodega: "CATENA ZAPATA", nombre: "Birth of Cabernet (OFERTA)", precio: 57000, precioMinorista: 59900 },
+        { bodega: "CATENA ZAPATA", nombre: " As Bravas Malbec 2018 - 100 PTS", precio: 122000, precioMinorista: 127000 },
         { bodega: "CHACRA", nombre: "Barda / Roka / Nacha (Barda Pinot Noir / Roka Malbec / Nacha Rosé)", precio: 46500, precioMinorista: 49000 },
         { bodega: "CHACRA", nombre: "Chacra 55 Pinot Noir", precio: 76000, precioMinorista: 78000 },
         { bodega: "COLOMÉ", nombre: "Colomé Auténtico", precio: 17500, precioMinorista: 19500 },
@@ -581,8 +582,13 @@
         { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Histoire D´A / La Savante)", precio: 52000, precioMinorista: 54000 },
         { bodega: "DURIGUTTI", nombre: "Proyecto las Compuertas Charbono Bonarda (AGOTADO)", precio: 28000, precioMinorista: 29000 },
         { bodega: "DURIGUTTI", nombre: "Cara Sucia Criolla (OFERTA)", precio: 16900, precioMinorista: 19900 },
+        { bodega: "EL BAYEH", nombre: "Criolla de Tilcara (PRÓXIMAMENTE)", precio: 21000, precioMinorista: 25000 },
+        { bodega: "EL BAYEH", nombre: "Doña Carmen Criolla Chica (PRÓXIMAMENTE)", precio: 39000, precioMinorista: 43000 },
+        { bodega: "EL BAYEH", nombre: "Malbec de Maimará (PRÓXIMAMENTE)", precio: 28000, precioMinorista: 32000 },
         { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "El Enemigo (Cabernet Franc / Malbec / Chardonnay / Bonarda)", precio: 17000, precioMinorista: 18500 },
         { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "Gran Enemigo (Cepillo / Agrelo / Chacayes / Corte / Gualtallary) (OFERTA)", precio: 36000, precioMinorista: 37500 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: " Gran Enemigo Gualtallary 2023 - 100 PTS", precio: 44000, precioMinorista: 47000 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: " Gran Enemigo Gualtallary 2019 - 100 PTS", precio: 107000, precioMinorista: 112000 },
         { bodega: "EL ESTECO", nombre: "Blend de Extremos Malbec-Malbec (OFERTA)", precio: 16500, precioMinorista: 19000 },
         { bodega: "EL ESTECO", nombre: "Old Wines Malbec", precio: 23500, precioMinorista: 26500 },
         { bodega: "ERNESTO CATENA", nombre: "Animal Blend de Tintas", precio: 14000, precioMinorista: 16000 },
@@ -671,7 +677,8 @@
         { bodega: "ZUCCARDI", nombre: "Polígonos Gualtallary Cabernet Franc", precio: 24900, precioMinorista: 26900 },
         { bodega: "ZUCCARDI", nombre: "Concreto Malbec", precio: 29900, precioMinorista: 33000 },
         { bodega: "ZUCCARDI", nombre: "Ema Bonarda", precio: 34000, precioMinorista: 35000 },
-        { bodega: "ZUCCARDI", nombre: "Tito Altamira Blend Tinto (OFERTA)", precio: 35000, precioMinorista: 36000 }
+        { bodega: "ZUCCARDI", nombre: "Tito Altamira Blend Tinto (OFERTA)", precio: 35000, precioMinorista: 36000 },
+        { bodega: "ZUCCARDI", nombre: "Finca Piedra Infinita 2019", precio: 172000, uCaja: 3, precioMinorista: 177000 }
     ];
 
     // Ordenar productos agrupándolos por bodega y de menor a mayor precio (según regla solicitada)
@@ -737,7 +744,7 @@
     }
 
     function extractVariants(name) {
-        let cleanName = name.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").trim();
+        let cleanName = name.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
         const parenthesisMatch = cleanName.match(/\(([^)]+)\)/);
         if (parenthesisMatch && parenthesisMatch[1].includes('/')) return parenthesisMatch[1].split('/').map(v => v.trim());
         if (cleanName.includes('/')) return cleanName.split('/').map(v => v.trim().replace(/^\(/, '').replace(/\)$/, ''));
@@ -771,9 +778,10 @@
             const variants = extractVariants(p.nombre);
             const isOffer = p.nombre.toUpperCase().includes("OFERTA");
             const isAgotado = p.nombre.toUpperCase().includes("AGOTADO");
+            const isProximamente = p.nombre.toUpperCase().includes("PRÓXIMAMENTE");
             const isExclusivo = p.soloCaja;
-            
-            let displayName = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").trim();
+
+            let displayName = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
             if(variants) displayName = displayName.split('(')[0].trim();
             
             let imgName = p.bodega;
@@ -812,7 +820,7 @@
                     </select>
                 </div>` : '';
                 
-            const btnBotella = p.soloCaja 
+            const btnBotella = p.soloCaja
                 ? `<button class="btn btn-bottle" disabled style="opacity: 0.6; cursor: not-allowed; border-color: #eee;">Solo Caja Cerrada</button>`
                 : `<button class="btn btn-bottle" onclick="addToCart(${index}, 1)">+1 Botella</button>`;
 
@@ -821,6 +829,7 @@
             card.innerHTML = `
                 ${isOffer ? '<div class="offer-badge">🔥 OFERTA</div>' : ''}
                 ${isAgotado ? '<div class="offer-badge" style="background-color: #555; right: 10px;">🚫 AGOTADO</div>' : ''}
+                ${isProximamente ? '<div class="offer-badge" style="background-color: #555; right: 10px;">⏳ PRÓXIMAMENTE</div>' : ''}
                 ${isExclusivo ? '<div class="offer-badge" style="left: 10px; right: auto; background-color: #2c3e50;">Exclusivo x Caja</div>' : ''}
                 <div class="card-image-container">
                     <img src="${imagePath}" alt="${p.bodega}" onerror="this.style.display='none'">
@@ -834,8 +843,8 @@
                     ${variantHTML}
                 </div>
                 <div class="actions">
-                    ${isAgotado ? `<button class="btn btn-bottle" disabled style="opacity: 0.6; cursor: not-allowed; border-color: #eee;">+1 Botella</button>` : btnBotella}
-                    ${isAgotado ? `<button class="btn btn-box" disabled style="background-color: #888; color: #fff; cursor: not-allowed; box-shadow: none;">AGREGAR CAJA</button>` : `<button class="btn btn-box" onclick="addToCartBox(${index}, ${unitsInBox})">AGREGAR CAJA</button>`}
+                    ${(isAgotado || isProximamente) ? `<button class="btn btn-bottle" disabled style="opacity: 0.6; cursor: not-allowed; border-color: #eee;">+1 Botella</button>` : btnBotella}
+                    ${(isAgotado || isProximamente) ? `<button class="btn btn-box" disabled style="background-color: #888; color: #fff; cursor: not-allowed; box-shadow: none;">AGREGAR CAJA</button>` : `<button class="btn btn-box" onclick="addToCartBox(${index}, ${unitsInBox})">AGREGAR CAJA</button>`}
                 </div>`;
             grid.appendChild(card);
         });
@@ -843,7 +852,8 @@
 
     function addToCartBox(idx, qty) {
         const p = displayedProducts[idx];
-        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").trim();
+        if (p.nombre.toUpperCase().includes("AGOTADO") || p.nombre.toUpperCase().includes("PRÓXIMAMENTE")) return;
+        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
         if (name.includes('(')) name = name.split('(')[0].trim();
         const vSel = document.getElementById(`variant-select-${idx}`);
         let fullName = name;
@@ -856,7 +866,8 @@
 
     function addToCart(idx, qty) {
         const p = displayedProducts[idx];
-        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").trim();
+        if (p.nombre.toUpperCase().includes("AGOTADO") || p.nombre.toUpperCase().includes("PRÓXIMAMENTE")) return;
+        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
         if (name.includes('(')) name = name.split('(')[0].trim();
         const vSel = document.getElementById(`variant-select-${idx}`);
         let fullName = name;
