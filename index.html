@@ -819,7 +819,8 @@
             if (imgName === "ZORZAL") imgName = "zorzal";
             if (imgName === "TRUMPETER (Rutini Wines)") imgName = "TRUMPETER";
             if (imgName === "EL BAYEH") imgName = "el_bayeh";
-            const imagePath = `logos bodegas/${imgName}.png`;
+            if (imgName === "MICHELINI I MUFATTO") imgName = "michelini_mufatto.jpg";
+            const imagePath = /\.(png|jpe?g)$/i.test(imgName) ? `logos bodegas/${imgName}` : `logos bodegas/${imgName}.png`;
 
             let variantHTML = variants ? `
                 <div class="variant-selector">
