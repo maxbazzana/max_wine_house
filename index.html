@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Max Wine House - Catálogo</title>
+    <meta name="color-scheme" content="only light">
+    <style>
+        :root {
+            /* Paleta: Fondo Claro y Elegante */
+            --bg-body: #f4f6f8;       
+            --bg-card: #ffffff;       
+            --primary: #800020;       /* Burgundy */
+            --text-main: #333333;     
+            --text-light: #666666;    
+            --gold: #bfa05f;          
+            --btn-box: #27ae60;       /* Verde CTA Caja */
+            --btn-offer: #e74c3c;     /* Rojo Oferta */
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            color-scheme: only light; /* evita que el navegador oscurezca el catálogo */
+        }
+
+        body { 
+            font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* HEADER REFACTORIZADO */
+        header { 
+            background: linear-gradient(135deg, #2c3e50, #000000); 
+            padding: 0.8rem 16px; 
+            box-sizing: border-box;
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
+            width: 100%;
+        }
+        .header-content { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 10px;
+        }
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1 1 auto;
+            min-width: 0; /* Permite que el texto se trunque si es necesario */
+        }
+        .brand-logo-icon { 
+            font-size: 2rem; 
+        }
+        .brand-text { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            min-width: 0;
+        }
+        .brand-title { 
+            font-size: clamp(1rem, 4vw, 1.4rem); 
+            font-weight: 800; 
+            color: var(--gold); 
+            line-height: 1.2; 
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
+        }
+        .subtitle { 
+            font-size: clamp(0.65rem, 2.5vw, 0.75rem); 
+            color: #ccc; 
+            margin-top: 2px; 
+            font-weight: 300;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        .cart-icon { 
+            cursor: pointer; 
+            background: rgba(255,255,255,0.1); 
+            color: white; 
+            padding: 0 12px; 
+            border-radius: 50px; 
+            border: 1px solid var(--gold);
+            position: relative; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.2s;
+            min-height: 44px; /* Área táctil segura */
+            min-width: 44px; /* Área táctil segura */
+            box-sizing: border-box;
+            flex-shrink: 0; /* Prioridad de visibilidad */
+        }
+        #btn-ofertas {
+            flex-shrink: 1; /* Permite adaptación si falta espacio */
+        }
+
+        .cart-icon:active {
+            transform: scale(0.95);
+        }
+        .cart-badge { 
+            background: var(--btn-offer); 
+            color: white; 
+            border-radius: 50%; 
+            width: 20px; 
+            height: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 11px; 
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            flex-shrink: 0;
+        }
+
+        .nav-text { display: none; }
+        @media(min-width: 400px) {
+            .nav-text { display: inline; margin-left: 4px; }
+        }
+        @media(max-width: 350px) {
+            /* Extra seguridad para resoluciones ultra-pequeñas */
+            .header-content { gap: 5px; }
+            .header-actions { gap: 5px; }
+            .cart-icon { padding: 0 8px; }
+        }
+
+        /* LINK A LA GUIA (mismo estilo que los botones del header) */
+        a.cart-icon { text-decoration: none; }
+        a.cart-icon:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+        /* BANNER REGLAS */
+        .rules-banner {
+            background-color: #fff3cd;
+            color: #856404;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.9em;
+            border-bottom: 1px solid #ffeeba;
+            line-height: 1.5;
+        }
+
+        /* FILTROS */
+        .filters { 
+            max-width: 1200px; 
+            margin: 20px auto; 
+            padding: 0 15px; 
+            display: flex; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+        }
+        input, select, textarea { 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            flex-grow: 1; 
+            font-size: 16px; 
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+
+        /* GRID PRODUCTOS */
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 15px; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 20px; 
+            padding-bottom: 80px;
+        }
+        
+        .card { 
+            background: var(--bg-card); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: var(--shadow); 
+            display: flex; 
+            flex-direction: column; 
+            transition: transform 0.2s; 
+            border: 1px solid #eee; 
+            position: relative; 
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+
+        .card-image-container {
+            width: 100%;
+            height: 200px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0; 
+            background: linear-gradient(-45deg, #0a1e38, #4a041c, #2c041c, #800020);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite; 
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card-image-container img {
+            max-width: 90%; 
+            max-height: 90%;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4));
+            border-radius: 8px; 
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--btn-offer);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .card-header { 
+            background: #f8f9fa; 
+            color: var(--text-light); 
+            padding: 10px 15px; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-weight: 700;
+            border-bottom: 1px solid #eee;
+        }
+        .card-body { padding: 15px; flex-grow: 1; }
+        .card-title { 
+            font-weight: 700; 
+            font-size: 1.15rem; 
+            margin-bottom: 8px; 
+            color: var(--primary); 
+            line-height: 1.3; 
+        }
+        .card-price { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            color: #333; 
+            margin: 10px 0; 
+        }
+        .card-price small { font-size: 0.9rem; color: #777; font-weight: 400; }
+        .box-price { font-size: 0.9em; color: var(--btn-box); font-weight: 600; margin-bottom: 10px; display: block;}
+        
+        .variant-selector { margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 6px; border: 1px solid #eee; }
+        .variant-selector label { display: block; font-size: 0.85em; color: var(--primary); font-weight: bold; margin-bottom: 5px; }
+        .variant-select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: white; cursor: pointer; }
+
+        .actions { 
+            padding: 15px; 
+            background: white; 
+            border-top: 1px solid #eee; 
+            display: flex; 
+            gap: 10px; 
+            flex-direction: column; 
+        }
+        .btn { 
+            border: none; 
+            padding: 12px; 
+            cursor: pointer; 
+            border-radius: 6px; 
+            font-weight: 700; 
+            font-size: 0.95em; 
+            transition: all 0.2s; 
+            text-align: center;
+        }
+        .btn-bottle { 
+            background-color: white; 
+            border: 2px solid #ddd; 
+            color: #555; 
+        }
+        .btn-bottle:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+        
+        .btn-box { 
+            background-color: var(--btn-box); 
+            color: white; 
+            box-shadow: 0 4px 6px rgba(39, 174, 96, 0.2);
+        }
+        .btn-box:hover { background-color: #219150; transform: scale(1.02); }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(2px); }
+        .modal-content { 
+            background: white; 
+            width: 100%; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        }
+        @media(min-width: 600px) {
+            .modal-content { height: 90vh; margin-top: 5vh; border-radius: 12px; }
+        }
+
+        .modal-header { 
+            padding: 20px; 
+            border-bottom: 1px solid #eee; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--primary); 
+            color: white; 
+        }
+        .modal-body { padding: 20px; overflow-y: auto; flex-grow: 1; background: #f9f9f9; }
+        
+        .cart-item { 
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start;
+        }
+        
+        .cart-alert {
+            background: #fff3cd; border: 1px solid #ffeeba; color: #856404;
+            padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center; font-weight: bold;
+        }
+        .cart-success {
+            background: #d4edda; border: 1px solid #c3e6cb; color: #155724;
+            padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center;
+        }
+
+        .checkout-form { background: white; padding: 20px; border-radius: 8px; margin-top: 10px; border: 1px solid #eee; }
+        .payment-info { 
+            background: #e8f4fd; 
+            padding: 15px; 
+            border-radius: 6px;
+            border-left: 4px solid #2196F3; 
+            margin-bottom: 20px; 
+            font-size: 0.9em; 
+            color: #444; 
+        }
+        .copy-btn {
+            background: #ddd; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8em; margin-left: 5px;
+        }
+        
+        .btn-checkout { 
+            background: #25D366; 
+            color: white; 
+            width: 100%; 
+            padding: 18px; 
+            font-size: 1.1em; 
+            margin-top: 15px; 
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-checkout:disabled { background: #ccc; cursor: not-allowed; }
+        
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 12px 25px; border-radius: 30px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 3000; }
+        
+        .selected-variant-text {
+            color: var(--primary);
+            font-weight: bold;
+            display: block;
+            margin-top: 4px;
+            background: rgba(128, 0, 32, 0.05);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* WHATSAPP FLOAT */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.05);
+            color: #FFF;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="brand-container">
+            <div class="brand-text">
+                <span class="brand-title">MAX WINE HOUSE</span>
+                <span class="subtitle">Curaduría de vinos argentinos</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <a href="guia-mendoza.html" class="cart-icon" title="Guía para visitar bodegas en Mendoza">
+                🍇<span class="nav-text">Guía Mendoza</span>
+            </a>
+            <div id="btn-ofertas" class="cart-icon" onclick="filterOffers()" style="background: var(--btn-offer); border-color: var(--btn-offer);" title="Ver Ofertas">
+                🔥<span class="nav-text">Ofertas</span>
+            </div>
+            <div class="cart-icon" onclick="openCart()">
+                🛒<span class="nav-text">Pedido</span>
+                <span id="cart-count" class="cart-badge">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="rules-banner">
+    <button onclick="openRulesModal()" style="background-color: transparent; color: #856404; border: 1px solid #856404; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95em;">
+        ⚠️ Ver Condiciones de Venta
+    </button>
+</div>
+
+<div class="filters">
+    <input type="text" id="searchInput" placeholder="Buscar vino o varietal..." onkeyup="renderProducts()">
+    <select id="bodegaFilter" onchange="renderProducts()">
+        <option value="all">Todas las Bodegas</option>
+    </select>
+</div>
+
+<div class="container" id="product-grid"></div>
+
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="margin:0">Mi Pedido</h3>
+            <span style="cursor:pointer; font-size:1.5em;" onclick="closeCart()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="cart-items"></div>
+            
+            <div id="cart-validation-msg" class="cart-alert">Tu caja está vacía.</div>
+
+            <div style="font-size: 1.3em; font-weight: 800; text-align: right; margin-top: 10px; color: #333;">
+                Total: $<span id="cart-total-price">0</span> <span style="font-size:0.6em; font-weight:400;">(envío incluido)</span>
+            </div>
+
+            <div class="checkout-form">
+                <h4 style="margin-top:0; color:var(--primary)">Finalizar Pedido</h4>
+                
+                <div style="margin-bottom: 10px; font-weight: bold; color: #555;">
+                    Vendedor: Max Bazzana
+                </div>
+
+                <label style="font-size:0.9em; font-weight:bold;">Forma de pago:</label>
+                <select id="paymentMethod" style="width: 100%; margin-bottom: 10px;" onchange="togglePaymentInfo()">
+                    <option value="" disabled selected>Seleccioná una opción</option>
+                    <option value="Transferencia">Transferencia</option>
+                    <option value="Efectivo">Efectivo</option>
+                </select>
+
+                <div id="transfer-info" class="payment-info" style="display: none;">
+                    <strong>Alias:</strong> <span id="alias-text" style="font-family: monospace; font-size: 1.1em; color:#000;">bazzana.max-1906</span>
+                    <button class="copy-btn" onclick="copyAlias()">COPIAR</button>
+                </div>
+                
+                <label style="font-size:0.9em; font-weight:bold;">Tu Nombre:</label>
+                <input type="text" id="customerName" placeholder="Ej: Juan Pérez" style="width: 93%; margin-bottom: 10px;">
+                
+                <label style="font-size:0.9em; font-weight:bold;">Dirección:</label>
+                <input type="text" id="customerAddress" placeholder="Calle, Altura, Piso..." style="width: 93%; margin-bottom: 10px;">
+
+                <label style="font-size:0.9em; font-weight:bold;">Día de entrega preferido:</label>
+                <select id="deliveryDate" style="width: 100%; margin-bottom: 10px;"></select>
+
+                <label style="font-size:0.9em; font-weight:bold;">Observaciones:</label>
+                <textarea id="customerObs" placeholder="Ej: Timbre no funciona, dejar en portería..." style="width: 93%; margin-bottom: 10px; font-family: inherit; resize: vertical;" rows="3"></textarea>
+                
+                <button id="btn-checkout" class="btn btn-checkout" onclick="sendOrder()" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                    </svg>
+                    ENVIAR PEDIDO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="rulesModal" class="modal">
+    <div class="modal-content" style="max-width: 450px; height: auto; max-height: 90vh;">
+        <div class="modal-header">
+            <h3 style="margin:0">Condiciones de Venta</h3>
+            <span style="cursor:pointer; font-size:1.5em;" onclick="closeRulesModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <ul style="margin-top: 0; margin-bottom: 0; padding-left: 20px; line-height: 1.6; color: #333;">
+                <li>Pedido mínimo: una caja cerrada de 3, 4 o 6 unidades, según el producto.</li>
+                <li>Las cajas mixtas se permiten únicamente en formatos de 6 unidades.</li>
+                <li>En las cajas mixtas, cada vino se facturará a precio minorista.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast">Producto agregado</div>
+
+<a href="https://wa.me/5491130529102" class="whatsapp-float" target="_blank" title="Contáctanos por WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+    </svg>
+</a>
+
+<script>
+    let products = [
+        { bodega: "ACHAVAL FERRER", nombre: "Malbec Appellation (Lujan de Cuyo / Valle de Uco)", precio: 29000, precioMinorista: 32000 },
+        { bodega: "ACHAVAL FERRER", nombre: "Quimera Diamante Blend", precio: 57000, precioMinorista: 59900 },
+        { bodega: "ALFA CRUX", nombre: "Beta Crux Malbec (AGOTADO)", precio: 23500, precioMinorista: 25900 },
+        { bodega: "ALFA CRUX", nombre: "Alfa Crux Corte Uco", precio: 42000, precioMinorista: 45000 },
+        { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Tinto Blend (OFERTA)", precio: 22000, precioMinorista: 23000 },
+        { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Brut Nature Rose", precio: 26500, precioMinorista: 27500 },
+        { bodega: "ALTOS LAS HORMIGAS", nombre: "The Malbec Specialist (OFERTA)", precio: 13000, precioMinorista: 17000 },
+        { bodega: "ALTOS LAS HORMIGAS", nombre: "Jardín de Hormigas Meteora Malbec", precio: 39900, precioMinorista: 43000 },
+        { bodega: "ANTUCURA", nombre: "La Folie Blend", precio: 21000, precioMinorista: 24000 },
+        { bodega: "ANTUCURA", nombre: "Single Vineyard (Malbec / Pinot Noir) (OFERTA)", precio: 26000, precioMinorista: 29000 },
+        { bodega: "ATAMISQUE", nombre: "Catalpa Assemblage", precio: 17000, precioMinorista: 18000 },
+        { bodega: "ATAMISQUE", nombre: "Finca Andrea Malbec (Vistalba / Consulta)", precio: 38000, precioMinorista: 39900 },
+        { bodega: "BRESSIA", nombre: "Monteagrelo (Malbec / Cab. Franc / Cab. Sauv. / Syrah)", precio: 18900, precioMinorista: 19900 },
+        { bodega: "BRESSIA", nombre: "Royal Brut Nature", precio: 28500, precioMinorista: 29500 },
+        { bodega: "BRESSIA", nombre: "Lagrima Canela (Blend de blancos)", precio: 28500, precioMinorista: 29500 },
+        { bodega: "BRESSIA", nombre: "Profundo", precio: 28500, precioMinorista: 29500 },
+        { bodega: "BRESSIA", nombre: "Piel Negra Pinot Noir (OFERTA)", precio: 37000, precioMinorista: 38500 },
+        { bodega: "BRESSIA", nombre: "Conjuro (OFERTA)", precio: 54000, precioMinorista: 57000 },
+        { bodega: "BRESSIA", nombre: "Ultima Hoja (OFERTA)", precio: 96000, precioMinorista: 98000 },
+        { bodega: "CATENA ZAPATA", nombre: "Saint Felicien (Malbec / Cab. Franc / Cab. Sauv. / Chardonnay / Cab-Merlot / Pinot Noir)", precio: 9000, precioMinorista: 10500 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Cabernet-Malbec", precio: 12500, precioMinorista: 13500 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Pinot-Pinot", precio: 15000, precioMinorista: 16000 },
+        { bodega: "CATENA ZAPATA", nombre: "Saint Felicien Bonarda (OFERTA)", precio: 17000, uCaja: 4, precioMinorista: 18000 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Chardonnay-Chardonnay", precio: 14500, precioMinorista: 15500 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Malbec-Malbec", precio: 16000, precioMinorista: 17500 },
+        { bodega: "CATENA ZAPATA", nombre: "DV L'Esploratore (Malbec Cafayate / Malbec Angulos)", precio: 17000, uCaja: 4, precioMinorista: 18000 },
+        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata (Chardonnay / Merlot / Cab. Sauv. / Cab. Franc)", precio: 22000, uCaja: 4, precioMinorista: 23900 },
+        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec", precio: 23000, uCaja: 4, precioMinorista: 24900 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard (Cab. Sauv Paraje Altamira / Cab. Sauv Domingo Tupungato / Cab. Sauv La Pirámide Agrelo) (OFERTA)", precio: 24000, uCaja: 4, precioMinorista: 25500 },
+        { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard Malbec Adriana (OFERTA)", precio: 26500, uCaja: 4, precioMinorista: 27500 },
+        { bodega: "CATENA ZAPATA", nombre: "Nicola Catena Bonarda (OFERTA)", precio: 46000, uCaja: 4, precioMinorista: 48000 },
+        { bodega: "CATENA ZAPATA", nombre: "Malbec Argentino", precio: 59900, precioMinorista: 62000 },
+        { bodega: "CATENA ZAPATA", nombre: "Nicolas Catena 2022", precio: 62000, precioMinorista: 63500 },
+        { bodega: "CATENA ZAPATA", nombre: "Birth of Cabernet (OFERTA)", precio: 58500, precioMinorista: 59900 },
+        { bodega: "CATENA ZAPATA", nombre: "As Bravas Malbec 2018 - 100 PTS", precio: 122000, precioMinorista: 127000 },
+        { bodega: "CHACRA", nombre: "Barda / Roka / Nacha (Barda Pinot Noir / Roka Malbec / Nacha Rosé)", precio: 46500, precioMinorista: 49000 },
+        { bodega: "CHACRA", nombre: "Chacra 55 Pinot Noir (OFERTA)", precio: 82000, precioMinorista: 89000 },
+        { bodega: "COLOMÉ", nombre: "Colomé Auténtico", precio: 17000, precioMinorista: 18000 },
+        { bodega: "COLOMÉ", nombre: "Colomé 1831", precio: 36000, precioMinorista: 37000 },
+        { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Grand Mère / Grand Père)", precio: 32000, precioMinorista: 33000 },
+        { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Histoire / La Savante) (OFERTA)", precio: 54500, precioMinorista: 56000 },
+        { bodega: "DURIGUTTI", nombre: "Cara Sucia Criolla (OFERTA)", precio: 16900, precioMinorista: 19900 },
+        { bodega: "DURIGUTTI", nombre: "HD Reserva Malbec", precio: 22000, precioMinorista: 25000 },
+        { bodega: "EL BAYEH", nombre: "Tinto de Purmamarca Criolla (PRÓXIMAMENTE)", precio: 22000, precioMinorista: 25000 },
+        { bodega: "EL BAYEH", nombre: "Finca Ollantay Malbec (PRÓXIMAMENTE)", precio: 28000, precioMinorista: 32000 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "El Enemigo (Cabernet Franc / Malbec / Chardonnay / Bonarda)", precio: 17000, precioMinorista: 18500 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "Gran Enemigo (Cepillo / Agrelo / Chacayes / Corte)", precio: 39900, precioMinorista: 44000 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "Gran Enemigo Gualtallary 2023 - 100 PTS", precio: 54000, precioMinorista: 56000 },
+        { bodega: "EL ENENIGO (Bodega Aleanna)", nombre: "Bonarda (El Mirador / El Barranco / El Paraíso)", precio: 23000, precioMinorista: 25000 },
+        { bodega: "EL ESTECO", nombre: "Blend de Extremos Malbec-Malbec", precio: 19500, precioMinorista: 23500 },
+        { bodega: "EL ESTECO", nombre: "Old Wines Malbec", precio: 24500, precioMinorista: 26900 },
+        { bodega: "ERNESTO CATENA", nombre: "Animal Colors Blend de Tintas Orgánico (OFERTA)", precio: 13000, precioMinorista: 15000 },
+        { bodega: "ERNESTO CATENA", nombre: "Tikal Amorio Malbec (AGOTADO)", precio: 28500, precioMinorista: 31000 },
+        { bodega: "ERNESTO CATENA", nombre: "Lost by Siesta Malbec (OFERTA)", precio: 89000, uCaja: 3, precioMinorista: 93000 },
+        { bodega: "ESCORIHUELA GASCÓN", nombre: "Gran Reserva Malbec Orgánico (OFERTA)", precio: 16000, precioMinorista: 18000 },
+        { bodega: "ESCORIHUELA GASCÓN", nombre: "Pequeñas Producciones (Malbec / Cab. Sauv. / Pinot Noir / Cabernet Franc / Chardonnay / Sauv. Blanc)", precio: 23500, uCaja: 4, precioMinorista: 26000 },
+        { bodega: "ESCORIHUELA GASCÓN", nombre: "Presidents (Blend Tinto / White Blend) ", precio: 32000, uCaja: 4, precioMinorista: 35000 },
+        { bodega: "ESCORIHUELA GASCÓN", nombre: "DON Malbec", precio: 50500, uCaja: 4, precioMinorista: 52000 },
+        { bodega: "KAIKEN", nombre: "Desbandado Cabernet Franc (OFERTA)", precio: 15000, precioMinorista: 18000 },
+        { bodega: "KAIKEN", nombre: "Disobedience Blend By Francis Mallmann", precio: 18900, precioMinorista: 22500 },
+        { bodega: "KARIM MUSSI", nombre: "El Turco Blend", precio: 15000, precioMinorista: 16500 },
+        { bodega: "KARIM MUSSI", nombre: "Altocedro Año Cero Malbec (OFERTA)", precio: 22000, precioMinorista: 26000 },
+        { bodega: "LUCA", nombre: "Luca (Pinot Noir / Syrah / Chardonnay) (OFERTA)", precio: 24500, precioMinorista: 26500 },
+        { bodega: "LUCA", nombre: "Luca Malbec", precio: 27500, precioMinorista: 29900 },
+        { bodega: "LUCA", nombre: "Beso de Dante (OFERTA)", precio: 42000, precioMinorista: 43000 },
+        { bodega: "LUCA", nombre: "Nico by Luca Malbec (OFERTA)", precio: 89900, uCaja: 3, precioMinorista: 92000 },
+        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca de Sangre (Red Blend / White Blend)", precio: 16500, precioMinorista: 18500 },
+        { bodega: "LUIGI BOSCA", nombre: "Los Nobles (Malbec Doc / Cabernet Bouchet - field blend) (OFERTA)", precio: 58000, uCaja: 4, precioMinorista: 59900 },
+        { bodega: "MIL SUELOS", nombre: "Manos Negras Artesano Malbec (OFERTA)", precio: 26000, precioMinorista: 28000 },
+        { bodega: "MIL SUELOS", nombre: "Teho Grand Cru (AGOTADO)", precio: 58000, uCaja: 3, precioMinorista: 62000 },
+        { bodega: "MOSQUITA MUERTA", nombre: "Sapo de Otro Pozo (Malbec / Blend de Tintas) (OFERTA)", precio: 12000, precioMinorista: 13500 },
+        { bodega: "MOSQUITA MUERTA", nombre: "Espumante Extra Brut", precio: 14000, precioMinorista: 15000 },
+        { bodega: "MOSQUITA MUERTA", nombre: "Mosquita Blend de Tintas", precio: 15000, uCaja: 3, precioMinorista: 16500 },
+        { bodega: "MOSQUITA MUERTA", nombre: "Malcriado Malbec (OFERTA)", precio: 49900, uCaja: 3, precioMinorista: 53000 },
+        { bodega: "PULENTA", nombre: "Pulenta Estate (Chardonnay / Pinot Gris)", precio: 14000, precioMinorista: 15000 },
+        { bodega: "PULENTA", nombre: "Pulenta Estate (Red Blend / Pinot Noir / Cabernet Franc / Malbec / Malbec orgánico / Cab. Sauvignon) (OFERTA)", precio: 21000, precioMinorista: 22000 },
+        { bodega: "PULENTA", nombre: "Pulenta Gran (Pinot Noir / Cabernet Franc / Cab. Sauv. / Merlot / Malbec) (OFERTA)", precio: 59900, precioMinorista: 62000 },
+        { bodega: "RAQUIS", nombre: "Las Bases Malbec (OFERTA)", precio: 47500, precioMinorista: 49900 },
+        { bodega: "RIBERA DEL CUARZO", nombre: "Clásico (Malbec / Merlot / Pátinas Blancas)", precio: 35000, precioMinorista: 37000 },
+        { bodega: "RIBERA DEL CUARZO", nombre: "Especial Blend (OFERTA)", precio: 72000, precioMinorista: 74000 },
+        { bodega: "RICCITELLI", nombre: "The Apple Malbec", precio: 25000, precioMinorista: 26900 },
+        { bodega: "RICCITELLI", nombre: "Kongfu Criolla", precio: 34000, precioMinorista: 36000 },
+        { bodega: "ROLLAND", nombre: "Mariflor Merlot", precio: 22000, precioMinorista: 25000 },
+        { bodega: "ROLLAND", nombre: "Val de Flores Malbec", precio: 77000, precioMinorista: 79900 },
+        { bodega: "ROSELL BOHER", nombre: "Casa Boher (Malbec Agrelo / Malbec San Pablo) (OFERTA)", precio: 16000, precioMinorista: 18000 },
+        { bodega: "ROSELL BOHER", nombre: "Encarnación Brut Nature", precio: 35000, precioMinorista: 37000 },
+        { bodega: "ROSELL BOHER", nombre: "Boher Gran (Chardonnay / Viognier) (OFERTA)", precio: 35000, uCaja: 4, precioMinorista: 37000 },
+        { bodega: "RUTINI", nombre: "Encuentro (Malbec / Cab. Sauv. / Chardonnay)", precio: 13000, precioMinorista: 14500 },
+        { bodega: "RUTINI", nombre: "Rutini (Cab. Franc-Malbec / Cab. Sauv-Malbec / Cab. Sauv-Merlot / Cab. Sauv-Syrah)", precio: 15000, precioMinorista: 16500 },
+        { bodega: "RUTINI", nombre: "Rutini (Cab. Sauv. / Cab. Franc / Chardonnay)", precio: 22000, precioMinorista: 23500 },
+        { bodega: "RUTINI", nombre: "Dominio Chardonnay", precio: 21000, precioMinorista: 24000 },
+        { bodega: "RUTINI", nombre: "Espumoso Extra Brut (OFERTA)", precio: 24000, uCaja: 4, precioMinorista: 27000 },
+        { bodega: "RUTINI", nombre: "Rutini Malbec", precio: 26000, precioMinorista: 27900 },
+        { bodega: "RUTINI", nombre: "Espumoso Brut Nature (OFERTA)", precio: 39000, uCaja: 4, precioMinorista: 44000 },
+        { bodega: "RUTINI", nombre: "Gualtallary Single Vineyard (Malbec / Cab. Sauv.) (OFERTA)", precio: 54000, precioMinorista: 56000 },
+        { bodega: "RUTINI", nombre: "Dominio Grand Blend (OFERTA)", precio: 58000, precioMinorista: 61000 },
+        { bodega: "RUTINI", nombre: "Antologia XXXVIII (38)", precio: 51000, uCaja: 4, precioMinorista: 52500 },
+        { bodega: "RUTINI", nombre: "Apartado Gran (Blend / Malbec)", precio: 108000, uCaja: 4, precioMinorista: 112000 },
+        { bodega: "SALENTEIN", nombre: "Single Vineyard Las Tunas Malbec (AGOTADO)", precio: 39900, precioMinorista: 43000 },
+        { bodega: "SALENTEIN", nombre: "Alyda Brut Nature", precio: 19000, precioMinorista: 21000 },
+        { bodega: "SALENTEIN", nombre: "Primus Chardonnay (OFERTA)", precio: 36000, precioMinorista: 38000 },
+        { bodega: "SALENTEIN", nombre: "Primus Malbec", precio: 51000, precioMinorista: 53000 },
+        { bodega: "SALENTEIN", nombre: "Gran VU Blend", precio: 98000, uCaja: 3, precioMinorista: 99900 },
+        { bodega: "SOLOCONTIGO", nombre: "Develado Cab. Sauv-Cab. Franc (OFERTA)", precio: 18500, precioMinorista: 21000 },
+        { bodega: "SOLOCONTIGO", nombre: "Casa de las Musas Blend (OFERTA)", precio: 29500, precioMinorista: 32000 },
+        { bodega: "SOTTANO", nombre: "Reserva de Familia 12 meses Roble (Malbec / Cab. Sauv. / Cabernet-Malbec / Pinot Noir)", precio: 16000, precioMinorista: 17500 },
+        { bodega: "SOTTANO", nombre: "María Magdalena Chardonnay", precio: 18000, precioMinorista: 19900 },
+        { bodega: "SOTTANO", nombre: "Mil Demonios Samurai Malbec (OFERTA)", precio: 23000, uCaja: 4, precioMinorista: 26000 },
+        { bodega: "SOTTANO", nombre: "Barrabás Cabernet Franc (OFERTA)", precio: 33000, precioMinorista: 36000 },
+        { bodega: "SOTTANO", nombre: "Judas Blend", precio: 68000, uCaja: 3, precioMinorista: 69900 },
+        { bodega: "SUSANA BALBO", nombre: "Signature Malbec", precio: 22500, precioMinorista: 24000 },
+        { bodega: "SUSANA BALBO", nombre: "Benmarco Expresivo Blend (OFERTA)", precio: 33000, precioMinorista: 37000 },
+        { bodega: "SUSANA BALBO", nombre: "Signature Brioso Blend (OFERTA)", precio: 37500, precioMinorista: 39900 },
+        { bodega: "TAPIZ", nombre: "Black Tears Malbec (OFERTA)", precio: 55000, precioMinorista: 59000 },
+        { bodega: "TAPIZ", nombre: "Las Notas de Jean Claude", precio: 71000, precioMinorista: 72500 },
+        { bodega: "TRUMPETER (Rutini Wines)", nombre: "Varietales (Malbec / Cab. Sauv. / Syrah / Merlot / Chardonnay)", precio: 8500, precioMinorista: 9900 },
+        { bodega: "TRUMPETER (Rutini Wines)", nombre: "Reserva (Malbec / Cab. Sauv. / Rose)", precio: 10500, precioMinorista: 12000 },
+        { bodega: "TUTU WINES", nombre: "Tutu Malbec", precio: 24500, precioMinorista: 26500 },
+        { bodega: "TUTU WINES", nombre: "Tutu Pinot Noir", precio: 25000, precioMinorista: 27000 },
+        { bodega: "VIÑA COBOS", nombre: "Felino Malbec", precio: 21500, precioMinorista: 23000 },
+        { bodega: "VIÑA COBOS", nombre: "Bramare (Malbec Luján de Cuyo / Malbec Valle de Uco)", precio: 47500, precioMinorista: 49000 },
+        { bodega: "VIÑA COBOS", nombre: "Vinculum Malbec (OFERTA)", precio: 67000, precioMinorista: 69000 },
+        { bodega: "YACOCHUYA", nombre: "San Pedro de Yacochuya Torrontés", precio: 13000, precioMinorista: 14500 },
+        { bodega: "YACOCHUYA", nombre: "San Pedro de Yacochuya Tinto Blend", precio: 23500, precioMinorista: 25000 },
+        { bodega: "YACOCHUYA", nombre: "Yacochuya Malbec", precio: 61000, precioMinorista: 62000 },
+        { bodega: "YANAY", nombre: "Tinto de Jujuy Blend (OFERTA)", precio: 29900, precioMinorista: 33000 },
+        { bodega: "ZORZAL", nombre: "Malbec Terroir Único", precio: 9500, precioMinorista: 13000 },
+        { bodega: "ZORZAL", nombre: "Zorzal Eggo Filoso Pinot Noir (OFERTA)", precio: 21000, precioMinorista: 24000 },
+        { bodega: "ZORZAL", nombre: "Piantao Blend (OFERTA)", precio: 54000, precioMinorista: 57000 },
+        { bodega: "ZUCCARDI", nombre: "Zuccardi Q (Malbec / Cab. Sauv. / Tepranillos / Chardonnay)", precio: 18000, precioMinorista: 20500 },
+        { bodega: "ZUCCARDI", nombre: "Polígonos Gualtallary Cabernet Franc", precio: 24900, precioMinorista: 26900 },
+        { bodega: "ZUCCARDI", nombre: "Concreto Malbec", precio: 27900, precioMinorista: 31000 },
+        { bodega: "ZUCCARDI", nombre: "Ema Bonarda", precio: 34000, precioMinorista: 35000 },
+        { bodega: "ZUCCARDI", nombre: "Tito Altamira Blend Tinto (OFERTA)", precio: 32000, precioMinorista: 33000 },
+        { bodega: "ZUCCARDI", nombre: "Finca Piedra Infinita 2019", precio: 172000, uCaja: 3, precioMinorista: 177000 }
+    ];
+
+    // Ordenar productos agrupándolos por bodega y de menor a mayor precio (según regla solicitada)
+    products.sort((a, b) => a.bodega.localeCompare(b.bodega) || a.precio - b.precio);
+
+    // --- NUEVO BLOQUE DE LÓGICA DE PRECIOS ---
+    products.forEach(p => {
+        // 3. Recálculo del precio por caja exacto (Precio * Unidades)
+        // Se usa la cantidad de unidades definida en el producto (uCaja) o 6 por defecto
+        const unidades = p.uCaja || 6;
+        p.caja = p.precio * unidades;
+    });
+    // --- FIN BLOQUE DE LÓGICA ---
+
+    let cart = [];
+    let displayedProducts = [];
+    let showingOffers = false;
+
+    // Feriados 2026 proporcionados por el usuario
+    const feriados2026 = [
+        "1/1", "16/2", "17/2", "23/3", "24/3", "2/4", "3/4", "1/5", "25/5", "15/6", "20/6", "9/7", "10/7", "17/8", "12/10", "23/11", "7/12", "8/12", "25/12"
+    ];
+
+    function initDeliveryDates() {
+        const select = document.getElementById('deliveryDate');
+        select.innerHTML = '';
+        const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+        const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+        
+        let validDates = 0;
+        
+        let current = new Date();
+        current.setDate(current.getDate() + 1);
+
+        while(validDates < 4) { 
+            if (current.getDay() === 5) { // Viernes
+                let deliveryDay = new Date(current);
+                
+                // Chequeo de feriados y retroceso de días
+                let dateKey = `${deliveryDay.getDate()}/${deliveryDay.getMonth() + 1}`;
+                if (feriados2026.includes(dateKey)) {
+                    deliveryDay.setDate(deliveryDay.getDate() - 1); // Jueves
+                    dateKey = `${deliveryDay.getDate()}/${deliveryDay.getMonth() + 1}`;
+                    if (feriados2026.includes(dateKey)) {
+                        deliveryDay.setDate(deliveryDay.getDate() - 1); // Miércoles
+                    }
+                }
+                
+                let today = new Date();
+                today.setHours(0,0,0,0);
+                if (deliveryDay >= today) {
+                    const opt = document.createElement('option');
+                    const dayName = days[deliveryDay.getDay()];
+                    const dateStr = `${deliveryDay.getDate()} ${months[deliveryDay.getMonth()]}`;
+                    let label = `${dayName} ${dateStr} (9 a 18hs)`;
+                    opt.value = label; opt.innerText = label;
+                    select.appendChild(opt); 
+                    validDates++;
+                }
+            }
+            current.setDate(current.getDate() + 1);
+        }
+    }
+
+    function extractVariants(name) {
+        let cleanName = name.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
+        const parenthesisMatch = cleanName.match(/\(([^)]+)\)/);
+        if (parenthesisMatch && parenthesisMatch[1].includes('/')) return parenthesisMatch[1].split('/').map(v => v.trim());
+        if (cleanName.includes('/')) return cleanName.split('/').map(v => v.trim().replace(/^\(/, '').replace(/\)$/, ''));
+        return null;
+    }
+
+    function filterOffers() {
+        showingOffers = !showingOffers;
+        const btn = document.getElementById('btn-ofertas');
+        if (showingOffers) {
+            btn.style.boxShadow = '0 0 0 2px white';
+        } else {
+            btn.style.boxShadow = 'none';
+        }
+        renderProducts();
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = '';
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const bodega = document.getElementById('bodegaFilter').value;
+        displayedProducts = products.filter(p => {
+            const matchesSearch = p.nombre.toLowerCase().includes(search) || p.bodega.toLowerCase().includes(search);
+            const matchesBodega = bodega === 'all' || p.bodega === bodega;
+            const matchesOffer = showingOffers ? p.nombre.toUpperCase().includes("OFERTA") : true;
+            return matchesSearch && matchesBodega && matchesOffer;
+        });
+        displayedProducts.forEach((p, index) => {
+            const unitsInBox = p.uCaja || 6;
+            const variants = extractVariants(p.nombre);
+            const isOffer = p.nombre.toUpperCase().includes("OFERTA");
+            const isAgotado = p.nombre.toUpperCase().includes("AGOTADO");
+            const isProximamente = p.nombre.toUpperCase().includes("PRÓXIMAMENTE");
+            const isExclusivo = p.soloCaja;
+
+            let displayName = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
+            if(variants) displayName = displayName.split('(')[0].trim();
+            
+            let imgName = p.bodega;
+            if (imgName === "ALMA NEGRA (Ernesto Catena)") imgName = "ALMA NEGRA";
+            if (imgName === "EL ENENIGO (Bodega Aleanna)") imgName = "EL ENEMIGO";
+            if (imgName === "ERNESTO CATENA") imgName = "Esnesto_Catena";
+            if (imgName === "RICCITELLI") imgName = "riccitelli";
+            if (imgName === "KRONTIRAS") imgName = "Krontiras";
+            if (imgName === "ALFA CRUX") imgName = "alfa_crux";
+            if (imgName === "ANTUCURA") imgName = "antucura";
+            if (imgName === "EL ESTECO") imgName = "el_esteco";
+            if (imgName === "KARIM MUSSI") imgName = "karim_mussi";
+            if (imgName === "MIL SUELOS") imgName = "mil_suelos";
+            if (imgName === "SOLOCONTIGO") imgName = "solo_contigo";
+            if (imgName === "YANAY") imgName = "yanay";
+            if (imgName === "RAQUIS") imgName = "raquis";
+            if (imgName === "COLOMÉ") imgName = "COLOMÉ";
+            if (imgName === "DURIGUTTI") imgName = "DURIGUTTI";
+            if (imgName === "TUTU WINES") imgName = "tutu_wines";
+            if (imgName === "ALTOS LAS HORMIGAS") imgName = "altos_las_hormigas";
+            if (imgName === "ZUCCARDI") imgName = "zuccardi";
+            if (imgName === "ALTALAND") imgName = "altaland";
+            if (imgName === "NINA") imgName = "nina";
+            if (imgName === "FALASCO") imgName = "falasco";
+            if (imgName === "ALTAR UCO") imgName = "altar_uco";
+            if (imgName === "KAIKEN") imgName = "kaiken";
+            if (imgName === "ZORZAL") imgName = "zorzal";
+            if (imgName === "TRUMPETER (Rutini Wines)") imgName = "TRUMPETER";
+            if (imgName === "EL BAYEH") imgName = "el_bayeh";
+            const imagePath = `logos bodegas/${imgName}.png`;
+
+            let variantHTML = variants ? `
+                <div class="variant-selector">
+                    <label>Variedad / Uva:</label>
+                    <select id="variant-select-${index}" class="variant-select">
+                        ${variants.map(v => `<option value="${v}">${v}</option>`).join('')}
+                    </select>
+                </div>` : '';
+                
+            const btnBotella = p.soloCaja
+                ? `<button class="btn btn-bottle" disabled style="opacity: 0.6; cursor: not-allowed; border-color: #eee;">Solo Caja Cerrada</button>`
+                : `<button class="btn btn-bottle" onclick="addToCart(${index}, 1)">+1 Botella</button>`;
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                ${isOffer ? '<div class="offer-badge">🔥 OFERTA</div>' : ''}
+                ${isAgotado ? '<div class="offer-badge" style="background-color: #555; right: 10px;">🚫 AGOTADO</div>' : ''}
+                ${isProximamente ? '<div class="offer-badge" style="background-color: #555; right: 10px;">⏳ PRÓXIMAMENTE</div>' : ''}
+                ${isExclusivo ? '<div class="offer-badge" style="left: 10px; right: auto; background-color: #2c3e50;">Exclusivo x Caja</div>' : ''}
+                <div class="card-image-container">
+                    <img src="${imagePath}" alt="${p.bodega}" onerror="this.style.display='none'">
+                </div>
+                <div class="card-header">${p.bodega}</div>
+                <div class="card-body">
+                    <div class="card-title">${displayName}</div>
+                    <div class="card-price">$${p.precio.toLocaleString('es-AR')} <small>c/u</small></div>
+                    <span class="box-price">Caja x${unitsInBox}: $${p.caja.toLocaleString('es-AR')}</span>
+                    ${p.precioMinorista ? `<span class="box-price" style="color: #666; font-weight: 500;">Precio Minorista: $${p.precioMinorista.toLocaleString('es-AR')} c/u</span>` : ''}
+                    ${variantHTML}
+                </div>
+                <div class="actions">
+                    ${(isAgotado || isProximamente) ? `<button class="btn btn-bottle" disabled style="opacity: 0.6; cursor: not-allowed; border-color: #eee;">+1 Botella</button>` : btnBotella}
+                    ${(isAgotado || isProximamente) ? `<button class="btn btn-box" disabled style="background-color: #888; color: #fff; cursor: not-allowed; box-shadow: none;">AGREGAR CAJA</button>` : `<button class="btn btn-box" onclick="addToCartBox(${index}, ${unitsInBox})">AGREGAR CAJA</button>`}
+                </div>`;
+            grid.appendChild(card);
+        });
+    }
+
+    function addToCartBox(idx, qty) {
+        const p = displayedProducts[idx];
+        if (p.nombre.toUpperCase().includes("AGOTADO") || p.nombre.toUpperCase().includes("PRÓXIMAMENTE")) return;
+        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
+        if (name.includes('(')) name = name.split('(')[0].trim();
+        const vSel = document.getElementById(`variant-select-${idx}`);
+        let fullName = name;
+        if (vSel) fullName += ` (Elegida: ${vSel.value})`;
+        const unitPrice = p.caja / qty;
+        const exist = cart.find(i => i.bodega === p.bodega && i.nombre === fullName && i.precio === unitPrice && i.isBox === true);
+        if (exist) exist.qty += qty; else cart.push({ bodega: p.bodega, nombre: fullName, precio: unitPrice, qty: qty, isBox: true, boxSize: qty });
+        updateCartUI(); showToast(`Caja agregada`);
+    }
+
+    function addToCart(idx, qty) {
+        const p = displayedProducts[idx];
+        if (p.nombre.toUpperCase().includes("AGOTADO") || p.nombre.toUpperCase().includes("PRÓXIMAMENTE")) return;
+        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
+        if (name.includes('(')) name = name.split('(')[0].trim();
+        const vSel = document.getElementById(`variant-select-${idx}`);
+        let fullName = name;
+        if (vSel) fullName += ` (Elegida: ${vSel.value})`;
+        
+        // Uso del precio minorista por unidad si existe
+        const unitPrice = p.precioMinorista ? p.precioMinorista : p.precio;
+        
+        const exist = cart.find(i => i.bodega === p.bodega && i.nombre === fullName && i.precio === unitPrice && i.isBox === false);
+        if (exist) exist.qty += qty; else cart.push({ bodega: p.bodega, nombre: fullName, precio: unitPrice, qty: qty, isBox: false });
+        updateCartUI(); showToast(`Botella agregada`);
+    }
+
+    function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
+
+    function togglePaymentInfo() {
+        const method = document.getElementById('paymentMethod').value;
+        const info = document.getElementById('transfer-info');
+        if (method === 'Transferencia') {
+            info.style.display = 'block';
+        } else {
+            info.style.display = 'none';
+        }
+    }
+
+    function updateCartUI() {
+        const count = cart.reduce((acc, i) => acc + i.qty, 0);
+        document.getElementById('cart-count').textContent = count;
+        const itemsDiv = document.getElementById('cart-items');
+        const valMsg = document.getElementById('cart-validation-msg');
+        const btn = document.getElementById('btn-checkout');
+        itemsDiv.innerHTML = ''; let total = 0;
+        
+        // Conteo diferenciado para la lógica de validación
+        let countBottles = cart.filter(i => !i.isBox).reduce((acc, i) => acc + i.qty, 0);
+        let hasBoxes = cart.some(i => i.isBox);
+        
+        if (cart.length === 0) {
+            valMsg.className = 'cart-alert'; valMsg.innerHTML = "Tu caja está vacía.";
+            valMsg.style.display = 'block'; btn.disabled = true;
+        } else {
+            cart.forEach((item, i) => {
+                const sub = item.precio * item.qty; total += sub;
+                const dName = item.nombre.replace(" (Elegida:", '<br><span class="selected-variant-text">👉 Elegida:').replace(")", "</span>");
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div style="flex-grow:1">
+                        <div style="font-weight:bold; color:var(--primary); font-size:0.9em;">${item.bodega}</div>
+                        <div>${dName}</div>
+                        <small style="color:#777">${item.qty} x $${item.precio.toLocaleString('es-AR')}</small>
+                    </div>
+                    <div style="text-align:right">
+                        <div style="font-weight:bold;">$${Math.round(sub).toLocaleString('es-AR')}</div>
+                        <button style="background:none; border:none; color:#e74c3c; cursor:pointer;" onclick="removeFromCart(${i})">🗑️</button>
+                    </div>`;
+                itemsDiv.appendChild(div);
+            });
+
+            // Lógica de pedido mínimo (ignora cajas cerradas, exige múltiplos de 6 para mixtas)
+            if (countBottles > 0 && countBottles % 6 !== 0) {
+                const missing = 6 - (countBottles % 6);
+                valMsg.className = 'cart-alert'; 
+                if (missing === 1) {
+                    valMsg.innerHTML = `⚠️ Falta <strong>1</strong> botella individual para completar la caja mixta de 6.`;
+                } else {
+                    valMsg.innerHTML = `⚠️ Faltan <strong>${missing}</strong> botellas individuales para completar la caja mixta de 6.`;
+                }
+                btn.disabled = true;
+            } else {
+                valMsg.className = 'cart-success'; 
+                valMsg.innerHTML = "✅ ¡Pedido válido! Todo listo.";
+                btn.disabled = false;
+            }
+        }
+        document.getElementById('cart-total-price').textContent = Math.round(total).toLocaleString('es-AR');
+    }
+
+    function copyAlias() {
+        navigator.clipboard.writeText("bazzana.max-1906").then(() => showToast("Alias copiado"));
+    }
+
+    function openCart() { document.getElementById('cartModal').style.display = 'block'; }
+    function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
+    function openRulesModal() { document.getElementById('rulesModal').style.display = 'block'; }
+    function closeRulesModal() { document.getElementById('rulesModal').style.display = 'none'; }
+    
+    function showToast(msg) {
+        const t = document.getElementById('toast'); t.textContent = msg; t.style.opacity = 1;
+        setTimeout(() => t.style.opacity = 0, 3000);
+    }
+
+    function sendOrder() {
+        const name = document.getElementById('customerName').value;
+        const addr = document.getElementById('customerAddress').value;
+        const date = document.getElementById('deliveryDate').value;
+        const payment = document.getElementById('paymentMethod').value;
+        const obs = document.getElementById('customerObs').value;
+
+        if (!name || !addr || !payment) { alert("Completá tus datos y la forma de pago."); return; }
+        
+        let msg = `*SALES ORDER Nº*\n👤 Cliente: ${name}\n📍 Dirección: ${addr}\n📅 Entrega: ${date}\n💵 Pago: ${payment}\n`;
+        
+        if (obs && obs.trim() !== "") {
+            msg += `📝 Observaciones: ${obs}\n`;
+        }
+
+        msg += `-------------------\n Detalle del pedido:\n`;
+        
+        let total = 0;
+        let totalBotellas = 0;
+        let totalCajas = 0;
+
+        const cajasMixtas = cart.filter(i => !i.isBox);
+        const cajasCerradas = cart.filter(i => i.isBox);
+
+        const getFinalName = (i) => {
+            let finalName = "";
+            if (i.nombre.includes("(Elegida:")) {
+                const parts = i.nombre.split("(Elegida:");
+                const variant = parts[1].replace(")", "").trim();
+                finalName = `${i.bodega} ${variant}`;
+            } else {
+                const cleanName = i.nombre.replace('<br>', ' ').replace('<span class="selected-variant-text">', '').replace('</span>', '');
+                finalName = `${i.bodega} ${cleanName}`;
+            }
+            return finalName;
+        };
+
+        if (cajasMixtas.length > 0) {
+            msg += `*Caja Mixta*\n`;
+            let botellasMixtas = 0;
+            cajasMixtas.forEach(i => {
+                const subtotal = i.precio * i.qty;
+                total += subtotal;
+                totalBotellas += i.qty;
+                botellasMixtas += i.qty;
+                msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
+                msg += `   ↳ ${i.qty} x $${i.precio.toLocaleString('es-AR')} = $${subtotal.toLocaleString('es-AR')}\n`;
+            });
+            totalCajas += (botellasMixtas / 6);
+        }
+
+        if (cajasCerradas.length > 0) {
+            if (cajasMixtas.length > 0) msg += `\n`; 
+            msg += `*Caja Cerrada*\n`;
+            cajasCerradas.forEach(i => {
+                const subtotal = i.precio * i.qty;
+                total += subtotal;
+                totalBotellas += i.qty;
+                const bSize = i.boxSize || 6;
+                totalCajas += (i.qty / bSize);
+                msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
+                msg += `   ↳ ${i.qty} x $${i.precio.toLocaleString('es-AR')} = $${subtotal.toLocaleString('es-AR')}\n`;
+            });
+        }
+        
+        let formattedCajas = Number.isInteger(totalCajas) ? totalCajas : totalCajas.toFixed(1);
+
+        msg += `-------------------\nTotal de botellas: ${totalBotellas}\n`;
+        msg += `Total de cajas: ${formattedCajas}\n`;
+        msg += `💰 *TOTAL: $${Math.round(total).toLocaleString('es-AR')}*\n`;
+        msg += `-------------------\n👤 Vendedor: Max Bazzana`;
+        
+        window.open(`https://wa.me/5491130529102?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function init() {
+        const bodegas = [...new Set(products.map(p => p.bodega))].sort();
+        const sel = document.getElementById('bodegaFilter');
+        bodegas.forEach(b => { const o = document.createElement('option'); o.value = b; o.textContent = b; sel.appendChild(o); });
+        renderProducts(); initDeliveryDates();
+    }
+
+    window.onclick = e => { 
+        if (e.target == document.getElementById('cartModal')) closeCart(); 
+        if (e.target == document.getElementById('rulesModal')) closeRulesModal();
+    }
+    init();
+</script>
+</body>
+</html>
