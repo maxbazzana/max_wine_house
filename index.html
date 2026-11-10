@@ -145,11 +145,52 @@
             .header-content { gap: 5px; }
             .header-actions { gap: 5px; }
             .cart-icon { padding: 0 8px; }
+            header { padding-left: 10px; padding-right: 10px; }
+            .brand-title { font-size: 0.85rem; letter-spacing: -0.2px; }
+            .subtitle { font-size: 0.58rem; }
+            .cart-icon { min-width: 40px; min-height: 40px; }
         }
 
         /* LINK A LA GUIA (mismo estilo que los botones del header) */
         a.cart-icon { text-decoration: none; }
         a.cart-icon:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+        /* LOGO / TITULO CLICKEABLE (volver al inicio) */
+        .brand-container { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .brand-container:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 6px; }
+
+        /* BARRA "SOLO OFERTAS" CON BOTON VOLVER */
+        .offers-bar {
+            max-width: 1200px;
+            margin: 15px auto 0;
+            padding: 10px 15px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #fdecea;
+            color: #a93226;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        .offers-bar button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 14px;
+            min-height: 44px;
+            font-weight: 700;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+        @media(max-width: 480px) {
+            .offers-bar { margin: 15px 15px 0; width: auto; justify-content: center; text-align: center; }
+            .offers-bar button { width: 100%; }
+        }
 
         /* BANNER REGLAS */
         .rules-banner {
@@ -427,7 +468,7 @@
 
 <header>
     <div class="header-content">
-        <div class="brand-container">
+        <div class="brand-container" onclick="goHome()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goHome();}" role="button" tabindex="0" title="Volver al inicio">
             <div class="brand-text">
                 <span class="brand-title">MAX WINE HOUSE</span>
                 <span class="subtitle">Curaduría de vinos argentinos</span>
@@ -459,6 +500,11 @@
     <select id="bodegaFilter" onchange="renderProducts()">
         <option value="all">Todas las Bodegas</option>
     </select>
+</div>
+
+<div id="offers-bar" class="offers-bar" style="display: none;">
+    <span>🔥 Mostrando solo ofertas</span>
+    <button type="button" onclick="goHome()">← Ver todo el catálogo</button>
 </div>
 
 <div class="container" id="product-grid"></div>
@@ -763,7 +809,20 @@
         } else {
             btn.style.boxShadow = 'none';
         }
+        document.getElementById('offers-bar').style.display = showingOffers ? 'flex' : 'none';
         renderProducts();
+        if (showingOffers) window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Vuelve a la pagina principal: quita ofertas y filtros y sube al inicio
+    function goHome() {
+        showingOffers = false;
+        document.getElementById('btn-ofertas').style.boxShadow = 'none';
+        document.getElementById('offers-bar').style.display = 'none';
+        document.getElementById('searchInput').value = '';
+        document.getElementById('bodegaFilter').value = 'all';
+        renderProducts();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderProducts() {
