@@ -546,6 +546,7 @@
 
 <script>
     let products = [
+        { bodega: "4 GATOS LOCOS", nombre: "Miau Malbec", precio: 19000, precioMinorista: 21000 },
         { bodega: "ACHAVAL FERRER", nombre: "Malbec Appellation (Lujan de Cuyo / Valle de Uco)", precio: 29000, precioMinorista: 32000 },
         { bodega: "ACHAVAL FERRER", nombre: "Quimera Diamante Blend", precio: 57000, precioMinorista: 59900 },
         { bodega: "ALFA CRUX", nombre: "Beta Crux Malbec (AGOTADO)", precio: 23500, precioMinorista: 25900 },
@@ -571,6 +572,7 @@
         { bodega: "CATENA ZAPATA", nombre: "DV L'Esploratore (Malbec Cafayate / Malbec Angulos)", precio: 17000, uCaja: 4, precioMinorista: 18000 },
         { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata (Chardonnay / Merlot / Cab. Sauv. / Cab. Franc)", precio: 22000, uCaja: 4, precioMinorista: 23900 },
         { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec", precio: 23000, uCaja: 4, precioMinorista: 24900 },
+        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec Alta 2018", precio: 45000, uCaja: 4, precioMinorista: 48900 },
         { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard (Cab. Sauv Paraje Altamira / Cab. Sauv Domingo Tupungato / Cab. Sauv La Pirámide Agrelo) (OFERTA)", precio: 24000, uCaja: 4, precioMinorista: 25500 },
         { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard Malbec Adriana (OFERTA)", precio: 26500, uCaja: 4, precioMinorista: 27500 },
         { bodega: "CATENA ZAPATA", nombre: "Nicola Catena Bonarda", precio: 47000, uCaja: 4, precioMinorista: 49900 },
@@ -580,12 +582,16 @@
         { bodega: "CATENA ZAPATA", nombre: "As Bravas Malbec 2018 - 100 PTS", precio: 122000, precioMinorista: 127000 },
         { bodega: "CHACRA", nombre: "Barda / Roka / Nacha (Barda Pinot Noir / Roka Malbec / Nacha Rosé)", precio: 46500, precioMinorista: 49000 },
         { bodega: "CHACRA", nombre: "Chacra 55 Pinot Noir (OFERTA)", precio: 82000, precioMinorista: 89000 },
+        { bodega: "COINCIDIR", nombre: "Coincidir Malbec", precio: 19900, uCaja: 4, precioMinorista: 21900 },
+        { bodega: "CASARENA", nombre: "Casarena Single Vineyard Naoki Malbec 2022", precio: 38000, uCaja: 3, precioMinorista: 43000 },
         { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Grand Mère / Grand Père)", precio: 32000, precioMinorista: 33000 },
         { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Histoire / La Savante) (OFERTA)", precio: 54500, precioMinorista: 56000 },
         { bodega: "DURIGUTTI", nombre: "Cara Sucia Criolla (OFERTA)", precio: 16900, precioMinorista: 19900 },
         { bodega: "DURIGUTTI", nombre: "HD Reserva Malbec", precio: 22000, precioMinorista: 25000 },
+        { bodega: "DURIGUTTI", nombre: "Pie de Monte Inmigrantes - Tintas de Pie Franco", precio: 18000, precioMinorista: 21000 },
         { bodega: "EL BAYEH", nombre: "Tinto de Purmamarca Criolla (PRÓXIMAMENTE)", precio: 22000, precioMinorista: 25000 },
         { bodega: "EL BAYEH", nombre: "Finca Ollantay Malbec (PRÓXIMAMENTE)", precio: 28000, precioMinorista: 32000 },
+        { bodega: "EL BAYEH", nombre: "Doña Carmen Criolla Chica", precio: 42000, precioMinorista: 45000 },
         { bodega: "EL ENEMIGO (Bodega Aleanna)", nombre: "El Enemigo (Cabernet Franc / Malbec / Chardonnay / Bonarda)", precio: 17000, precioMinorista: 18500 },
         { bodega: "EL ENEMIGO (Bodega Aleanna)", nombre: "Gran Enemigo (Cepillo / Agrelo / Chacayes / Corte)", precio: 39900, precioMinorista: 44000 },
         { bodega: "EL ENEMIGO (Bodega Aleanna)", nombre: "Gran Enemigo Gualtallary 2023 - 100 PTS", precio: 55000, precioMinorista: 56500 },
@@ -594,11 +600,14 @@
         { bodega: "EL ESTECO", nombre: "Old Vines Malbec", precio: 24500, precioMinorista: 26900 },
         { bodega: "ERNESTO CATENA", nombre: "Animal Colors Blend de Tintas Orgánico (OFERTA)", precio: 13000, precioMinorista: 15000 },
         { bodega: "ERNESTO CATENA", nombre: "Tikal Amorio Malbec (AGOTADO)", precio: 28500, precioMinorista: 31000 },
+        { bodega: "ERNESTO CATENA", nombre: "Siesta Malbec 2017 (Estuche de Madera)", precio: 37000, uCaja: 3, precioMinorista: 42000 },
         { bodega: "ERNESTO CATENA", nombre: "Lost by Siesta Malbec (OFERTA)", precio: 89000, uCaja: 3, precioMinorista: 93000 },
+        { bodega: "FLECHAS DE LOS ANDES", nombre: "Gran Malbec 2022", precio: 46000, precioMinorista: 49500 },
         { bodega: "KAIKEN", nombre: "Desbandado Cabernet Franc (OFERTA)", precio: 15000, precioMinorista: 18000 },
         { bodega: "KAIKEN", nombre: "Disobedience Blend By Francis Mallmann", precio: 18900, precioMinorista: 22500 },
         { bodega: "KARIM MUSSI", nombre: "Alandes Paradoux Blend de Blancs", precio: 36500, precioMinorista: 38900 },
         { bodega: "KARIM MUSSI", nombre: "Alandes Gran Cabernet Franc", precio: 49500, precioMinorista: 52000 },
+        { bodega: "KRONTIRAS", nombre: "Explore Malbec", precio: 26500, precioMinorista: 29500 },
         { bodega: "LUCA", nombre: "Luca (Pinot Noir / Syrah / Chardonnay) (OFERTA)", precio: 24500, precioMinorista: 26500 },
         { bodega: "LUCA", nombre: "Luca Malbec", precio: 27500, precioMinorista: 29900 },
         { bodega: "LUCA", nombre: "Beso de Dante (OFERTA)", precio: 42000, precioMinorista: 43000 },
@@ -609,8 +618,12 @@
         { bodega: "MICHELINI I MUFATTO", nombre: "GY Blend", precio: 23500, precioMinorista: 26000 },
         { bodega: "MIL SUELOS", nombre: "Manos Negras Artesano Malbec (OFERTA)", precio: 26000, precioMinorista: 28000 },
         { bodega: "MIL SUELOS", nombre: "Estancia Los Cardones Tigerstone Garnacha (AGOTADO)", precio: 26000, uCaja: 3, precioMinorista: 29000 },
+        { bodega: "MIL SUELOS", nombre: "Zaha Espumante Calcaire", precio: 42000, precioMinorista: 45000 },
+        { bodega: "MIL SUELOS", nombre: "Teho El Corte", precio: 35000, precioMinorista: 38000 },
+        { bodega: "MUNDO REVÉS", nombre: "Asa Nisi Masa Malbec", precio: 17500, precioMinorista: 19500 },
         { bodega: "MOSQUITA MUERTA", nombre: "Mosquita Blend de Tintas", precio: 15000, uCaja: 3, precioMinorista: 16500 },
         { bodega: "MOSQUITA MUERTA", nombre: "Malcriado Malbec (OFERTA)", precio: 49900, uCaja: 3, precioMinorista: 53000 },
+        { bodega: "OTRONIA", nombre: "45° Rugientes Pinot Noir", precio: 38900, precioMinorista: 42900 },
         { bodega: "PULENTA", nombre: "Pulenta Estate Chardonnay", precio: 14000, precioMinorista: 15000 },
         { bodega: "PULENTA", nombre: "Pulenta Estate (Red Blend / Pinot Noir / Cabernet Franc / Malbec / Malbec orgánico / Cab. Sauvignon) (OFERTA)", precio: 21000, precioMinorista: 22000 },
         { bodega: "PULENTA", nombre: "Pulenta Gran (Pinot Noir / Cabernet Franc / Cab. Sauv. / Merlot / Malbec) (OFERTA)", precio: 59900, precioMinorista: 62000 },
@@ -621,6 +634,7 @@
         { bodega: "RICCITELLI", nombre: "Invader Semillón (PRÓXIMAMENTE)", precio: 32500, precioMinorista: 34500 },
         { bodega: "ROLLAND", nombre: "Mariflor Merlot", precio: 22000, precioMinorista: 25000 },
         { bodega: "ROLLAND", nombre: "Val de Flores Malbec", precio: 77000, precioMinorista: 79900 },
+        { bodega: "ROLLAND", nombre: "Château Fontenil 2018", precio: 89900, precioMinorista: 94000 },
         { bodega: "ROSELL BOHER", nombre: "Casa Boher (Malbec Agrelo / Malbec San Pablo) (OFERTA)", precio: 16000, precioMinorista: 18000 },
         { bodega: "ROSELL BOHER", nombre: "Encarnación Brut Nature", precio: 35000, precioMinorista: 37000 },
         { bodega: "ROSELL BOHER", nombre: "Boher Gran (Chardonnay / Viognier) (OFERTA)", precio: 35000, uCaja: 4, precioMinorista: 37000 },
@@ -802,6 +816,7 @@
             if (imgName === "TRUMPETER (Rutini Wines)") imgName = "TRUMPETER";
             if (imgName === "EL BAYEH") imgName = "el_bayeh";
             if (imgName === "MICHELINI I MUFATTO") imgName = "michelini_mufatto.jpg";
+            if (imgName === "MUNDO REVÉS") imgName = "mundo_reves";
             const imagePath = /\.(png|jpe?g)$/i.test(imgName) ? `logos bodegas/${imgName}` : `logos bodegas/${imgName}.png`;
 
             let variantHTML = variants ? `
