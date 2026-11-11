@@ -15,13 +15,8 @@
   }
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
-  html{background:#000}
-  body{margin:0;background:transparent;color:var(--ink);font:400 1.0625rem/1.65 'Segoe UI','Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 'Segoe UI','Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 
-  /* Fondo fijo: la copa queda quieta mientras el contenido se desplaza encima */
-  body::before{content:"";position:fixed;inset:0;z-index:-2;background:#000 url("img/fondo-guia.jpg") center/contain no-repeat}
-  body::after{content:"";position:fixed;inset:0;z-index:-1;background:rgba(0,0,0,.3)}
-  @media (max-aspect-ratio:3/4){ body::before{background-size:cover} }
   a{color:var(--gold);text-underline-offset:.18em}
   a:focus-visible,.btn:focus-visible,.pill:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   h1,h2,h3,h4{margin:0;line-height:1.15}
@@ -160,6 +155,11 @@
   .ph-alert{border-color:var(--primary);background:rgba(128,0,32,.35)}
   .ph-alert a{font-size:1.6rem;color:#fff}
   .ph-note{color:var(--soft);font-size:.85rem;margin:.9rem 0 0}
+  .cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:2000;max-width:40rem;margin:0 auto;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding:1rem 1.1rem;border-radius:12px;background:#0d1217;border:1px solid var(--gold);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+  .cookie[hidden]{display:none}
+  .cookie p{margin:0;flex:1 1 16rem;font-size:.9rem;color:var(--ink)}
+  .cookie button{min-height:44px;padding:0 1.2rem;border-radius:50px;border:0;background:var(--primary);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+  .cookie button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   footer{margin-top:4rem;padding-top:1.25rem;border-top:1px solid var(--rule);color:var(--soft);font-size:.88rem}
 
   @media (max-width:560px){
@@ -238,7 +238,7 @@
         <h4>Catena Zapata</h4>
         <span class="where">Agrelo</span>
         <p>La pirámide en medio de los viñedos y una de las marcas de vino más admiradas del mundo. La visita más pedida de Mendoza.</p>
-        <div class="acts"><a class="act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20vi%20Catena%20Zapata%20en%20la%20gu%C3%ADa%20y%20me%20gustar%C3%ADa%20visitarla.%20%C2%BFMe%20ayudan%20a%20conseguir%20lugar%3F%20Somos%20___%20personas%20y%20viajamos%20en%20estas%20fechas%3A%20___." rel="noopener" target="_blank">Coordinar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
+        <div class="acts"><a class="act" href="https://www.viator.com/tours/Mendoza/Visit-and-Tasting-EN-Catena-Zapata-Winery-and-Private-Transportation/d931-372644P28?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-catena" rel="sponsored noopener" target="_blank">Reservar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
       </article>
       <article class="entry">
         <figure class="shot">
@@ -261,8 +261,8 @@
         </figure>
         <h4>Casa Vigil · El Enemigo</h4>
         <span class="where">Chachingo</span>
-        <p>Una bodega inspirada en la Divina Comedia, con los vinos de Alejandro Vigil y uno de los almuerzos más buscados de la provincia.</p>
-        <div class="acts"><a class="act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20vi%20Casa%20Vigil%20en%20la%20gu%C3%ADa.%20Me%20gustar%C3%ADa%20hacer%20la%20visita%20y%2C%20si%20se%20puede%2C%20almorzar%20ah%C3%AD.%20%C2%BFMe%20ayudan%20a%20reservar%3F%20Somos%20___%20personas%2C%20fechas%3A%20___." rel="noopener" target="_blank">Coordinar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
+        <p>Una bodega inspirada en la Divina Comedia, con los vinos de Alejandro Vigil y una de las experiencias gastronómicas más buscadas de la provincia.</p>
+        <div class="acts"><a class="act" href="https://www.viator.com/tours/Mendoza/Taste-Routes-Wines-and-Oils-of-Mendoza/d931-225765P5?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-vigil" rel="sponsored noopener" target="_blank">Reservar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
       </article>
     </div>
 
@@ -276,7 +276,7 @@
         <h4>Zuccardi Piedra Infinita</h4>
         <span class="where">Paraje Altamira</span>
         <p>Arquitectura de piedra al pie de los Andes. Tras liderar tres años seguidos el ranking mundial, entró a su Salón de la Fama.</p>
-        <div class="acts"><a class="act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20quiero%20conocer%20Zuccardi%20Piedra%20Infinita%20en%20el%20Valle%20de%20Uco.%20%C2%BFMe%20ayudan%20a%20coordinar%20la%20visita%20y%20el%20traslado%3F%20Somos%20___%20personas%2C%20fechas%3A%20___." rel="noopener" target="_blank">Coordinar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
+        <div class="acts"><a class="act" href="https://www.viator.com/tours/Mendoza/Wine-Idols-Zuccardi-Legacy-Journey-Through-Uco-Valleys-Finest/d931-379582P18?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-zuccardi" rel="sponsored noopener" target="_blank">Reservar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
       </article>
     </div>
   </section>
@@ -293,7 +293,7 @@
         <h4>Riccitelli Wines</h4>
         <span class="where">Las Compuertas · Luján de Cuyo</span>
         <p>La bodega de autor de Matías Riccitelli, en el ranking mundial de enoturismo 2025. Viñas viejas y un bistró entre ellas.</p>
-        <div class="acts"><a class="act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20vi%20Riccitelli%20entre%20las%20destacadas%20de%20la%20gu%C3%ADa%20y%20me%20gustar%C3%ADa%20visitarla.%20%C2%BFC%C3%B3mo%20la%20coordinamos%3F%20Somos%20___%20personas%2C%20fechas%3A%20___." rel="noopener" target="_blank">Coordinar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
+        <div class="acts"><a class="act" href="https://www.viator.com/tours/Mendoza/Riccitelli-Wines-Tasting-Experience-in-the-Andes/d931-379582P35?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-riccitelli" rel="sponsored noopener" target="_blank">Reservar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
       </article>
       <article class="entry">
         <figure class="shot">
@@ -303,7 +303,7 @@
         <h4>Viña Cobos</h4>
         <span class="where">Perdriel · Luján de Cuyo</span>
         <p>La bodega de Paul Hobbs en Mendoza, que en 2025 entró al ranking mundial de enoturismo.</p>
-        <div class="acts"><a class="act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20me%20interesa%20la%20cata%20en%20Vi%C3%B1a%20Cobos%20que%20recomiendan%20en%20la%20gu%C3%ADa.%20%C2%BFMe%20ayudan%20a%20reservarla%3F%20Somos%20___%20personas%2C%20fechas%3A%20___." rel="noopener" target="_blank">Coordinar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
+        <div class="acts"><a class="act" href="https://www.viator.com/tours/Mendoza/Vina-Cobos-Wine-Tasting-Experience/d931-379582P33?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-cobos" rel="sponsored noopener" target="_blank">Reservar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
       </article>
       <article class="entry">
         <figure class="shot">
@@ -313,7 +313,7 @@
         <h4>Achaval Ferrer</h4>
         <span class="where">Perdriel · Luján de Cuyo</span>
         <p>Una de las bodegas más premiadas del país. Su cata sentada frente a la cordillera, con Malbecs de viñedos centenarios, es lo que más destacan quienes la visitan.</p>
-        <div class="acts"><a class="act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20vi%20Achaval%20Ferrer%20en%20la%20gu%C3%ADa%20y%20me%20gustar%C3%ADa%20hacer%20la%20cata%20frente%20a%20la%20cordillera.%20%C2%BFMe%20ayudan%20a%20coordinarla%3F%20Somos%20___%20personas%2C%20fechas%3A%20___." rel="noopener" target="_blank">Coordinar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
+        <div class="acts"><a class="act" href="https://www.viator.com/tours/Mendoza/Mendoza-Achaval-Ferrer-Ultimate-Wine-Tasting-Tour-Winery-Visit/d931-379582P27?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-achaval" rel="sponsored noopener" target="_blank">Reservar visita</a><a class="act act-wine" href="index.html">Probá sus vinos</a></div>
       </article>
       <article class="entry">
         <figure class="shot">
@@ -383,14 +383,14 @@
         <div class="combo">
           <h4>Catena Zapata + Achaval Ferrer</h4>
           <span class="where">Agrelo y Perdriel · Luján de Cuyo</span>
-          <p>La pirámide de Catena a la mañana y almuerzo en el bistró de Achaval Ferrer.</p>
-          <a class="act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20me%20interesa%20el%20recorrido%20Catena%20Zapata%20%2B%20Achaval%20Ferrer%20que%20vi%20en%20la%20gu%C3%ADa.%20%C2%BFMe%20ayudan%20a%20coordinarlo%3F%20Somos%20___%20personas%2C%20fecha%3A%20___." rel="noopener" target="_blank">Coordinar este recorrido</a>
+          <p>Catena Zapata con un juego para armar tu propio corte y almuerzo en Quimera, el bistró de Achaval Ferrer recomendado por la Guía Michelin.</p>
+          <a class="act" href="https://www.viator.com/tours/Mendoza/Private-Wine-Tour-Catena-Zapata-and-El-Enemigo-with-Tastings/d931-372644P27?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-combo-catena-achaval" rel="sponsored noopener" target="_blank">Reservar este recorrido</a>
         </div>
         <div class="combo">
           <h4>Catena Zapata + Casa Vigil</h4>
           <span class="where">Luján de Cuyo y Maipú</span>
           <p>La combinación más pedida: visita a Catena y almuerzo en Casa Vigil, con estrella Michelin.</p>
-          <a class="act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20me%20interesa%20el%20recorrido%20Catena%20Zapata%20%2B%20Casa%20Vigil%20que%20vi%20en%20la%20gu%C3%ADa.%20%C2%BFMe%20ayudan%20a%20coordinarlo%3F%20Somos%20___%20personas%2C%20fecha%3A%20___." rel="noopener" target="_blank">Coordinar este recorrido</a>
+          <a class="act" href="https://www.viator.com/tours/Mendoza/Visit-with-Tasting-and-Lunch-in-Wine-Cellars/d931-372644P2?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-combo-catena-vigil" rel="sponsored noopener" target="_blank">Reservar este recorrido</a>
         </div>
       </div>
     </div>
@@ -399,9 +399,9 @@
       <div class="trip-head"><span class="trip-num">3 días</span><h3>Mendoza completa</h3></div>
       <p class="trip-lead">Te alojás en Mendoza o en Chacras de Coria y cada día te buscan y te traen al hotel. Sin manejar.</p>
       <ol class="days">
-        <li><div><h4>Luján de Cuyo y Maipú</h4><p>Visita a Catena Zapata a la mañana y almuerzo en Casa Vigil, con traslado privado.</p><a class="day-act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20quiero%20reservar%20el%20d%C3%ADa%201%20del%20itinerario%20de%20la%20gu%C3%ADa%3A%20Catena%20Zapata%20%2B%20almuerzo%20en%20Casa%20Vigil.%20Somos%20___%20personas%2C%20fecha%3A%20___." rel="noopener" target="_blank">Reservar día 1</a></div></li>
-        <li><div><h4>Valle de Uco</h4><p>Zuccardi Piedra Infinita con almuerzo frente a los Andes, con traslado privado ida y vuelta.</p><a class="day-act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20quiero%20reservar%20el%20d%C3%ADa%202%20del%20itinerario%20de%20la%20gu%C3%ADa%3A%20Zuccardi%20Piedra%20Infinita%20con%20almuerzo.%20Somos%20___%20personas%2C%20fecha%3A%20___." rel="noopener" target="_blank">Reservar día 2</a></div></li>
-        <li><div><h4>Luján de Cuyo</h4><p>Cata en Viña Cobos o en Riccitelli, dos de nuestras destacadas.</p><a class="day-act" href="https://wa.me/5491130529102?text=Hola%20MWH%2C%20quiero%20reservar%20el%20d%C3%ADa%203%20del%20itinerario%20de%20la%20gu%C3%ADa%3A%20cata%20en%20Vi%C3%B1a%20Cobos%20o%20Riccitelli.%20Somos%20___%20personas%2C%20fecha%3A%20___." rel="noopener" target="_blank">Reservar día 3</a></div></li>
+        <li><div><h4>Luján de Cuyo y Maipú</h4><p>Visita a Catena Zapata a la mañana y almuerzo en Casa Vigil, con traslado privado.</p><a class="day-act" href="https://www.viator.com/tours/Mendoza/Visit-with-Tasting-and-Lunch-in-Wine-Cellars/d931-372644P2?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-dia1" rel="sponsored noopener" target="_blank">Reservar día 1</a></div></li>
+        <li><div><h4>Valle de Uco</h4><p>Visita y cata de cinco vinos en Zuccardi Piedra Infinita, frente a los Andes, con traslado privado ida y vuelta.</p><a class="day-act" href="https://www.viator.com/tours/Mendoza/Wine-Idols-Zuccardi-Legacy-Journey-Through-Uco-Valleys-Finest/d931-379582P18?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-dia2" rel="sponsored noopener" target="_blank">Reservar día 2</a></div></li>
+        <li><div><h4>Luján de Cuyo</h4><p>Cata en Viña Cobos, una de nuestras destacadas, con traslado privado.</p><a class="day-act" href="https://www.viator.com/tours/Mendoza/Vina-Cobos-Wine-Tasting-Experience/d931-379582P33?pid=P00331038&amp;mcid=42383&amp;medium=link&amp;medium_version=selector&amp;campaign=guia-mza-dia3" rel="sponsored noopener" target="_blank">Reservar día 3</a></div></li>
       </ol>
       <div class="stay">
         <div class="stay-head"><strong>¿Dónde dormir?</strong><span>Tres hoteles muy bien valorados por quienes vienen a recorrer bodegas.</span></div>
@@ -479,10 +479,26 @@
   </section>
 
   <footer>
-    <p>Solo recomendamos lugares que elegiríamos nosotros.</p>
-    <p>Max Wine House · Buenos Aires · <a href="https://www.instagram.com/max_wine_house/" rel="noopener" target="_blank">@max_wine_house</a></p>
+    <p>Algunos links de esta guía son de afiliados: si reservás desde ellos, Max Wine House recibe una comisión, sin costo extra para vos. Solo recomendamos lugares que elegiríamos nosotros.</p>
+    <p>Max Wine House · Buenos Aires · <a href="https://www.instagram.com/max_wine_house/" rel="noopener" target="_blank">@max_wine_house</a> · <a href="politica-privacidad.html">Política de privacidad y cookies</a></p>
+    <p>Beber con moderación. Prohibida la venta de bebidas alcohólicas a menores de 18 años.</p>
   </footer>
 
 </main>
+<div class="cookie" id="cookie" role="region" aria-label="Aviso de cookies" hidden>
+  <p>Esta guía tiene links de afiliados: si hacés clic, sitios como Viator o Booking.com pueden usar cookies para registrar tu reserva. <a href="politica-privacidad.html">Más información</a></p>
+  <button type="button" id="cookie-ok">Entendido</button>
+</div>
+<script>
+  (function(){
+    var box=document.getElementById('cookie'), ok=document.getElementById('cookie-ok'), seen=false;
+    try{ seen=localStorage.getItem('mwh-cookies')==='ok'; }catch(e){}
+    if(!seen) box.hidden=false;
+    ok.addEventListener('click',function(){
+      box.hidden=true;
+      try{ localStorage.setItem('mwh-cookies','ok'); }catch(e){}
+    });
+  })();
+</script>
 </body>
 </html>
