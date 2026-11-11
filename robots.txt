@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Cuando tengas dominio propio, cambiá esta línea por: Sitemap: https://TU-DOMINIO/sitemap.xml
+Sitemap: https://maxbazzana.github.io/max_wine_house/sitemap.xml
