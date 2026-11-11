@@ -192,6 +192,50 @@
             .offers-bar button { width: 100%; }
         }
 
+        /* VERIFICACION DE EDAD (+18) */
+        .age-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #2c3e50, #000000);
+            overflow-y: auto;
+        }
+        .age-gate[hidden] { display: none; }
+        .age-box {
+            width: 100%;
+            max-width: 420px;
+            box-sizing: border-box;
+            text-align: center;
+            background: #fff;
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+            padding: 28px 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .age-brand { color: var(--gold); font-weight: 800; font-size: 1.3rem; background: #1b1b1b; border-radius: 8px; padding: 8px; margin-bottom: 18px; }
+        .age-box h2 { margin: 0 0 10px; font-size: 1.4rem; color: var(--primary); }
+        .age-box p { margin: 0 0 18px; color: var(--text-main); line-height: 1.5; font-size: 0.95rem; }
+        .age-actions { display: flex; flex-direction: column; gap: 10px; }
+        .age-actions button {
+            border: none;
+            border-radius: 8px;
+            min-height: 48px;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .age-yes { background: var(--primary); color: #fff; }
+        .age-no { background: #fff; color: #555; border: 2px solid #ddd !important; }
+        .age-actions button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+        .age-box .age-legal { margin: 16px 0 0; font-size: 0.78rem; color: #777; }
+        .age-denied { color: #a93226; font-weight: 700; }
+
         /* BANNER REGLAS */
         .rules-banner {
             background-color: #fff3cd;
@@ -579,6 +623,19 @@
                 <li>En las cajas mixtas, cada vino se facturará a precio minorista.</li>
             </ul>
         </div>
+    </div>
+</div>
+
+<div id="age-gate" class="age-gate" role="dialog" aria-modal="true" aria-labelledby="age-title" hidden>
+    <div class="age-box">
+        <div class="age-brand">MAX WINE HOUSE</div>
+        <h2 id="age-title">¿Sos mayor de 18 años?</h2>
+        <p id="age-text">Este sitio vende bebidas alcohólicas. Para continuar, confirmá que sos mayor de edad.</p>
+        <div class="age-actions" id="age-actions">
+            <button type="button" class="age-yes" id="age-yes">Sí, soy mayor de 18</button>
+            <button type="button" class="age-no" id="age-no">No, soy menor</button>
+        </div>
+        <p class="age-legal">Beber con moderación. Prohibida la venta de bebidas alcohólicas a menores de 18 años.</p>
     </div>
 </div>
 
@@ -1118,6 +1175,30 @@
         if (e.target == document.getElementById('rulesModal')) closeRulesModal();
     }
     init();
+
+    // Verificacion de edad: se pregunta una vez y se recuerda en el navegador
+    (function () {
+        const gate = document.getElementById('age-gate');
+        const KEY = 'mwh-mayor-18';
+        let ok = false;
+        try { ok = localStorage.getItem(KEY) === 'ok'; } catch (e) {}
+        if (ok) return;
+        gate.hidden = false;
+        document.body.style.overflow = 'hidden';
+        document.getElementById('age-yes').focus();
+        document.getElementById('age-yes').addEventListener('click', function () {
+            try { localStorage.setItem(KEY, 'ok'); } catch (e) {}
+            gate.hidden = true;
+            document.body.style.overflow = '';
+        });
+        document.getElementById('age-no').addEventListener('click', function () {
+            document.getElementById('age-title').textContent = 'Acceso no permitido';
+            const t = document.getElementById('age-text');
+            t.className = 'age-denied';
+            t.textContent = 'Lo sentimos: la venta de bebidas alcohólicas está prohibida a menores de 18 años. Volvé cuando seas mayor de edad.';
+            document.getElementById('age-actions').style.display = 'none';
+        });
+    })();
 </script>
 </body>
 </html>
