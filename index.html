@@ -39,8 +39,8 @@
       "telephone": "+54 9 11 3052-9102",
       "email": "bazzanitawines@gmail.com",
       "priceRange": "$$",
-      "currenciesAccepted": "ARS",
-      "paymentAccepted": "Transferencia, Efectivo",
+      "currenciesAccepted": "ARS, USD",
+      "paymentAccepted": "Transferencia, Pix, Efectivo",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Buenos Aires",
@@ -661,6 +661,7 @@
         <div class="footer-col">
             <h2>Entregas</h2>
             <p>Delivery a domicilio en toda la Ciudad de Buenos Aires (CABA), envío incluido en el precio. Elegís el día de entrega al hacer tu pedido.</p>
+            <p>Pagás por transferencia, Pix o efectivo (AR$ o USD).</p>
             <p>Regalos y pedidos empresariales: consultanos por WhatsApp.</p>
             <a class="review-btn" href="https://g.page/r/CYecT-INyTEVEBM/review" target="_blank" rel="noopener">★ Dejanos tu reseña en Google</a>
         </div>
@@ -703,13 +704,23 @@
                 <label style="font-size:0.9em; font-weight:bold;">Forma de pago:</label>
                 <select id="paymentMethod" style="width: 100%; margin-bottom: 10px;" onchange="togglePaymentInfo()">
                     <option value="" disabled selected>Seleccioná una opción</option>
-                    <option value="Transferencia">Transferencia</option>
-                    <option value="Efectivo">Efectivo</option>
+                    <option value="Transferencia (AR$)">Transferencia (AR$)</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Efectivo (AR$)">Efectivo (AR$)</option>
+                    <option value="Efectivo (USD)">Efectivo (USD)</option>
                 </select>
 
                 <div id="transfer-info" class="payment-info" style="display: none;">
                     <strong>Alias:</strong> <span id="alias-text" style="font-family: monospace; font-size: 1.1em; color:#000;">bazzana.max-1906</span>
                     <button class="copy-btn" onclick="copyAlias()">COPIAR</button>
+                </div>
+
+                <div id="pix-info" class="payment-info" style="display: none;">
+                    Al recibir tu pedido te enviamos la clave Pix y el monto en reales por WhatsApp.
+                </div>
+
+                <div id="usd-info" class="payment-info" style="display: none;">
+                    El monto en USD se calcula con la cotización del día. Te lo confirmamos por WhatsApp.
                 </div>
                 
                 <label style="font-size:0.9em; font-weight:bold;">Tu Nombre:</label>
@@ -1139,12 +1150,9 @@
 
     function togglePaymentInfo() {
         const method = document.getElementById('paymentMethod').value;
-        const info = document.getElementById('transfer-info');
-        if (method === 'Transferencia') {
-            info.style.display = 'block';
-        } else {
-            info.style.display = 'none';
-        }
+        document.getElementById('transfer-info').style.display = method.startsWith('Transferencia') ? 'block' : 'none';
+        document.getElementById('pix-info').style.display = method === 'Pix' ? 'block' : 'none';
+        document.getElementById('usd-info').style.display = method.includes('USD') ? 'block' : 'none';
     }
 
     function updateCartUI() {
