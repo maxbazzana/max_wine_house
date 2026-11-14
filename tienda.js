@@ -342,6 +342,8 @@ function sendOrder() {
     let total = 0;
     let totalBotellas = 0;
     let totalCajas = 0;
+    let cajasCerradasCount = 0;
+    let botellasMixtasCount = 0;
 
     const cajasMixtas = cart.filter(i => !i.isBox);
     const cajasCerradas = cart.filter(i => i.isBox);
@@ -350,8 +352,10 @@ function sendOrder() {
         let finalName = "";
         if (i.nombre.includes("(Elegida:")) {
             const parts = i.nombre.split("(Elegida:");
+            const base = parts[0].trim();
             const variant = parts[1].replace(")", "").trim();
-            finalName = `${i.bodega} ${variant}`;
+            // Incluye el nombre del vino además de la variedad elegida
+            finalName = base && !base.includes('/') ? `${i.bodega} ${base} – ${variant}` : `${i.bodega} ${variant}`;
         } else {
             const cleanName = i.nombre.replace('<br>', ' ').replace('<span class="selected-variant-text">', '').replace('</span>', '');
             finalName = `${i.bodega} ${cleanName}`;
@@ -371,6 +375,7 @@ function sendOrder() {
             msg += `   ↳ ${i.qty} x $${i.precio.toLocaleString('es-AR')} = $${subtotal.toLocaleString('es-AR')}\n`;
         });
         totalCajas += (botellasMixtas / 6);
+        botellasMixtasCount = botellasMixtas;
     }
 
     if (cajasCerradas.length > 0) {
@@ -382,15 +387,24 @@ function sendOrder() {
             totalBotellas += i.qty;
             const bSize = i.boxSize || 6;
             totalCajas += (i.qty / bSize);
+            cajasCerradasCount += Math.round(i.qty / bSize);
             msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
             msg += `   ↳ ${i.qty} x $${i.precio.toLocaleString('es-AR')} = $${subtotal.toLocaleString('es-AR')}\n`;
         });
     }
 
-    let formattedCajas = Number.isInteger(totalCajas) ? totalCajas : totalCajas.toFixed(1);
 
     msg += `-------------------\nTotal de botellas: ${totalBotellas}\n`;
-    msg += `Total de cajas: ${formattedCajas}\n`;
+    // Detalle de cajas: cerradas por un lado y mixtas (o botellas sueltas) por otro
+    if (cajasCerradasCount > 0) {
+        msg += `Cajas cerradas: ${cajasCerradasCount}\n`;
+    }
+    if (botellasMixtasCount > 0) {
+        const mixtasCompletas = Math.floor(botellasMixtasCount / 6);
+        const sueltas = botellasMixtasCount % 6;
+        if (mixtasCompletas > 0) msg += `Cajas mixtas: ${mixtasCompletas} (${mixtasCompletas * 6} botellas)\n`;
+        if (sueltas > 0) msg += `Botellas sueltas: ${sueltas}\n`;
+    }
     msg += `💰 *TOTAL: $${Math.round(total).toLocaleString('es-AR')}*\n`;
     msg += `-------------------\n👤 Vendedor: Max Bazzana`;
 
