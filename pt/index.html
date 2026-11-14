@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinhos argentinos com entrega em Buenos Aires · Max Wine House</title>
+    <meta name="description" content="Max Wine House: vinhos argentinos com entrega em Buenos Aires (CABA). Curadoria de rótulos premium de mais de 50 vinícolas de Mendoza, Salta e Patagônia, a preço direto da vinícola. Pedidos pelo WhatsApp, com pagamento via Pix.">
+    <meta name="color-scheme" content="only light">
+    <meta name="theme-color" content="#2c3e50">
+    <!-- SEO: cuando tengas dominio propio, reemplazá https://maxbazzana.github.io/max_wine_house/ por el nuevo dominio en canonical, og:url, og:image y el JSON-LD -->
+    <meta name="google-site-verification" content="QrjUBSMKptwY9tl3TQxm9fhhHS-So_swVU64mRQd_N0" />
+    <link rel="canonical" href="https://maxbazzana.github.io/max_wine_house/pt/">
+    <!-- Versiones por idioma -->
+    <link rel="alternate" hreflang="es" href="https://maxbazzana.github.io/max_wine_house/">
+    <link rel="alternate" hreflang="en" href="https://maxbazzana.github.io/max_wine_house/en/">
+    <link rel="alternate" hreflang="pt-BR" href="https://maxbazzana.github.io/max_wine_house/pt/">
+    <link rel="alternate" hreflang="x-default" href="https://maxbazzana.github.io/max_wine_house/">
+    <link rel="icon" href="../favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+    <!-- Open Graph: vista previa al compartir en WhatsApp, Instagram, Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Max Wine House">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale:alternate" content="es_AR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:title" content="Max Wine House · Vinhos argentinos com entrega em Buenos Aires">
+    <meta property="og:description" content="Curadoria de vinhos argentinos premium, a preço direto da vinícola. Pedidos pelo WhatsApp com entrega em domicílio em Buenos Aires.">
+    <meta property="og:url" content="https://maxbazzana.github.io/max_wine_house/pt/">
+    <meta property="og:image" content="https://maxbazzana.github.io/max_wine_house/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Max Wine House: curadoria de vinhos argentinos">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Datos estructurados: le dicen a Google qué es el negocio -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LiquorStore",
+      "name": "Max Wine House",
+      "alternateName": "MWH",
+      "description": "Vinhos argentinos com entrega em Buenos Aires: curadoria de rótulos premium a preço direto da vinícola.",
+      "url": "https://maxbazzana.github.io/max_wine_house/pt/",
+      "inLanguage": "pt-BR",
+      "logo": "https://maxbazzana.github.io/max_wine_house/apple-touch-icon.png",
+      "image": "https://maxbazzana.github.io/max_wine_house/og-image.jpg",
+      "telephone": "+54 9 11 3052-9102",
+      "email": "bazzanitawines@gmail.com",
+      "priceRange": "$$",
+      "currenciesAccepted": "ARS, USD",
+      "paymentAccepted": "Transferência, Pix, Dinheiro",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Buenos Aires",
+        "addressRegion": "CABA",
+        "addressCountry": "AR"
+      },
+      "areaServed": { "@type": "City", "name": "Cidade Autônoma de Buenos Aires (CABA)" },
+      "sameAs": ["https://www.instagram.com/max_wine_house/"],
+      "founder": { "@type": "Person", "name": "Maximiliano Bazzana" }
+    }
+    </script>
+    <style>
+        :root {
+            /* Paleta: Fondo Claro y Elegante */
+            --bg-body: #f4f6f8;       
+            --bg-card: #ffffff;       
+            --primary: #800020;       /* Burgundy */
+            --text-main: #333333;     
+            --text-light: #666666;    
+            --gold: #bfa05f;          
+            --btn-box: #27ae60;       /* Verde CTA Caja */
+            --btn-offer: #e74c3c;     /* Rojo Oferta */
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            color-scheme: only light; /* evita que el navegador oscurezca el catálogo */
+        }
+
+        body { 
+            font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* HEADER REFACTORIZADO */
+        header { 
+            background: linear-gradient(135deg, #2c3e50, #000000); 
+            padding: 0.8rem 16px; 
+            box-sizing: border-box;
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
+            width: 100%;
+        }
+        .header-content { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 10px;
+        }
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1 1 auto;
+            min-width: 0; /* Permite que el texto se trunque si es necesario */
+        }
+        .brand-logo-icon { 
+            font-size: 2rem; 
+        }
+        .brand-text { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            min-width: 0;
+        }
+        .brand-title { 
+            font-size: clamp(1rem, 4vw, 1.4rem); 
+            font-weight: 800; 
+            color: var(--gold); 
+            line-height: 1.2; 
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
+        }
+        .subtitle { 
+            font-size: clamp(0.65rem, 2.5vw, 0.75rem); 
+            color: #ccc; 
+            margin-top: 2px; 
+            font-weight: 300;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        .cart-icon { 
+            cursor: pointer; 
+            background: rgba(255,255,255,0.1); 
+            color: white; 
+            padding: 0 12px; 
+            border-radius: 50px; 
+            border: 1px solid var(--gold);
+            position: relative; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.2s;
+            min-height: 44px; /* Área táctil segura */
+            min-width: 44px; /* Área táctil segura */
+            box-sizing: border-box;
+            flex-shrink: 0; /* Prioridad de visibilidad */
+        }
+        #btn-ofertas {
+            flex-shrink: 1; /* Permite adaptación si falta espacio */
+        }
+
+        .cart-icon:active {
+            transform: scale(0.95);
+        }
+        .cart-badge { 
+            background: var(--btn-offer); 
+            color: white; 
+            border-radius: 50%; 
+            width: 20px; 
+            height: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 11px; 
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            flex-shrink: 0;
+        }
+
+        .nav-text { display: none; }
+        @media(min-width: 400px) {
+            .nav-text { display: inline; margin-left: 4px; }
+        }
+        @media(max-width: 350px) {
+            /* Extra seguridad para resoluciones ultra-pequeñas */
+            .header-content { gap: 5px; }
+            .header-actions { gap: 5px; }
+            .cart-icon { padding: 0 8px; }
+            header { padding-left: 10px; padding-right: 10px; }
+            .brand-title { font-size: 0.85rem; letter-spacing: -0.2px; }
+            .subtitle { font-size: 0.58rem; }
+            .cart-icon { min-width: 40px; min-height: 40px; }
+        }
+
+        /* SELECTOR DE IDIOMA (ES · EN · PT) */
+        .lang-switch {
+            max-width: 1200px;
+            margin: -4px auto 4px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+        .lang-switch a { color: #ccc; text-decoration: none; font-weight: 600; padding: 6px 8px; border-radius: 4px; }
+        .lang-switch a:hover { color: #fff; }
+        .lang-switch a[aria-current] { color: var(--gold); font-weight: 800; }
+        .lang-switch a:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+        .lang-switch span { color: #777; }
+
+        /* LINK A LA GUIA (mismo estilo que los botones del header) */
+        a.cart-icon { text-decoration: none; }
+        a.cart-icon:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+        /* LOGO / TITULO CLICKEABLE (volver al inicio) */
+        .brand-container { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .brand-container:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 6px; }
+
+        /* BARRA "SOLO OFERTAS" CON BOTON VOLVER */
+        .offers-bar {
+            max-width: 1200px;
+            margin: 15px auto 0;
+            padding: 10px 15px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #fdecea;
+            color: #a93226;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        .offers-bar button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 14px;
+            min-height: 44px;
+            font-weight: 700;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+        @media(max-width: 480px) {
+            .offers-bar { margin: 15px 15px 0; width: auto; justify-content: center; text-align: center; }
+            .offers-bar button { width: 100%; }
+        }
+
+        /* VERIFICACION DE EDAD (+18) */
+        .age-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #2c3e50, #000000);
+            overflow-y: auto;
+        }
+        .age-gate[hidden] { display: none; }
+        .age-box {
+            width: 100%;
+            max-width: 420px;
+            box-sizing: border-box;
+            text-align: center;
+            background: #fff;
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+            padding: 28px 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .age-brand { color: var(--gold); font-weight: 800; font-size: 1.3rem; background: #1b1b1b; border-radius: 8px; padding: 8px; margin-bottom: 18px; }
+        .age-box h2 { margin: 0 0 10px; font-size: 1.4rem; color: var(--primary); }
+        .age-box p { margin: 0 0 18px; color: var(--text-main); line-height: 1.5; font-size: 0.95rem; }
+        .age-actions { display: flex; flex-direction: column; gap: 10px; }
+        .age-actions button {
+            border: none;
+            border-radius: 8px;
+            min-height: 48px;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .age-yes { background: var(--primary); color: #fff; }
+        .age-no { background: #fff; color: #555; border: 2px solid #ddd !important; }
+        .age-actions button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+        .age-box .age-legal { margin: 16px 0 0; font-size: 0.78rem; color: #777; }
+        .age-denied { color: #a93226; font-weight: 700; }
+
+        /* BANNER REGLAS */
+        .rules-banner {
+            background-color: #fff3cd;
+            color: #856404;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.9em;
+            border-bottom: 1px solid #ffeeba;
+            line-height: 1.5;
+        }
+
+        /* FILTROS */
+        .filters { 
+            max-width: 1200px; 
+            margin: 20px auto; 
+            padding: 0 15px; 
+            display: flex; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+        }
+        input, select, textarea { 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            flex-grow: 1; 
+            font-size: 16px; 
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+
+        /* GRID PRODUCTOS */
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 15px; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 20px; 
+            padding-bottom: 80px;
+        }
+        
+        .card { 
+            background: var(--bg-card); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: var(--shadow); 
+            display: flex; 
+            flex-direction: column; 
+            transition: transform 0.2s; 
+            border: 1px solid #eee; 
+            position: relative; 
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+
+        .card-image-container {
+            width: 100%;
+            height: 200px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0; 
+            background: linear-gradient(-45deg, #0a1e38, #4a041c, #2c041c, #800020);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite; 
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card-image-container img {
+            max-width: 90%; 
+            max-height: 90%;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4));
+            border-radius: 8px; 
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--btn-offer);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .card-header { 
+            background: #f8f9fa; 
+            color: var(--text-light); 
+            padding: 10px 15px; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-weight: 700;
+            border-bottom: 1px solid #eee;
+        }
+        .card-body { padding: 15px; flex-grow: 1; }
+        .card-title { 
+            font-weight: 700; 
+            font-size: 1.15rem; 
+            margin-bottom: 8px; 
+            color: var(--primary); 
+            line-height: 1.3; 
+        }
+        .card-price { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            color: #333; 
+            margin: 10px 0; 
+        }
+        .card-price small { font-size: 0.9rem; color: #777; font-weight: 400; }
+        .box-price { font-size: 0.9em; color: var(--btn-box); font-weight: 600; margin-bottom: 10px; display: block;}
+        
+        .variant-selector { margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 6px; border: 1px solid #eee; }
+        .variant-selector label { display: block; font-size: 0.85em; color: var(--primary); font-weight: bold; margin-bottom: 5px; }
+        .variant-select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: white; cursor: pointer; }
+
+        .actions { 
+            padding: 15px; 
+            background: white; 
+            border-top: 1px solid #eee; 
+            display: flex; 
+            gap: 10px; 
+            flex-direction: column; 
+        }
+        .btn { 
+            border: none; 
+            padding: 12px; 
+            cursor: pointer; 
+            border-radius: 6px; 
+            font-weight: 700; 
+            font-size: 0.95em; 
+            transition: all 0.2s; 
+            text-align: center;
+        }
+        .btn-bottle { 
+            background-color: white; 
+            border: 2px solid #ddd; 
+            color: #555; 
+        }
+        .btn-bottle:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+        
+        .btn-box { 
+            background-color: var(--btn-box); 
+            color: white; 
+            box-shadow: 0 4px 6px rgba(39, 174, 96, 0.2);
+        }
+        .btn-box:hover { background-color: #219150; transform: scale(1.02); }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; backdrop-filter: blur(2px); }
+        .modal-content { 
+            background: white; 
+            width: 100%; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        }
+        @media(min-width: 600px) {
+            .modal-content { height: 90vh; margin-top: 5vh; border-radius: 12px; }
+        }
+
+        .modal-header { 
+            padding: 20px; 
+            border-bottom: 1px solid #eee; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--primary); 
+            color: white; 
+        }
+        .modal-body { padding: 20px; overflow-y: auto; flex-grow: 1; background: #f9f9f9; }
+        
+        .cart-item { 
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start;
+        }
+        
+        .cart-alert {
+            background: #fff3cd; border: 1px solid #ffeeba; color: #856404;
+            padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center; font-weight: bold;
+        }
+        .cart-success {
+            background: #d4edda; border: 1px solid #c3e6cb; color: #155724;
+            padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center;
+        }
+
+        .checkout-form { background: white; padding: 20px; border-radius: 8px; margin-top: 10px; border: 1px solid #eee; }
+        .payment-info { 
+            background: #e8f4fd; 
+            padding: 15px; 
+            border-radius: 6px;
+            border-left: 4px solid #2196F3; 
+            margin-bottom: 20px; 
+            font-size: 0.9em; 
+            color: #444; 
+        }
+        .copy-btn {
+            background: #ddd; border: none; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8em; margin-left: 5px;
+        }
+        
+        .btn-checkout { 
+            background: #25D366; 
+            color: white; 
+            width: 100%; 
+            padding: 18px; 
+            font-size: 1.1em; 
+            margin-top: 15px; 
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-checkout:disabled { background: #ccc; cursor: not-allowed; }
+        
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 12px 25px; border-radius: 30px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 3000; }
+        
+        .selected-variant-text {
+            color: var(--primary);
+            font-weight: bold;
+            display: block;
+            margin-top: 4px;
+            background: rgba(128, 0, 32, 0.05);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* WHATSAPP FLOAT */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .whatsapp-float:hover {
+            background-color: #128C7E;
+            transform: scale(1.05);
+            color: #FFF;
+        }
+
+        /* PIE DE PÁGINA (SEO + contacto) */
+        .site-footer {
+            background: linear-gradient(135deg, #2c3e50, #000000);
+            color: #ccc;
+            margin-top: 40px;
+            padding: 32px 16px 90px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 28px;
+        }
+        .site-footer h2 {
+            color: var(--gold);
+            font-size: 1rem;
+            margin: 0 0 8px;
+            font-weight: 700;
+        }
+        .site-footer p { margin: 0 0 8px; }
+        .site-footer ul { list-style: none; padding: 0; margin: 0; }
+        .site-footer li { margin-bottom: 6px; }
+        .site-footer a { color: #eee; text-decoration: none; }
+        .site-footer a:hover { color: var(--gold); text-decoration: underline; }
+        .site-footer a.review-btn {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 8px 16px;
+            border: 1px solid var(--gold);
+            border-radius: 50px;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        .site-footer a.review-btn:hover { background: var(--gold); color: #111; text-decoration: none; }
+        .footer-legal {
+            max-width: 1200px;
+            margin: 24px auto 0 !important;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            font-size: 0.78rem;
+            color: #999;
+        }
+        @media (max-width: 768px) {
+            .footer-content { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="lang-switch" aria-label="Idioma / Language">
+        <a href="../index.html" hreflang="es" lang="es" title="Español">ES</a><span aria-hidden="true">·</span><a href="../en/index.html" hreflang="en" lang="en" title="English">EN</a><span aria-hidden="true">·</span><a href="index.html" hreflang="pt-BR" lang="pt-BR" aria-current="true" title="Português">PT</a>
+    </nav>
+    <div class="header-content">
+        <div class="brand-container" onclick="goHome()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goHome();}" role="button" tabindex="0" title="Voltar ao início">
+            <h1 class="brand-text" style="margin:0; font-size:inherit; font-weight:inherit;">
+                <span class="brand-title">MAX WINE HOUSE</span>
+                <span class="subtitle">Curadoria de vinhos argentinos</span>
+            </h1>
+        </div>
+        <div class="header-actions">
+            <a href="guia-mendoza.html" class="cart-icon" title="Guia para visitar vinícolas em Mendoza">
+                🍇<span class="nav-text">Guia Mendoza</span>
+            </a>
+            <div id="btn-ofertas" class="cart-icon" onclick="filterOffers()" style="background: var(--btn-offer); border-color: var(--btn-offer);" title="Ver ofertas">
+                🔥<span class="nav-text">Ofertas</span>
+            </div>
+            <div class="cart-icon" onclick="openCart()">
+                🛒<span class="nav-text">Pedido</span>
+                <span id="cart-count" class="cart-badge">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="rules-banner">
+    <button onclick="openRulesModal()" style="background-color: transparent; color: #856404; border: 1px solid #856404; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95em;">
+        ⚠️ Ver Condições de Venda
+    </button>
+</div>
+
+<div class="filters">
+    <input type="text" id="searchInput" placeholder="Buscar vinho ou uva..." onkeyup="renderProducts()">
+    <select id="bodegaFilter" onchange="renderProducts()">
+        <option value="all">Todas as vinícolas</option>
+    </select>
+</div>
+
+<div id="offers-bar" class="offers-bar" style="display: none;">
+    <span>🔥 Mostrando somente ofertas</span>
+    <button type="button" onclick="goHome()">← Ver todo o catálogo</button>
+</div>
+
+<div class="container" id="product-grid"></div>
+
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-col footer-about">
+            <h2>Vinhos argentinos com entrega em Buenos Aires</h2>
+            <p>A Max Wine House é uma curadoria de vinhos argentinos premium. Selecionamos rótulos de mais de 50 vinícolas de Mendoza, Salta e Patagônia e entregamos na sua porta, a preço direto da vinícola.</p>
+            <p>Trabalhamos com vinícolas como Catena Zapata, Zuccardi, Achaval Ferrer, Susana Balbo, Luigi Bosca, Rutini, El Enemigo, Riccitelli, Viña Cobos, Kaiken, Salentein e Zorzal.</p>
+        </div>
+        <div class="footer-col">
+            <h2>Entregas</h2>
+            <p>Entrega em domicílio somente na Cidade de Buenos Aires (CABA), com frete incluído no preço. Você escolhe o dia da entrega ao fazer o pedido.</p>
+            <p>Pague com Pix, transferência ou dinheiro (pesos argentinos ou dólares).</p>
+            <p>Presentes e pedidos corporativos: fale com a gente pelo WhatsApp.</p>
+            <a class="review-btn" href="https://g.page/r/CYecT-INyTEVEBM/review" target="_blank" rel="noopener">★ Deixe sua avaliação no Google</a>
+        </div>
+        <div class="footer-col">
+            <h2>Contato</h2>
+            <ul>
+                <li><a href="https://wa.me/5491130529102" target="_blank" rel="noopener">WhatsApp: +54 9 11 3052-9102</a></li>
+                <li><a href="https://www.instagram.com/max_wine_house/" target="_blank" rel="noopener">Instagram: @max_wine_house</a></li>
+                <li><a href="mailto:bazzanitawines@gmail.com">bazzanitawines@gmail.com</a></li>
+                <li><a href="guia-mendoza.html">Guia para visitar vinícolas em Mendoza</a></li>
+                <li><a href="../politica-privacidad.html" hreflang="es">Política de privacidade (em espanhol)</a></li>
+            </ul>
+        </div>
+    </div>
+    <p class="footer-legal">© Max Wine House · Beba com moderação. Proibida a venda de bebidas alcoólicas para menores de 18 anos.</p>
+</footer>
+
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="margin:0">Meu Pedido</h3>
+            <span style="cursor:pointer; font-size:1.5em;" onclick="closeCart()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="cart-items"></div>
+            
+            <div id="cart-validation-msg" class="cart-alert">Sua caixa está vazia.</div>
+
+            <div style="font-size: 1.3em; font-weight: 800; text-align: right; margin-top: 10px; color: #333;">
+                Total: AR$ <span id="cart-total-price">0</span> <span style="font-size:0.6em; font-weight:400;">(entrega incluída)</span>
+            </div>
+
+            <div class="checkout-form">
+                <h4 style="margin-top:0; color:var(--primary)">Finalizar Pedido</h4>
+                
+                <div style="margin-bottom: 10px; font-weight: bold; color: #555;">
+                    Vendedor: Max Bazzana
+                </div>
+
+                <label style="font-size:0.9em; font-weight:bold;">Forma de pagamento:</label>
+                <select id="paymentMethod" style="width: 100%; margin-bottom: 10px;" onchange="togglePaymentInfo()">
+                    <option value="" disabled selected>Selecione uma opção</option>
+                    <option value="Transferencia (AR$)">Transferência (AR$)</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Efectivo (AR$)">Dinheiro (AR$)</option>
+                    <option value="Efectivo (USD)">Dinheiro (USD)</option>
+                </select>
+
+                <div id="transfer-info" class="payment-info" style="display: none;">
+                    <strong>Alias:</strong> <span id="alias-text" style="font-family: monospace; font-size: 1.1em; color:#000;">bazzana.max-1906</span>
+                    <button class="copy-btn" onclick="copyAlias()">COPIAR</button>
+                </div>
+
+                <div id="pix-info" class="payment-info" style="display: none;">
+                    Geramos a chave Pix (QR code ou link de pagamento) no momento da entrega.
+                </div>
+
+                <div id="usd-info" class="payment-info" style="display: none;">
+                    O valor em USD é calculado pela cotação do dia. Confirmamos pelo WhatsApp.
+                </div>
+                
+                <label style="font-size:0.9em; font-weight:bold;">Seu nome:</label>
+                <input type="text" id="customerName" placeholder="Ex.: João Silva" style="width: 93%; margin-bottom: 10px;">
+                
+                <label style="font-size:0.9em; font-weight:bold;">Endereço (somente Cidade de Buenos Aires):</label>
+                <input type="text" id="customerAddress" placeholder="Rua, número, andar / apartamento..." style="width: 93%; margin-bottom: 10px;">
+
+                <label style="font-size:0.9em; font-weight:bold;">Dia de entrega preferido:</label>
+                <select id="deliveryDate" style="width: 100%; margin-bottom: 10px;"></select>
+
+                <label style="font-size:0.9em; font-weight:bold;">Observações:</label>
+                <textarea id="customerObs" placeholder="Ex.: Campainha não funciona, deixar na portaria..." style="width: 93%; margin-bottom: 10px; font-family: inherit; resize: vertical;" rows="3"></textarea>
+                
+                <button id="btn-checkout" class="btn btn-checkout" onclick="sendOrder()" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                    </svg>
+                    ENVIAR PEDIDO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="rulesModal" class="modal">
+    <div class="modal-content" style="max-width: 450px; height: auto; max-height: 90vh;">
+        <div class="modal-header">
+            <h3 style="margin:0">Condições de Venda</h3>
+            <span style="cursor:pointer; font-size:1.5em;" onclick="closeRulesModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <ul style="margin-top: 0; margin-bottom: 0; padding-left: 20px; line-height: 1.6; color: #333;">
+                <li>Pedido mínimo: uma caixa fechada de 3, 4 ou 6 garrafas, conforme o produto.</li>
+                <li>As caixas mistas são permitidas somente no formato de 6 garrafas.</li>
+                <li>Nas caixas mistas, cada vinho é cobrado pelo preço de garrafa avulsa (varejo).</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="age-gate" class="age-gate" role="dialog" aria-modal="true" aria-labelledby="age-title" hidden>
+    <div class="age-box">
+        <div class="age-brand">MAX WINE HOUSE</div>
+        <h2 id="age-title">Você tem mais de 18 anos?</h2>
+        <p id="age-text">Este site vende bebidas alcoólicas. Para continuar, confirme que você é maior de idade.</p>
+        <div class="age-actions" id="age-actions">
+            <button type="button" class="age-yes" id="age-yes">Sim, tenho mais de 18</button>
+            <button type="button" class="age-no" id="age-no">Não, sou menor</button>
+        </div>
+        <p class="age-legal">Beba com moderação. Proibida a venda de bebidas alcoólicas para menores de 18 anos.</p>
+    </div>
+</div>
+
+<div id="toast" class="toast">Produto adicionado</div>
+
+<a href="https://wa.me/5491130529102" class="whatsapp-float" target="_blank" title="Fale conosco pelo WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+    </svg>
+</a>
+
+<script>
+    // Textos de la interfaz en portugués. La lógica está en ../tienda.js y el catálogo en ../products.js
+    window.MWH = {
+        lang: 'pt-BR',
+        langName: 'Portugués (PT)',
+        base: '../',
+        locale: 'pt-BR',
+        cur: 'AR$ ',
+        t: {
+            variety: 'Variedade / Uva:',
+            boxOnly: 'Somente caixa fechada',
+            addBottle: '+1 Garrafa',
+            addBox: 'ADICIONAR CAIXA',
+            offer: 'OFERTA',
+            soldOut: 'ESGOTADO',
+            soon: 'EM BREVE',
+            exclusive: 'Somente por caixa',
+            logoAlt: b => `Logo da vinícola ${b}`,
+            each: 'cada',
+            boxOf: n => `Caixa c/${n}:`,
+            retail: 'Garrafa avulsa:',
+            toastBox: 'Caixa adicionada',
+            toastBottle: 'Garrafa adicionada',
+            emptyCart: 'Sua caixa está vazia.',
+            chosen: 'Escolhida:',
+            missingOne: '⚠️ Falta <strong>1</strong> garrafa avulsa para completar a caixa mista de 6.',
+            missingMany: n => `⚠️ Faltam <strong>${n}</strong> garrafas avulsas para completar a caixa mista de 6.`,
+            validOrder: '✅ Pedido válido! Tudo pronto.',
+            aliasCopied: 'Alias copiado',
+            alertFill: 'Preencha seus dados e escolha a forma de pagamento.',
+            ageDeniedTitle: 'Acesso não permitido',
+            ageDeniedText: 'Desculpe: a venda de bebidas alcoólicas é proibida para menores de 18 anos. Volte quando for maior de idade.',
+            dateLabel: d => { const s = d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'short' }); return s.charAt(0).toUpperCase() + s.slice(1) + ' (9h às 18h)'; }
+        }
+    };
+</script>
+<script src="../products.js"></script>
+<script src="../tienda.js"></script>
+</body>
+</html>

@@ -10,6 +10,11 @@
     <!-- SEO: cuando tengas dominio propio, reemplazá https://maxbazzana.github.io/max_wine_house/ por el nuevo dominio en canonical, og:url, og:image y el JSON-LD -->
     <meta name="google-site-verification" content="QrjUBSMKptwY9tl3TQxm9fhhHS-So_swVU64mRQd_N0" />
     <link rel="canonical" href="https://maxbazzana.github.io/max_wine_house/">
+    <!-- Versiones por idioma -->
+    <link rel="alternate" hreflang="es" href="https://maxbazzana.github.io/max_wine_house/">
+    <link rel="alternate" hreflang="en" href="https://maxbazzana.github.io/max_wine_house/en/">
+    <link rel="alternate" hreflang="pt-BR" href="https://maxbazzana.github.io/max_wine_house/pt/">
+    <link rel="alternate" hreflang="x-default" href="https://maxbazzana.github.io/max_wine_house/">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -17,6 +22,8 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Max Wine House">
     <meta property="og:locale" content="es_AR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
     <meta property="og:title" content="Max Wine House · Vinos argentinos con delivery en Buenos Aires">
     <meta property="og:description" content="Curaduría de vinos argentinos de alta gama, a precio directo de bodega. Pedidos por WhatsApp con entrega a domicilio.">
     <meta property="og:url" content="https://maxbazzana.github.io/max_wine_house/">
@@ -197,6 +204,23 @@
             .subtitle { font-size: 0.58rem; }
             .cart-icon { min-width: 40px; min-height: 40px; }
         }
+
+        /* SELECTOR DE IDIOMA (ES · EN · PT) */
+        .lang-switch {
+            max-width: 1200px;
+            margin: -4px auto 4px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+        .lang-switch a { color: #ccc; text-decoration: none; font-weight: 600; padding: 6px 8px; border-radius: 4px; }
+        .lang-switch a:hover { color: #fff; }
+        .lang-switch a[aria-current] { color: var(--gold); font-weight: 800; }
+        .lang-switch a:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+        .lang-switch span { color: #777; }
 
         /* LINK A LA GUIA (mismo estilo que los botones del header) */
         a.cart-icon { text-decoration: none; }
@@ -609,6 +633,9 @@
 <body>
 
 <header>
+    <nav class="lang-switch" aria-label="Idioma / Language">
+        <a href="index.html" hreflang="es" lang="es" aria-current="true" title="Español">ES</a><span aria-hidden="true">·</span><a href="en/index.html" hreflang="en" lang="en" title="English">EN</a><span aria-hidden="true">·</span><a href="pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português">PT</a>
+    </nav>
     <div class="header-content">
         <div class="brand-container" onclick="goHome()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goHome();}" role="button" tabindex="0" title="Volver al inicio">
             <h1 class="brand-text" style="margin:0; font-size:inherit; font-weight:inherit;">
@@ -783,556 +810,7 @@
     </svg>
 </a>
 
-<script>
-    let products = [
-        { bodega: "4 GATOS LOCOS", nombre: "Miau Malbec (OFERTA)", precio: 19000, precioMinorista: 21000 },
-        { bodega: "ACHAVAL FERRER", nombre: "Malbec Appellation (Lujan de Cuyo / Valle de Uco)", precio: 29000, precioMinorista: 32000 },
-        { bodega: "ACHAVAL FERRER", nombre: "Quimera Diamante Blend", precio: 57000, precioMinorista: 59900 },
-        { bodega: "ALFA CRUX", nombre: "Beta Crux Malbec (AGOTADO)", precio: 23500, precioMinorista: 25900 },
-        { bodega: "ALFA CRUX", nombre: "Alfa Crux Corte Uco (AGOTADO)", precio: 42000, precioMinorista: 45000 },
-        { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Tinto Blend (OFERTA)", precio: 22000, precioMinorista: 23000 },
-        { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Brut Nature Rose", precio: 26500, precioMinorista: 27500 },
-        { bodega: "ALTOS LAS HORMIGAS", nombre: "The Malbec Specialist (OFERTA)", precio: 12000, precioMinorista: 13000 },
-        { bodega: "ALTOS LAS HORMIGAS", nombre: "Jardín de Hormigas Meteora Malbec", precio: 39900, precioMinorista: 43000 },
-        { bodega: "ALTOS LAS HORMIGAS", nombre: "Appellation Malbec (Paraje Altamira / Paraje Gualtallary)", precio: 55000, precioMinorista: 58000 },
-        { bodega: "ANTUCURA", nombre: "La Folie Blend", precio: 21900, precioMinorista: 25000 },
-        { bodega: "ANTUCURA", nombre: "Single Vineyard (Malbec / Pinot Noir)", precio: 27000, precioMinorista: 29900 },
-        { bodega: "ATAMISQUE", nombre: "Catalpa Assemblage", precio: 17000, precioMinorista: 18000 },
-        { bodega: "ATAMISQUE", nombre: "Finca Andrea Malbec (Vistalba / Consulta)", precio: 38000, precioMinorista: 39900 },
-        { bodega: "BRESSIA", nombre: "Lagrima Canela (Blend de blancos)", precio: 28500, precioMinorista: 29500 },
-        { bodega: "BRESSIA", nombre: "Profundo", precio: 28500, precioMinorista: 29500 },
-        { bodega: "BRESSIA", nombre: "Piel Negra Pinot Noir (OFERTA)", precio: 37000, precioMinorista: 38500 },
-        { bodega: "BRESSIA", nombre: "Conjuro (OFERTA)", precio: 54000, precioMinorista: 57000 },
-        { bodega: "BRESSIA", nombre: "Ultima Hoja (OFERTA)", precio: 99000, precioMinorista: 104000 },
-        { bodega: "CATENA ZAPATA", nombre: "Saint Felicien (Malbec / Cab. Franc / Cab. Sauv. / Chardonnay / Cab-Merlot / Pinot Noir)", precio: 9000, precioMinorista: 10500 },
-        { bodega: "CATENA ZAPATA", nombre: "DV Cabernet-Malbec", precio: 12500, precioMinorista: 13500 },
-        { bodega: "CATENA ZAPATA", nombre: "Saint Felicien Bonarda", precio: 17000, uCaja: 4, precioMinorista: 18000 },
-        { bodega: "CATENA ZAPATA", nombre: "DV Malbec-Malbec", precio: 16000, precioMinorista: 17500 },
-        { bodega: "CATENA ZAPATA", nombre: "DV L'Esploratore (Malbec Cafayate / Malbec Angulos)", precio: 17000, uCaja: 4, precioMinorista: 18000 },
-        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata (Chardonnay / Merlot / Cab. Sauv. / Cab. Franc)", precio: 22000, uCaja: 4, precioMinorista: 23900 },
-        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec", precio: 23000, uCaja: 4, precioMinorista: 24900 },
-        { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec Alta 2018", precio: 45000, uCaja: 4, precioMinorista: 48900 },
-        { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard (Cab. Sauv Paraje Altamira / Cab. Sauv Domingo Tupungato / Cab. Sauv La Pirámide Agrelo) (OFERTA)", precio: 24000, uCaja: 4, precioMinorista: 25500 },
-        { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard Malbec Adriana (OFERTA)", precio: 26500, uCaja: 4, precioMinorista: 27500 },
-        { bodega: "CATENA ZAPATA", nombre: "Nicola Catena Bonarda", precio: 47000, uCaja: 4, precioMinorista: 49900 },
-        { bodega: "CATENA ZAPATA", nombre: "Malbec Argentino", precio: 59900, precioMinorista: 62000 },
-        { bodega: "CATENA ZAPATA", nombre: "Nicolas Catena 2022", precio: 63000, precioMinorista: 64500 },
-        { bodega: "CATENA ZAPATA", nombre: "Birth of Cabernet", precio: 59000, precioMinorista: 62000 },
-        { bodega: "CATENA ZAPATA", nombre: "As Bravas Malbec 2018 - 100 PTS", precio: 122000, precioMinorista: 127000 },
-        { bodega: "CHACRA", nombre: "Barda / Roka / Nacha (Barda Pinot Noir / Roka Malbec / Nacha Rosé)", precio: 46500, precioMinorista: 49000 },
-        { bodega: "CHACRA", nombre: "Chacra 55 Pinot Noir (OFERTA)", precio: 82000, precioMinorista: 89000 },
-        { bodega: "COINCIDIR", nombre: "Coincidir Malbec (PRÓXIMAMENTE)", precio: 19900, uCaja: 4, precioMinorista: 21900 },
-        { bodega: "CASARENA", nombre: "Casarena Single Vineyard Naoki Malbec 2022 (PRÓXIMAMENTE)", precio: 38000, uCaja: 3, precioMinorista: 43000 },
-        { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Grand Mère / Grand Père)", precio: 32000, precioMinorista: 33000 },
-        { bodega: "DOMAINE NICO", nombre: "Pinot Noir (Histoire / La Savante) (OFERTA)", precio: 54500, precioMinorista: 56000 },
-        { bodega: "DURIGUTTI", nombre: "Cara Sucia Criolla (OFERTA)", precio: 16900, precioMinorista: 19900 },
-        { bodega: "DURIGUTTI", nombre: "HD Reserva Malbec", precio: 22000, precioMinorista: 25000 },
-        { bodega: "DURIGUTTI", nombre: "Pie de Monte Inmigrantes - Tintas de Pie Franco (AGOTADO)", precio: 18000, precioMinorista: 21000 },
-        { bodega: "EL BAYEH", nombre: "Tinto de Purmamarca Criolla (PRÓXIMAMENTE)", precio: 22000, precioMinorista: 25000 },
-        { bodega: "EL BAYEH", nombre: "Finca Ollantay Malbec (PRÓXIMAMENTE)", precio: 28000, precioMinorista: 32000 },
-        { bodega: "EL BAYEH", nombre: "Doña Carmen Criolla Chica (PRÓXIMAMENTE)", precio: 42000, precioMinorista: 45000 },
-        { bodega: "EL ENEMIGO (Bodega Aleanna)", nombre: "El Enemigo (Cabernet Franc / Malbec / Chardonnay / Bonarda)", precio: 17000, precioMinorista: 18500 },
-        { bodega: "EL ENEMIGO (Bodega Aleanna)", nombre: "Gran Enemigo (Cepillo / Agrelo / Chacayes / Corte)", precio: 39900, precioMinorista: 44000 },
-        { bodega: "EL ENEMIGO (Bodega Aleanna)", nombre: "Gran Enemigo Gualtallary 2023 - 100 PTS", precio: 55000, precioMinorista: 56500 },
-        { bodega: "EL ENEMIGO (Bodega Aleanna)", nombre: "Bonarda (El Mirador / El Barranco / El Paraíso)", precio: 23000, precioMinorista: 25000 },
-        { bodega: "EL ESTECO", nombre: "Blend de Extremos Malbec-Malbec", precio: 19500, precioMinorista: 23500 },
-        { bodega: "EL ESTECO", nombre: "Old Vines Malbec", precio: 24500, precioMinorista: 26900 },
-        { bodega: "ERNESTO CATENA", nombre: "Animal Colors Blend de Tintas Orgánico (OFERTA)", precio: 13000, precioMinorista: 15000 },
-        { bodega: "ERNESTO CATENA", nombre: "Tikal Amorio Malbec (AGOTADO)", precio: 28500, precioMinorista: 31000 },
-        { bodega: "ERNESTO CATENA", nombre: "Siesta Malbec 2017 (Estuche de Madera)", precio: 37000, uCaja: 3, precioMinorista: 42000 },
-        { bodega: "ERNESTO CATENA", nombre: "Lost by Siesta Malbec (OFERTA)", precio: 89000, uCaja: 3, precioMinorista: 93000 },
-        { bodega: "FLECHAS DE LOS ANDES", nombre: "Gran Malbec 2022", precio: 46000, precioMinorista: 49500 },
-        { bodega: "KAIKEN", nombre: "Desbandado Cabernet Franc (OFERTA)", precio: 15000, precioMinorista: 18000 },
-        { bodega: "KAIKEN", nombre: "Disobedience Blend By Francis Mallmann", precio: 18900, precioMinorista: 22500 },
-        { bodega: "KARIM MUSSI", nombre: "Alandes Paradoux Blend de Blancs", precio: 36500, precioMinorista: 38900 },
-        { bodega: "KARIM MUSSI", nombre: "Alandes Gran Cabernet Franc", precio: 49500, precioMinorista: 52000 },
-        { bodega: "KRONTIRAS", nombre: "Explore Malbec (OFERTA)", precio: 26500, precioMinorista: 29500 },
-        { bodega: "LUCA", nombre: "Luca (Pinot Noir / Syrah / Chardonnay) (OFERTA)", precio: 24500, precioMinorista: 26500 },
-        { bodega: "LUCA", nombre: "Luca Malbec", precio: 27500, precioMinorista: 29900 },
-        { bodega: "LUCA", nombre: "Beso de Dante (OFERTA)", precio: 42000, precioMinorista: 43000 },
-        { bodega: "LUCA", nombre: "Nico by Luca Malbec (OFERTA)", precio: 89900, uCaja: 3, precioMinorista: 92000 },
-        { bodega: "LUIGI BOSCA", nombre: "Luigi Bosca de Sangre (Red Blend / White Blend)", precio: 16500, precioMinorista: 18500 },
-        { bodega: "LUIGI BOSCA", nombre: "Los Nobles (Malbec Doc / Cabernet Bouchet - field blend) (OFERTA)", precio: 58000, uCaja: 4, precioMinorista: 59900 },
-        { bodega: "MICHELINI I MUFATTO", nombre: "La Cautiva Malbec (OFERTA)", precio: 46000, uCaja: 3, precioMinorista: 49900 },
-        { bodega: "MICHELINI I MUFATTO", nombre: "GY Blend", precio: 23500, precioMinorista: 26000 },
-        { bodega: "MIL SUELOS", nombre: "Manos Negras Artesano Malbec (OFERTA)", precio: 26000, precioMinorista: 28000 },
-        { bodega: "MIL SUELOS", nombre: "Estancia Los Cardones Tigerstone Garnacha (AGOTADO)", precio: 26000, uCaja: 3, precioMinorista: 29000 },
-        { bodega: "MIL SUELOS", nombre: "Zaha Espumante Calcaire (AGOTADO)", precio: 42000, precioMinorista: 45000 },
-        { bodega: "MIL SUELOS", nombre: "Teho El Corte (AGOTADO)", precio: 35000, precioMinorista: 38000 },
-        { bodega: "MUNDO REVÉS", nombre: "Asa Nisi Masa Malbec", precio: 17500, precioMinorista: 19500 },
-        { bodega: "MOSQUITA MUERTA", nombre: "Mosquita Blend de Tintas", precio: 15000, uCaja: 3, precioMinorista: 16500 },
-        { bodega: "MOSQUITA MUERTA", nombre: "Malcriado Malbec (OFERTA)", precio: 49900, uCaja: 3, precioMinorista: 53000 },
-        { bodega: "OTRONIA", nombre: "45° Rugientes Pinot Noir (OFERTA)", precio: 38900, precioMinorista: 42900 },
-        { bodega: "PULENTA", nombre: "Pulenta Estate Chardonnay", precio: 14000, precioMinorista: 15000 },
-        { bodega: "PULENTA", nombre: "Pulenta Estate (Red Blend / Pinot Noir / Cabernet Franc / Malbec / Malbec orgánico / Cab. Sauvignon) (OFERTA)", precio: 21000, precioMinorista: 22000 },
-        { bodega: "PULENTA", nombre: "Pulenta Gran (Pinot Noir / Cabernet Franc / Cab. Sauv. / Merlot / Malbec) (OFERTA)", precio: 59900, precioMinorista: 62000 },
-        { bodega: "RAQUIS", nombre: "Las Bases Malbec (OFERTA)", precio: 47500, precioMinorista: 49900 },
-        { bodega: "RIBERA DEL CUARZO", nombre: "Araucana Rio de los Ciervos Pinot Noir", precio: 39500, precioMinorista: 42000 },
-        { bodega: "RIBERA DEL CUARZO", nombre: "Especial Blend (OFERTA)", precio: 72000, precioMinorista: 74000 },
-        { bodega: "RICCITELLI", nombre: "The Apple Malbec (PRÓXIMAMENTE)", precio: 25000, precioMinorista: 26900 },
-        { bodega: "RICCITELLI", nombre: "Invader Semillón (PRÓXIMAMENTE)", precio: 32500, precioMinorista: 34500 },
-        { bodega: "ROLLAND", nombre: "Mariflor Merlot", precio: 22000, precioMinorista: 25000 },
-        { bodega: "ROLLAND", nombre: "Val de Flores Malbec", precio: 77000, precioMinorista: 79900 },
-        { bodega: "ROLLAND", nombre: "Château Fontenil 2018", precio: 89900, precioMinorista: 94000 },
-        { bodega: "ROSELL BOHER", nombre: "Casa Boher (Malbec Agrelo / Malbec San Pablo) (OFERTA)", precio: 16000, precioMinorista: 18000 },
-        { bodega: "ROSELL BOHER", nombre: "Encarnación Brut Nature", precio: 35000, precioMinorista: 37000 },
-        { bodega: "ROSELL BOHER", nombre: "Boher Gran (Chardonnay / Viognier) (OFERTA)", precio: 35000, uCaja: 4, precioMinorista: 37000 },
-        { bodega: "RUTINI", nombre: "Rutini (Cab. Franc-Malbec / Cab. Sauv-Malbec / Cab. Sauv-Merlot / Cab. Sauv-Syrah)", precio: 15000, precioMinorista: 16500 },
-        { bodega: "RUTINI", nombre: "Rutini (Cab. Sauv. / Cab. Franc / Chardonnay)", precio: 22000, precioMinorista: 23500 },
-        { bodega: "RUTINI", nombre: "Dominio Chardonnay", precio: 21000, precioMinorista: 24000 },
-        { bodega: "RUTINI", nombre: "Espumoso Extra Brut (OFERTA)", precio: 24000, uCaja: 4, precioMinorista: 27000 },
-        { bodega: "RUTINI", nombre: "Rutini Malbec", precio: 27000, precioMinorista: 29000 },
-        { bodega: "RUTINI", nombre: "Espumoso Brut Nature (OFERTA)", precio: 39000, uCaja: 4, precioMinorista: 44000 },
-        { bodega: "RUTINI", nombre: "Gualtallary Single Vineyard (Malbec / Cab. Sauv.) (OFERTA)", precio: 54000, precioMinorista: 56000 },
-        { bodega: "RUTINI", nombre: "Dominio Grand Blend (OFERTA)", precio: 58000, precioMinorista: 61000 },
-        { bodega: "RUTINI", nombre: "Antologia XXXVIII (38)", precio: 51000, uCaja: 4, precioMinorista: 52500 },
-        { bodega: "RUTINI", nombre: "Apartado Gran (Blend / Malbec)", precio: 108000, uCaja: 4, precioMinorista: 112000 },
-        { bodega: "SALENTEIN", nombre: "Alyda Brut Nature", precio: 19000, precioMinorista: 21000 },
-        { bodega: "SALENTEIN", nombre: "Primus Chardonnay (OFERTA)", precio: 36000, precioMinorista: 38000 },
-        { bodega: "SALENTEIN", nombre: "Primus Malbec", precio: 51000, precioMinorista: 53000 },
-        { bodega: "SALENTEIN", nombre: "Gran VU Blend", precio: 98000, uCaja: 3, precioMinorista: 99900 },
-        { bodega: "SOLOCONTIGO", nombre: "Develado Cab. Sauv-Cab. Franc (OFERTA)", precio: 18500, precioMinorista: 21000 },
-        { bodega: "SOLOCONTIGO", nombre: "Casa de las Musas Blend (OFERTA)", precio: 29500, precioMinorista: 32000 },
-        { bodega: "SOTTANO", nombre: "Barrabás Cabernet Franc (OFERTA)", precio: 33000, precioMinorista: 36000 },
-        { bodega: "SOTTANO", nombre: "Judas Blend", precio: 68000, uCaja: 3, precioMinorista: 69900 },
-        { bodega: "SUSANA BALBO", nombre: "Signature Malbec", precio: 22500, precioMinorista: 24000 },
-        { bodega: "SUSANA BALBO", nombre: "Benmarco Expresivo Blend (OFERTA)", precio: 33000, precioMinorista: 37000 },
-        { bodega: "SUSANA BALBO", nombre: "Signature Brioso Blend (OFERTA)", precio: 37500, precioMinorista: 39900 },
-        { bodega: "SUSANA BALBO", nombre: "Nosotros", precio: 115000, precioMinorista: 120000 },
-        { bodega: "TAPIZ", nombre: "Black Tears Malbec (OFERTA)", precio: 55000, precioMinorista: 59000 },
-        { bodega: "TAPIZ", nombre: "Las Notas de Jean Claude", precio: 71000, precioMinorista: 72500 },
-        { bodega: "TRUMPETER (Rutini Wines)", nombre: "Trumpeter (Malbec / Cab. Sauv. / Syrah / Merlot / Chardonnay)", precio: 8500, precioMinorista: 9900 },
-        { bodega: "TRUMPETER (Rutini Wines)", nombre: "Reserva (Malbec / Cab. Sauv. / Rose)", precio: 10500, precioMinorista: 12000 },
-        { bodega: "TUTU WINES", nombre: "Tutu Malbec", precio: 24500, precioMinorista: 26500 },
-        { bodega: "TUTU WINES", nombre: "Tutu Pinot Noir", precio: 25000, precioMinorista: 27000 },
-        { bodega: "VIÑA COBOS", nombre: "Felino Malbec", precio: 21500, precioMinorista: 23000 },
-        { bodega: "VIÑA COBOS", nombre: "Bramare (Malbec Luján de Cuyo / Malbec Valle de Uco)", precio: 47500, precioMinorista: 49000 },
-        { bodega: "VIÑA COBOS", nombre: "Vinculum Malbec (OFERTA)", precio: 67000, precioMinorista: 69000 },
-        { bodega: "VIÑA COBOS", nombre: "Cocodrilo Blend", precio: 38000, precioMinorista: 39900 },
-        { bodega: "YACOCHUYA", nombre: "San Pedro de Yacochuya Torrontés", precio: 13000, precioMinorista: 14500 },
-        { bodega: "YACOCHUYA", nombre: "San Pedro de Yacochuya Tinto Blend", precio: 23500, precioMinorista: 25000 },
-        { bodega: "YACOCHUYA", nombre: "Yacochuya Malbec", precio: 61000, precioMinorista: 62000 },
-        { bodega: "YANAY", nombre: "Tinto de Jujuy Blend (OFERTA)", precio: 29900, precioMinorista: 33000 },
-        { bodega: "ZORZAL", nombre: "Malbec Terroir Único", precio: 9500, precioMinorista: 13000 },
-        { bodega: "ZORZAL", nombre: "Zorzal Eggo (Tinto de Tiza Malbec / Filoso Pinot Noir) (OFERTA)", precio: 22000, precioMinorista: 24000 },
-        { bodega: "ZORZAL", nombre: "Piantao Blend (OFERTA)", precio: 54000, precioMinorista: 57000 },
-        { bodega: "ZUCCARDI", nombre: "Zuccardi Q Tempranillo 2012", precio: 35000, precioMinorista: 38000 },
-        { bodega: "ZUCCARDI", nombre: "Polígonos Gualtallary Cabernet Franc", precio: 24900, precioMinorista: 26900 },
-        { bodega: "ZUCCARDI", nombre: "Concreto Malbec 2015", precio: 49900, precioMinorista: 52000 },
-        { bodega: "ZUCCARDI", nombre: "Ema Bonarda", precio: 34000, precioMinorista: 35000 },
-        { bodega: "ZUCCARDI", nombre: "Tito Altamira Blend Tinto (OFERTA)", precio: 32000, precioMinorista: 33000 },
-        { bodega: "ZUCCARDI", nombre: "Finca Piedra Infinita 2019", precio: 172000, uCaja: 3, precioMinorista: 177000 }
-    ];
-
-    // Ordenar productos agrupándolos por bodega y de menor a mayor precio (según regla solicitada)
-    products.sort((a, b) => a.bodega.localeCompare(b.bodega) || a.precio - b.precio);
-
-    // --- NUEVO BLOQUE DE LÓGICA DE PRECIOS ---
-    products.forEach(p => {
-        // 3. Recálculo del precio por caja exacto (Precio * Unidades)
-        // Se usa la cantidad de unidades definida en el producto (uCaja) o 6 por defecto
-        const unidades = p.uCaja || 6;
-        p.caja = p.precio * unidades;
-    });
-    // --- FIN BLOQUE DE LÓGICA ---
-
-    let cart = [];
-    let displayedProducts = [];
-    let showingOffers = false;
-
-    // Feriados 2026 proporcionados por el usuario
-    const feriados2026 = [
-        "1/1", "16/2", "17/2", "23/3", "24/3", "2/4", "3/4", "1/5", "25/5", "15/6", "20/6", "9/7", "10/7", "17/8", "12/10", "23/11", "7/12", "8/12", "25/12"
-    ];
-
-    function initDeliveryDates() {
-        const select = document.getElementById('deliveryDate');
-        select.innerHTML = '';
-        const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-        const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-        
-        let validDates = 0;
-        
-        let current = new Date();
-        current.setDate(current.getDate() + 1);
-
-        while(validDates < 4) { 
-            if (current.getDay() === 5) { // Viernes
-                let deliveryDay = new Date(current);
-                
-                // Chequeo de feriados y retroceso de días
-                let dateKey = `${deliveryDay.getDate()}/${deliveryDay.getMonth() + 1}`;
-                if (feriados2026.includes(dateKey)) {
-                    deliveryDay.setDate(deliveryDay.getDate() - 1); // Jueves
-                    dateKey = `${deliveryDay.getDate()}/${deliveryDay.getMonth() + 1}`;
-                    if (feriados2026.includes(dateKey)) {
-                        deliveryDay.setDate(deliveryDay.getDate() - 1); // Miércoles
-                    }
-                }
-                
-                let today = new Date();
-                today.setHours(0,0,0,0);
-                if (deliveryDay >= today) {
-                    const opt = document.createElement('option');
-                    const dayName = days[deliveryDay.getDay()];
-                    const dateStr = `${deliveryDay.getDate()} ${months[deliveryDay.getMonth()]}`;
-                    let label = `${dayName} ${dateStr} (9 a 18hs)`;
-                    opt.value = label; opt.innerText = label;
-                    select.appendChild(opt); 
-                    validDates++;
-                }
-            }
-            current.setDate(current.getDate() + 1);
-        }
-    }
-
-    function extractVariants(name) {
-        let cleanName = name.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
-        const parenthesisMatch = cleanName.match(/\(([^)]+)\)/);
-        if (parenthesisMatch && parenthesisMatch[1].includes('/')) return parenthesisMatch[1].split('/').map(v => v.trim());
-        if (cleanName.includes('/')) return cleanName.split('/').map(v => v.trim().replace(/^\(/, '').replace(/\)$/, ''));
-        return null;
-    }
-
-    function filterOffers() {
-        showingOffers = !showingOffers;
-        const btn = document.getElementById('btn-ofertas');
-        if (showingOffers) {
-            btn.style.boxShadow = '0 0 0 2px white';
-        } else {
-            btn.style.boxShadow = 'none';
-        }
-        document.getElementById('offers-bar').style.display = showingOffers ? 'flex' : 'none';
-        renderProducts();
-        if (showingOffers) window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Vuelve a la pagina principal: quita ofertas y filtros y sube al inicio
-    function goHome() {
-        showingOffers = false;
-        document.getElementById('btn-ofertas').style.boxShadow = 'none';
-        document.getElementById('offers-bar').style.display = 'none';
-        document.getElementById('searchInput').value = '';
-        document.getElementById('bodegaFilter').value = 'all';
-        renderProducts();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function renderProducts() {
-        const grid = document.getElementById('product-grid');
-        grid.innerHTML = '';
-        const search = document.getElementById('searchInput').value.toLowerCase();
-        const bodega = document.getElementById('bodegaFilter').value;
-        displayedProducts = products.filter(p => {
-            const matchesSearch = p.nombre.toLowerCase().includes(search) || p.bodega.toLowerCase().includes(search);
-            const matchesBodega = bodega === 'all' || p.bodega === bodega;
-            const matchesOffer = showingOffers ? p.nombre.toUpperCase().includes("OFERTA") : true;
-            return matchesSearch && matchesBodega && matchesOffer;
-        });
-        displayedProducts.forEach((p, index) => {
-            const unitsInBox = p.uCaja || 6;
-            const variants = extractVariants(p.nombre);
-            const isOffer = p.nombre.toUpperCase().includes("OFERTA");
-            const isAgotado = p.nombre.toUpperCase().includes("AGOTADO");
-            const isProximamente = p.nombre.toUpperCase().includes("PRÓXIMAMENTE");
-            const isExclusivo = p.soloCaja;
-
-            let displayName = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
-            if(variants) displayName = displayName.split('(')[0].trim();
-            
-            let imgName = p.bodega;
-            if (imgName === "ALMA NEGRA (Ernesto Catena)") imgName = "ALMA NEGRA";
-            if (imgName === "EL ENEMIGO (Bodega Aleanna)") imgName = "EL ENEMIGO";
-            if (imgName === "ERNESTO CATENA") imgName = "Esnesto_Catena";
-            if (imgName === "RICCITELLI") imgName = "riccitelli";
-            if (imgName === "KRONTIRAS") imgName = "Krontiras";
-            if (imgName === "ALFA CRUX") imgName = "alfa_crux";
-            if (imgName === "ANTUCURA") imgName = "antucura";
-            if (imgName === "EL ESTECO") imgName = "el_esteco";
-            if (imgName === "KARIM MUSSI") imgName = "karim_mussi";
-            if (imgName === "MIL SUELOS") imgName = "mil_suelos";
-            if (imgName === "SOLOCONTIGO") imgName = "solo_contigo";
-            if (imgName === "YANAY") imgName = "yanay";
-            if (imgName === "RAQUIS") imgName = "raquis";
-            if (imgName === "COLOMÉ") imgName = "COLOMÉ";
-            if (imgName === "DURIGUTTI") imgName = "DURIGUTTI";
-            if (imgName === "TUTU WINES") imgName = "tutu_wines";
-            if (imgName === "ALTOS LAS HORMIGAS") imgName = "altos_las_hormigas";
-            if (imgName === "ZUCCARDI") imgName = "zuccardi";
-            if (imgName === "ALTALAND") imgName = "altaland";
-            if (imgName === "NINA") imgName = "nina";
-            if (imgName === "FALASCO") imgName = "falasco";
-            if (imgName === "ALTAR UCO") imgName = "altar_uco";
-            if (imgName === "KAIKEN") imgName = "kaiken";
-            if (imgName === "ZORZAL") imgName = "zorzal";
-            if (imgName === "TRUMPETER (Rutini Wines)") imgName = "TRUMPETER";
-            if (imgName === "EL BAYEH") imgName = "el_bayeh";
-            if (imgName === "MICHELINI I MUFATTO") imgName = "michelini_mufatto.jpg";
-            if (imgName === "MUNDO REVÉS") imgName = "mundo_reves";
-            if (imgName === "4 GATOS LOCOS") imgName = "4_gatos_locos";
-            if (imgName === "CASARENA") imgName = "Casarena";
-            if (imgName === "COINCIDIR") imgName = "Coincidir";
-            if (imgName === "OTRONIA") imgName = "Otronia";
-            if (imgName === "FLECHAS DE LOS ANDES") imgName = "Flecha_de_los_Andes.jpg";
-            // Logos optimizados en WebP (los PNG/JPG originales quedan en la carpeta, sin usarse)
-            const imagePath = `logos bodegas/${imgName.replace(/\.(png|jpe?g)$/i, '')}.webp`;
-
-            let variantHTML = variants ? `
-                <div class="variant-selector">
-                    <label>Variedad / Uva:</label>
-                    <select id="variant-select-${index}" class="variant-select">
-                        ${variants.map(v => `<option value="${v}">${v}</option>`).join('')}
-                    </select>
-                </div>` : '';
-                
-            const btnBotella = p.soloCaja
-                ? `<button class="btn btn-bottle" disabled style="opacity: 0.6; cursor: not-allowed; border-color: #eee;">Solo Caja Cerrada</button>`
-                : `<button class="btn btn-bottle" onclick="addToCart(${index}, 1)">+1 Botella</button>`;
-
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                ${isOffer ? '<div class="offer-badge">🔥 OFERTA</div>' : ''}
-                ${isAgotado ? '<div class="offer-badge" style="background-color: #555; right: 10px;">🚫 AGOTADO</div>' : ''}
-                ${isProximamente ? '<div class="offer-badge" style="background-color: #555; right: 10px;">⏳ PRÓXIMAMENTE</div>' : ''}
-                ${isExclusivo ? '<div class="offer-badge" style="left: 10px; right: auto; background-color: #2c3e50;">Exclusivo x Caja</div>' : ''}
-                <div class="card-image-container">
-                    <img src="${imagePath}" alt="Logo de la bodega ${p.bodega}" loading="${index < 6 ? 'eager' : 'lazy'}" decoding="async" onerror="this.style.display='none'">
-                </div>
-                <div class="card-header">${p.bodega}</div>
-                <div class="card-body">
-                    <div class="card-title">${displayName}</div>
-                    <div class="card-price">$${p.precio.toLocaleString('es-AR')} <small>c/u</small></div>
-                    <span class="box-price">Caja x${unitsInBox}: $${p.caja.toLocaleString('es-AR')}</span>
-                    ${p.precioMinorista ? `<span class="box-price" style="color: #666; font-weight: 500;">Precio Minorista: $${p.precioMinorista.toLocaleString('es-AR')} c/u</span>` : ''}
-                    ${variantHTML}
-                </div>
-                <div class="actions">
-                    ${(isAgotado || isProximamente) ? `<button class="btn btn-bottle" disabled style="opacity: 0.6; cursor: not-allowed; border-color: #eee;">+1 Botella</button>` : btnBotella}
-                    ${(isAgotado || isProximamente) ? `<button class="btn btn-box" disabled style="background-color: #888; color: #fff; cursor: not-allowed; box-shadow: none;">AGREGAR CAJA</button>` : `<button class="btn btn-box" onclick="addToCartBox(${index}, ${unitsInBox})">AGREGAR CAJA</button>`}
-                </div>`;
-            grid.appendChild(card);
-        });
-    }
-
-    function addToCartBox(idx, qty) {
-        const p = displayedProducts[idx];
-        if (p.nombre.toUpperCase().includes("AGOTADO") || p.nombre.toUpperCase().includes("PRÓXIMAMENTE")) return;
-        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
-        if (name.includes('(')) name = name.split('(')[0].trim();
-        const vSel = document.getElementById(`variant-select-${idx}`);
-        let fullName = name;
-        if (vSel) fullName += ` (Elegida: ${vSel.value})`;
-        const unitPrice = p.caja / qty;
-        const exist = cart.find(i => i.bodega === p.bodega && i.nombre === fullName && i.precio === unitPrice && i.isBox === true);
-        if (exist) exist.qty += qty; else cart.push({ bodega: p.bodega, nombre: fullName, precio: unitPrice, qty: qty, isBox: true, boxSize: qty });
-        updateCartUI(); showToast(`Caja agregada`);
-    }
-
-    function addToCart(idx, qty) {
-        const p = displayedProducts[idx];
-        if (p.nombre.toUpperCase().includes("AGOTADO") || p.nombre.toUpperCase().includes("PRÓXIMAMENTE")) return;
-        let name = p.nombre.replace(/\(OFERTA\)/gi, "").replace(/\(AGOTADO\)/gi, "").replace(/\(PRÓXIMAMENTE\)/gi, "").trim();
-        if (name.includes('(')) name = name.split('(')[0].trim();
-        const vSel = document.getElementById(`variant-select-${idx}`);
-        let fullName = name;
-        if (vSel) fullName += ` (Elegida: ${vSel.value})`;
-        
-        // Uso del precio minorista por unidad si existe
-        const unitPrice = p.precioMinorista ? p.precioMinorista : p.precio;
-        
-        const exist = cart.find(i => i.bodega === p.bodega && i.nombre === fullName && i.precio === unitPrice && i.isBox === false);
-        if (exist) exist.qty += qty; else cart.push({ bodega: p.bodega, nombre: fullName, precio: unitPrice, qty: qty, isBox: false });
-        updateCartUI(); showToast(`Botella agregada`);
-    }
-
-    function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
-
-    function togglePaymentInfo() {
-        const method = document.getElementById('paymentMethod').value;
-        document.getElementById('transfer-info').style.display = method.startsWith('Transferencia') ? 'block' : 'none';
-        document.getElementById('pix-info').style.display = method === 'Pix' ? 'block' : 'none';
-        document.getElementById('usd-info').style.display = method.includes('USD') ? 'block' : 'none';
-    }
-
-    function updateCartUI() {
-        const count = cart.reduce((acc, i) => acc + i.qty, 0);
-        document.getElementById('cart-count').textContent = count;
-        const itemsDiv = document.getElementById('cart-items');
-        const valMsg = document.getElementById('cart-validation-msg');
-        const btn = document.getElementById('btn-checkout');
-        itemsDiv.innerHTML = ''; let total = 0;
-        
-        // Conteo diferenciado para la lógica de validación
-        let countBottles = cart.filter(i => !i.isBox).reduce((acc, i) => acc + i.qty, 0);
-        let hasBoxes = cart.some(i => i.isBox);
-        
-        if (cart.length === 0) {
-            valMsg.className = 'cart-alert'; valMsg.innerHTML = "Tu caja está vacía.";
-            valMsg.style.display = 'block'; btn.disabled = true;
-        } else {
-            cart.forEach((item, i) => {
-                const sub = item.precio * item.qty; total += sub;
-                const dName = item.nombre.replace(" (Elegida:", '<br><span class="selected-variant-text">👉 Elegida:').replace(")", "</span>");
-                const div = document.createElement('div');
-                div.className = 'cart-item';
-                div.innerHTML = `
-                    <div style="flex-grow:1">
-                        <div style="font-weight:bold; color:var(--primary); font-size:0.9em;">${item.bodega}</div>
-                        <div>${dName}</div>
-                        <small style="color:#777">${item.qty} x $${item.precio.toLocaleString('es-AR')}</small>
-                    </div>
-                    <div style="text-align:right">
-                        <div style="font-weight:bold;">$${Math.round(sub).toLocaleString('es-AR')}</div>
-                        <button style="background:none; border:none; color:#e74c3c; cursor:pointer;" onclick="removeFromCart(${i})">🗑️</button>
-                    </div>`;
-                itemsDiv.appendChild(div);
-            });
-
-            // Lógica de pedido mínimo (ignora cajas cerradas, exige múltiplos de 6 para mixtas)
-            if (countBottles > 0 && countBottles % 6 !== 0) {
-                const missing = 6 - (countBottles % 6);
-                valMsg.className = 'cart-alert'; 
-                if (missing === 1) {
-                    valMsg.innerHTML = `⚠️ Falta <strong>1</strong> botella individual para completar la caja mixta de 6.`;
-                } else {
-                    valMsg.innerHTML = `⚠️ Faltan <strong>${missing}</strong> botellas individuales para completar la caja mixta de 6.`;
-                }
-                btn.disabled = true;
-            } else {
-                valMsg.className = 'cart-success'; 
-                valMsg.innerHTML = "✅ ¡Pedido válido! Todo listo.";
-                btn.disabled = false;
-            }
-        }
-        document.getElementById('cart-total-price').textContent = Math.round(total).toLocaleString('es-AR');
-    }
-
-    function copyAlias() {
-        navigator.clipboard.writeText("bazzana.max-1906").then(() => showToast("Alias copiado"));
-    }
-
-    function openCart() { document.getElementById('cartModal').style.display = 'block'; }
-    function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
-    function openRulesModal() { document.getElementById('rulesModal').style.display = 'block'; }
-    function closeRulesModal() { document.getElementById('rulesModal').style.display = 'none'; }
-    
-    function showToast(msg) {
-        const t = document.getElementById('toast'); t.textContent = msg; t.style.opacity = 1;
-        setTimeout(() => t.style.opacity = 0, 3000);
-    }
-
-    function sendOrder() {
-        const name = document.getElementById('customerName').value;
-        const addr = document.getElementById('customerAddress').value;
-        const date = document.getElementById('deliveryDate').value;
-        const payment = document.getElementById('paymentMethod').value;
-        const obs = document.getElementById('customerObs').value;
-
-        if (!name || !addr || !payment) { alert("Completá tus datos y la forma de pago."); return; }
-        
-        let msg = `*SALES ORDER Nº*\n👤 Cliente: ${name}\n📍 Dirección: ${addr}\n📅 Entrega: ${date}\n💵 Pago: ${payment}\n`;
-        
-        if (obs && obs.trim() !== "") {
-            msg += `📝 Observaciones: ${obs}\n`;
-        }
-
-        msg += `-------------------\n Detalle del pedido:\n`;
-        
-        let total = 0;
-        let totalBotellas = 0;
-        let totalCajas = 0;
-
-        const cajasMixtas = cart.filter(i => !i.isBox);
-        const cajasCerradas = cart.filter(i => i.isBox);
-
-        const getFinalName = (i) => {
-            let finalName = "";
-            if (i.nombre.includes("(Elegida:")) {
-                const parts = i.nombre.split("(Elegida:");
-                const variant = parts[1].replace(")", "").trim();
-                finalName = `${i.bodega} ${variant}`;
-            } else {
-                const cleanName = i.nombre.replace('<br>', ' ').replace('<span class="selected-variant-text">', '').replace('</span>', '');
-                finalName = `${i.bodega} ${cleanName}`;
-            }
-            return finalName;
-        };
-
-        if (cajasMixtas.length > 0) {
-            msg += `*Caja Mixta*\n`;
-            let botellasMixtas = 0;
-            cajasMixtas.forEach(i => {
-                const subtotal = i.precio * i.qty;
-                total += subtotal;
-                totalBotellas += i.qty;
-                botellasMixtas += i.qty;
-                msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
-                msg += `   ↳ ${i.qty} x $${i.precio.toLocaleString('es-AR')} = $${subtotal.toLocaleString('es-AR')}\n`;
-            });
-            totalCajas += (botellasMixtas / 6);
-        }
-
-        if (cajasCerradas.length > 0) {
-            if (cajasMixtas.length > 0) msg += `\n`; 
-            msg += `*Caja Cerrada*\n`;
-            cajasCerradas.forEach(i => {
-                const subtotal = i.precio * i.qty;
-                total += subtotal;
-                totalBotellas += i.qty;
-                const bSize = i.boxSize || 6;
-                totalCajas += (i.qty / bSize);
-                msg += `▪️ (${i.qty}u) ${getFinalName(i)}\n`;
-                msg += `   ↳ ${i.qty} x $${i.precio.toLocaleString('es-AR')} = $${subtotal.toLocaleString('es-AR')}\n`;
-            });
-        }
-        
-        let formattedCajas = Number.isInteger(totalCajas) ? totalCajas : totalCajas.toFixed(1);
-
-        msg += `-------------------\nTotal de botellas: ${totalBotellas}\n`;
-        msg += `Total de cajas: ${formattedCajas}\n`;
-        msg += `💰 *TOTAL: $${Math.round(total).toLocaleString('es-AR')}*\n`;
-        msg += `-------------------\n👤 Vendedor: Max Bazzana`;
-        
-        window.open(`https://wa.me/5491130529102?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    function init() {
-        const bodegas = [...new Set(products.map(p => p.bodega))].sort();
-        const sel = document.getElementById('bodegaFilter');
-        bodegas.forEach(b => { const o = document.createElement('option'); o.value = b; o.textContent = b; sel.appendChild(o); });
-        renderProducts(); initDeliveryDates();
-    }
-
-    window.onclick = e => { 
-        if (e.target == document.getElementById('cartModal')) closeCart(); 
-        if (e.target == document.getElementById('rulesModal')) closeRulesModal();
-    }
-    init();
-
-    // Verificacion de edad: se pregunta una vez y se recuerda en el navegador
-    (function () {
-        const gate = document.getElementById('age-gate');
-        const KEY = 'mwh-mayor-18';
-        let ok = false;
-        try { ok = localStorage.getItem(KEY) === 'ok'; } catch (e) {}
-        if (ok) return;
-        gate.hidden = false;
-        document.body.style.overflow = 'hidden';
-        document.getElementById('age-yes').focus();
-        document.getElementById('age-yes').addEventListener('click', function () {
-            try { localStorage.setItem(KEY, 'ok'); } catch (e) {}
-            gate.hidden = true;
-            document.body.style.overflow = '';
-        });
-        document.getElementById('age-no').addEventListener('click', function () {
-            document.getElementById('age-title').textContent = 'Acceso no permitido';
-            const t = document.getElementById('age-text');
-            t.className = 'age-denied';
-            t.textContent = 'Lo sentimos: la venta de bebidas alcohólicas está prohibida a menores de 18 años. Volvé cuando seas mayor de edad.';
-            document.getElementById('age-actions').style.display = 'none';
-        });
-    })();
-</script>
+<script src="products.js"></script>
+<script src="tienda.js"></script>
 </body>
 </html>
