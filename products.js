@@ -57,7 +57,7 @@ let products = [
     { bodega: "EL ESTECO", nombre: "Old Vines Malbec", precio: 24500, precioMinorista: 26900 },
     { bodega: "ERNESTO CATENA", nombre: "Animal Colors Blend de Tintas Orgánico (OFERTA)", precio: 13000, precioMinorista: 15000 },
     { bodega: "ERNESTO CATENA", nombre: "Tikal Amorio Malbec (AGOTADO)", precio: 28500, precioMinorista: 31000 },
-    { bodega: "ERNESTO CATENA", nombre: "Siesta Malbec 2017 (Estuche de Madera)", precio: 37000, uCaja: 3, precioMinorista: 42000 },
+    { bodega: "ERNESTO CATENA", nombre: "Siesta Malbec 2017 (Caja de madera x3)", precio: 37000, uCaja: 3, precioMinorista: 42000 },
     { bodega: "ERNESTO CATENA", nombre: "Lost by Siesta Malbec (OFERTA)", precio: 89000, uCaja: 3, precioMinorista: 93000 },
     { bodega: "FLECHAS DE LOS ANDES", nombre: "Gran Malbec 2022", precio: 46000, precioMinorista: 49500 },
     { bodega: "KAIKEN", nombre: "Desbandado Cabernet Franc (OFERTA)", precio: 15000, precioMinorista: 18000 },
