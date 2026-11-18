@@ -39,10 +39,62 @@ let cart = [];
 let displayedProducts = [];
 let showingOffers = false;
 
-// Feriados 2026 proporcionados por el usuario
-const feriados2026 = [
-    "1/1", "16/2", "17/2", "23/3", "24/3", "2/4", "3/4", "1/5", "25/5", "15/6", "20/6", "9/7", "10/7", "17/8", "12/10", "23/11", "7/12", "8/12", "25/12"
+// ===== Entregas: miércoles y viernes, 9 a 18 h =====
+// Si un día de entrega cae feriado, esa fecha se anula (no se corre a otro día).
+// El pedido debe hacerse como mínimo el día anterior hasta las 15:00 (hora de Buenos Aires).
+const DIAS_ENTREGA = [3, 5];          // 3 = miércoles, 5 = viernes
+const HORA_CORTE = 15;                // 15:00 del día anterior
+const CANTIDAD_FECHAS = 6;            // fechas que se muestran en el selector
+
+// Feriados con año (formato AAAA-MM-DD)
+const FERIADOS = [
+    // 2026
+    "2026-01-01", "2026-02-16", "2026-02-17", "2026-03-23", "2026-03-24", "2026-04-02", "2026-04-03",
+    "2026-05-01", "2026-05-25", "2026-06-15", "2026-06-20", "2026-07-09", "2026-07-10", "2026-08-17",
+    "2026-10-12", "2026-11-23", "2026-12-07", "2026-12-08", "2026-12-25",
+    // 2027 (fijos y trasladables por ley; los puentes todavía no fueron anunciados: agregarlos cuando salgan)
+    "2027-01-01", "2027-02-08", "2027-02-09", "2027-03-24", "2027-03-26", "2027-04-02", "2027-05-01",
+    "2027-05-25", "2027-06-20", "2027-06-21", "2027-07-09", "2027-08-16", "2027-10-11", "2027-11-20",
+    "2027-12-08", "2027-12-25"
 ];
+
+// Fechas de entrega excepcionales (fuera de miércoles y viernes)
+const ENTREGAS_EXTRA = [
+    "2027-03-23"  // Martes de Semana Santa: el miércoles 24 y el viernes 26 son feriados
+];
+
+// Fecha y hora actuales en Buenos Aires, sin importar la zona horaria del celular del cliente
+function ahoraEnBuenosAires(base) {
+    const partes = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Argentina/Buenos_Aires', year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', hourCycle: 'h23'
+    }).formatToParts(base || new Date());
+    const v = t => parseInt(partes.find(p => p.type === t).value, 10);
+    return { y: v('year'), m: v('month'), d: v('day'), h: v('hour') };
+}
+
+const claveFecha = f => `${f.getUTCFullYear()}-${String(f.getUTCMonth() + 1).padStart(2, '0')}-${String(f.getUTCDate()).padStart(2, '0')}`;
+
+// Devuelve las próximas fechas de entrega válidas (como fechas UTC de calendario)
+function proximasEntregas(base) {
+    const ahora = ahoraEnBuenosAires(base);
+    const hoy = new Date(Date.UTC(ahora.y, ahora.m - 1, ahora.d));
+    const fechas = [];
+    const f = new Date(hoy);
+    f.setUTCDate(f.getUTCDate() + 1);   // nunca para el mismo día
+    for (let i = 0; i < 120 && fechas.length < CANTIDAD_FECHAS; i++) {
+        const clave = claveFecha(f);
+        const esDiaEntrega = DIAS_ENTREGA.includes(f.getUTCDay()) || ENTREGAS_EXTRA.includes(clave);
+        if (esDiaEntrega && !FERIADOS.includes(clave)) {
+            // Corte: el día anterior a las 15:00
+            const vispera = new Date(f); vispera.setUTCDate(vispera.getUTCDate() - 1);
+            const llegaATiempo = hoy < vispera || (hoy.getTime() === vispera.getTime() && ahora.h < HORA_CORTE);
+            if (llegaATiempo) fechas.push(new Date(f));
+        }
+        f.setUTCDate(f.getUTCDate() + 1);
+    }
+    return fechas;
+}
 
 function initDeliveryDates() {
     const select = document.getElementById('deliveryDate');
@@ -50,40 +102,15 @@ function initDeliveryDates() {
     const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
     const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
-    let validDates = 0;
-
-    let current = new Date();
-    current.setDate(current.getDate() + 1);
-
-    while(validDates < 4) { 
-        if (current.getDay() === 5) { // Viernes
-            let deliveryDay = new Date(current);
-
-            // Chequeo de feriados y retroceso de días
-            let dateKey = `${deliveryDay.getDate()}/${deliveryDay.getMonth() + 1}`;
-            if (feriados2026.includes(dateKey)) {
-                deliveryDay.setDate(deliveryDay.getDate() - 1); // Jueves
-                dateKey = `${deliveryDay.getDate()}/${deliveryDay.getMonth() + 1}`;
-                if (feriados2026.includes(dateKey)) {
-                    deliveryDay.setDate(deliveryDay.getDate() - 1); // Miércoles
-                }
-            }
-
-            let today = new Date();
-            today.setHours(0,0,0,0);
-            if (deliveryDay >= today) {
-                const opt = document.createElement('option');
-                const dayName = days[deliveryDay.getDay()];
-                const dateStr = `${deliveryDay.getDate()} ${months[deliveryDay.getMonth()]}`;
-                let label = `${dayName} ${dateStr} (9 a 18hs)`;
-                opt.value = label; // el valor queda en español: es lo que llega en el mensaje de WhatsApp
-                opt.innerText = T.dateLabel ? T.dateLabel(deliveryDay) : label;
-                select.appendChild(opt); 
-                validDates++;
-            }
-        }
-        current.setDate(current.getDate() + 1);
-    }
+    proximasEntregas().forEach(f => {
+        const opt = document.createElement('option');
+        const label = `${days[f.getUTCDay()]} ${f.getUTCDate()} ${months[f.getUTCMonth()]} (9 a 18hs)`;
+        // Fecha local al mediodía, para que las traducciones muestren el mismo día del calendario
+        const fechaLocal = new Date(f.getUTCFullYear(), f.getUTCMonth(), f.getUTCDate(), 12);
+        opt.value = label; // el valor queda en español: es lo que llega en el mensaje de WhatsApp
+        opt.innerText = T.dateLabel ? T.dateLabel(fechaLocal) : label;
+        select.appendChild(opt);
+    });
 }
 
 function extractVariants(name) {
