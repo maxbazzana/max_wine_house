@@ -74,7 +74,7 @@ let products = [
     { bodega: "MICHELINI I MUFATTO", nombre: "GY Blend", precio: 23500, precioMinorista: 26000 },
     { bodega: "MIL SUELOS", nombre: "Manos Negras Artesano Malbec (OFERTA)", precio: 25000, precioMinorista: 26000 },
     { bodega: "MIL SUELOS", nombre: "Estancia Los Cardones Tigerstone Garnacha (AGOTADO)", precio: 26000, uCaja: 3, precioMinorista: 29000 },
-    { bodega: "MIL SUELOS", nombre: "Zaha Espumante Calcaire (AGOTADO)", precio: 42000, precioMinorista: 45000 },
+    { bodega: "MIL SUELOS", nombre: "Zaha Espumante Calcaire (PRÓXIMAMENTE)", precio: 42000, precioMinorista: 45000 },
     { bodega: "MIL SUELOS", nombre: "Teho El Corte (AGOTADO)", precio: 35000, precioMinorista: 38000 },
     { bodega: "MUNDO REVÉS", nombre: "Asa Nisi Masa Malbec", precio: 17500, precioMinorista: 19500 },
     { bodega: "OTRONIA", nombre: "45° Rugientes Pinot Noir (OFERTA)", precio: 38900, precioMinorista: 42900 },
