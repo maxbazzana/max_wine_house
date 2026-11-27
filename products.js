@@ -10,7 +10,7 @@ let products = [
     { bodega: "ALFA CRUX", nombre: "Alfa Crux Corte Uco (AGOTADO)", precio: 42000, precioMinorista: 45000 },
     { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Tinto Blend (OFERTA)", precio: 22000, precioMinorista: 23000 },
     { bodega: "ALMA NEGRA (Ernesto Catena)", nombre: "Brut Nature Rose", precio: 26500, precioMinorista: 27500 },
-    { bodega: "ALTOS LAS HORMIGAS", nombre: "Terroir (Valle de Uco Malbec / Luján de Cuyo Malbec)", precio: 15000, precioMinorista: 17000 },
+    { bodega: "ALTOS LAS HORMIGAS", nombre: "Terroir Malbec (Valle de Uco / Luján de Cuyo)", precio: 15000, precioMinorista: 17000 },
     { bodega: "ALTOS LAS HORMIGAS", nombre: "Jardín de Hormigas Meteora Malbec (OFERTA)", precio: 46000, precioMinorista: 49000 },
     { bodega: "ALTOS LAS HORMIGAS", nombre: "Appellation Malbec (Paraje Altamira / Paraje Gualtallary)", precio: 58000, precioMinorista: 59900 },
     { bodega: "ANTUCURA", nombre: "La Folie Blend", precio: 23000, precioMinorista: 25000 },
