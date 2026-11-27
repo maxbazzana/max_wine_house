@@ -27,7 +27,7 @@ let products = [
     { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata (Chardonnay / Merlot / Cab. Sauv.)", precio: 23000, uCaja: 4, precioMinorista: 24000 },
     { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec", precio: 23500, uCaja: 4, precioMinorista: 24900 },
     { bodega: "CATENA ZAPATA", nombre: "Angelica Zapata Malbec Alta 2018", precio: 45000, uCaja: 4, precioMinorista: 48900 },
-    { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard Cabernet Sauvignon Nicasia (Paraje Altamira) (OFERTA)", precio: 26000, uCaja: 4, precioMinorista: 27500 },
+    { bodega: "CATENA ZAPATA", nombre: "DV Designated Vineyard Nicasia Paraje Altamira - Cab. Sauvignon (OFERTA)", precio: 26000, uCaja: 4, precioMinorista: 27500 },
     { bodega: "CATENA ZAPATA", nombre: "Nicola Catena Bonarda", precio: 49000, uCaja: 4, precioMinorista: 52000 },
     { bodega: "CATENA ZAPATA", nombre: "Malbec Argentino", precio: 63000, precioMinorista: 67000 },
     { bodega: "CATENA ZAPATA", nombre: "Nicolas Catena 2022", precio: 64000, precioMinorista: 66000 },
